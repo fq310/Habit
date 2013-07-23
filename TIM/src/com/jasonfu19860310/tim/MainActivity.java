@@ -37,7 +37,6 @@ public class MainActivity extends Activity {
     }
 	
 	public void onOptionAddProject(MenuItem i) {
-		int iii = 0;
 	}
     
 }
