@@ -7,6 +7,7 @@ import com.jasonfu19860310.project.ProjectManager;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
@@ -37,6 +38,8 @@ public class MainActivity extends Activity {
     }
 	
 	public void onOptionAddProject(MenuItem i) {
+		Intent intent = new Intent(this, CreateProjectActivity.class);
+		startActivity(intent);
 	}
     
 }

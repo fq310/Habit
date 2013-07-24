@@ -11,7 +11,7 @@
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
-        android:label="@string/app_name">
+        android:label="@string/app_name" >
         <activity
             android:name="com.jasonfu19860310.tim.MainActivity"
             android:label="@string/app_name" >
@@ -20,6 +20,10 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name="com.jasonfu19860310.tim.CreateProjectActivity"
+            android:label="@string/title_activity_create_project" >
         </activity>
     </application>
 
