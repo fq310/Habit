@@ -15,4 +15,7 @@ public class ProjectManager {
 		projects.add(new Project());
 		return projects;
 	}
+	
+	public void saveNewProject(Project project) {
+	}
 }

@@ -22,7 +22,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.jasonfu19860310.tim.CreateProjectActivity"
+            android:name="com.jasonfu19860310.tim.createproject.CreateProjectActivity"
             android:label="@string/title_activity_create_project" >
         </activity>
     </application>
