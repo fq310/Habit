@@ -1,10 +1,9 @@
-package com.jasonfu19860310.tim.createproject;
+package com.jasonfu19860310.tim.view;
 
 
 import java.util.Calendar;
 
 import com.jasonfu19860310.project.Project;
-import com.jasonfu19860310.project.ProjectManager;
 import com.jasonfu19860310.tim.R;
 
 import android.os.Bundle;
@@ -14,8 +13,6 @@ import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.content.DialogInterface;
 import android.text.Editable;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -23,26 +20,18 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
-public class CreateProjectActivity extends Activity {
-	private Project newProject;
+public abstract class ProjectInfo extends Activity {
+	public static final String CREATE = "create";
+	public static final String MODIFY = "modify";
+	public static final String OPERATION = "operation";
+	protected Project project;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		newProject = new Project();
-		setContentView(R.layout.activity_create_project);
+		setContentView(R.layout.activity_project_info);
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.create_project, menu);
-		return true;
-	}
-	
-	public void onDeleteAddProject(MenuItem i) {
-		
-	}
-	
 	public void onSetStartDate(View v) {
 		showDatePickerDialog(R.id.button_create_project_start_date);
 	}
@@ -63,22 +52,23 @@ public class CreateProjectActivity extends Activity {
 		dialog.show();
 	}
 	
-	public void onSaveProject(View v) {
-		if (saveProjectName() 
-				&& saveStartDate()
-				&& saveEndDate()
-				&& saveTimePerDay()
-				&& compareDates()
-				&& saveWeekdays()
-				) {
-			ProjectManager.getInstance().saveNewProject(newProject);
-			return;
-		}
+	public abstract void onSaveProject(View v);
+	public void onCancelProject(View v) {
+		this.finish();
 	}
 
-	private boolean compareDates() {
-		Calendar start = newProject.getStartDate();
-		Calendar end = newProject.getEndDate();
+	protected boolean isValidProject() {
+		return verifyProjectName() 
+				&& verifyStartDate()
+				&& verifyEndDate()
+				&& verifyTimePerDay() 
+				&& verifyDates()
+				&& verifyWeekdays();
+	}
+
+	private boolean verifyDates() {
+		Calendar start = project.getStartDate();
+		Calendar end = project.getEndDate();
 		if (start.after(end)) {
 			showWarningMessage(R.string.warning, R.string.warning_input_dateCompare);
 			return false;
@@ -98,30 +88,30 @@ public class CreateProjectActivity extends Activity {
 		dialog.show();
 	}
 
-	private boolean saveProjectName() {
+	private boolean verifyProjectName() {
 		String projectName = getDateFromText(R.id.text_create_project_name);
 		if (projectName == null) {
 			showWarningMessage(R.string.warning, R.string.warning_input_name);
 			return false;
 		}
-		newProject.setName(projectName);
+		project.setName(projectName);
 		return true;
 	}
 	
-	private boolean saveStartDate() {
+	private boolean verifyStartDate() {
 		Calendar newDate = getDate(R.id.button_create_project_start_date);
 		if (newDate != null) {
-			newProject.setStartDate(newDate);
+			project.setStartDate(newDate);
 			return true;
 		}
 		showWarningMessage(R.string.warning, R.string.warning_input_startdate);
 		return false;
 	}
 	
-	private boolean saveEndDate() {
+	private boolean verifyEndDate() {
 		Calendar newDate = getDate(R.id.button_create_project_end_date);
 		if (newDate != null) {
-			newProject.setEndDate(newDate);
+			project.setEndDate(newDate);
 			return true;
 		}
 		showWarningMessage(R.string.warning, R.string.warning_input_enddate);
@@ -129,7 +119,7 @@ public class CreateProjectActivity extends Activity {
 	}
 
 	private Calendar getDate(int dateButton) {
-		Button button = (Button) findViewById(dateButton);
+		Button button = getButton(dateButton);
 		String date = button.getText().toString();
 		if (date.matches("\\d+/\\d+/\\d+")) {
 			String[] dates = date.split("/");
@@ -143,8 +133,16 @@ public class CreateProjectActivity extends Activity {
 		}
 	}
 	
-	private boolean saveWeekdays() {
-		int[] weekDays = newProject.getWeekdays();
+	protected Button getButton(int id) {
+		return  (Button) findViewById(id);
+	}
+	
+	protected EditText getEditText(int id) {
+		return  (EditText) findViewById(id);
+	}
+	
+	private boolean verifyWeekdays() {
+		int[] weekDays = project.getWeekdays();
 		LinearLayout weeks1 = (LinearLayout) findViewById(R.id.layout_create_project_week1);
 		for (int i = 0; i < weeks1.getChildCount(); ++i) {
 			CheckBox check = (CheckBox) weeks1.getChildAt(i);
@@ -173,30 +171,27 @@ public class CreateProjectActivity extends Activity {
 		return false;
 	}
 
-	private boolean saveTimePerDay() {
+	private boolean verifyTimePerDay() {
 		String hours = getDateFromText(R.id.text_create_project_hours);
-		if (hours == null) {
+		String minutes = getDateFromText(R.id.text_create_project_minutues);
+		if (hours == null && minutes == null) {
 			showWarningMessage(R.string.warning, R.string.warning_input_hours);
 			return false;
 		}
-		newProject.setHours(Integer.valueOf(hours));
-		String minutes = getDateFromText(R.id.text_create_project_minutues);
-		if (minutes == null) {
-			showWarningMessage(R.string.warning, R.string.warning_input_minutes);
-			return false;
-		}
-		newProject.setMinitues(Integer.valueOf(minutes));
+		project.setHours(Integer.valueOf(hours));
+		project.setMinitues(Integer.valueOf(minutes));
 		return true;
 	}
 
 	private String getDateFromText(int editID) {
-		EditText editor = (EditText) findViewById(editID);
+		EditText editor = getEditText(editID);
 		Editable text = editor.getText();
 		if (text == null || text.length() == 0) {
 			return null;
 		}
 		return text.toString();
 	}
+	
 }
 
 class DateSetListener implements OnDateSetListener {

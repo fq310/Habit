@@ -2,31 +2,33 @@ package com.jasonfu19860310.project;
 
 import java.util.Calendar;
 
-import android.content.Context;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.LinearLayout.LayoutParams;
-
 public class Project {
+	private int id;
 	private String name = "project";
-	private Calendar startDate;
-	private Calendar endDate;
+	private Calendar startDate = Calendar.getInstance();
+	private Calendar endDate = Calendar.getInstance();
 	private int hours;
 	private int minitues;
-	private int[] weekdays = new int[7];
+	private int totalMinitues = 0;
+	private int totalFinishedMinitues = 0;
+	private int totalPassedDays = 0;
 	
+	private int[] weekdays = new int[7];
 	{
 		for (int i = 0; i < weekdays.length; ++i) {
 			weekdays[i] = 0;
 		}
 	}
-
 	public Calendar getEndDate() {
 		return endDate;
 	}
-
+	
 	public int getHours() {
 		return hours;
+	}
+
+	public int getId() {
+		return id;
 	}
 
 	public int getMinitues() {
@@ -40,6 +42,7 @@ public class Project {
 	public Calendar getStartDate() {
 		return startDate;
 	}
+
 	public int[] getWeekdays() {
 		return weekdays;
 	}
@@ -48,6 +51,9 @@ public class Project {
 	}
 	public void setHours(int hours) {
 		this.hours = hours;
+	}
+	public void setId(int id) {
+		this.id = id;
 	}
 	public void setMinitues(int minitues) {
 		this.minitues = minitues;
@@ -64,12 +70,27 @@ public class Project {
 		this.weekdays = weekdays;
 	}
 	
-	public void showOn(Context context, ViewGroup parent) {
-		Button projectButton = new Button(context);
-        projectButton.setText(getName());
-    	int parentWidth = parent.getWidth();
-    	LayoutParams layoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-    	layoutParams.setMargins((int)(0.2*parentWidth), 3, (int)(0.2*parentWidth), 0);
-    	parent.addView(projectButton, layoutParams);
+	public int getTotalMinitues() {
+		return totalMinitues;
+	}
+
+	public void setTotalMinitues(int totalMinitues) {
+		this.totalMinitues = totalMinitues;
+	}
+
+	public int getTotalFinishedMinitues() {
+		return totalFinishedMinitues;
+	}
+
+	public void setTotalFinishedMinitues(int totalFinishedMinitues) {
+		this.totalFinishedMinitues = totalFinishedMinitues;
+	}
+	
+	public int getTotalPassedDays() {
+		return totalPassedDays;
+	}
+
+	public void setTotalPassedDays(int totalPassedDays) {
+		this.totalPassedDays = totalPassedDays;
 	}
 }

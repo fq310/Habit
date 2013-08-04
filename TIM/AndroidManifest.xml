@@ -22,8 +22,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.jasonfu19860310.tim.createproject.CreateProjectActivity"
+            android:name="com.jasonfu19860310.tim.view.CreateProjectActivity"
             android:label="@string/title_activity_create_project" >
+        </activity>
+        <activity
+            android:name="com.jasonfu19860310.tim.view.ModifyProjectActivity"
+            android:label="@string/title_activity_modify_project" >
         </activity>
     </application>
 

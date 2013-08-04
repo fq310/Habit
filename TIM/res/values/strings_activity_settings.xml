@@ -59,8 +59,8 @@
     <string name="warning_input_name">Please input a project name.</string>
     <string name="warning_input_enddate">Please set end date.</string>
     <string name="warning_input_startdate">Please set start date.</string>
-    <string name="warning_input_hours">Please input hours.</string>
-    <string name="warning_input_minutes">Please input minutes.</string>
+    <string name="warning_input_hours">Please set time spent per day(hours/minitues).</string>
+    <string name="warning_input_minutes">Please set time spent per day(hours/minitues).</string>
     <string name="warning_input_weekDays">Please select at least one day of week.</string>
     <string name="warning_input_dateCompare">The start date should NOT be after the end date.</string>
 

@@ -1,21 +1,25 @@
 package com.jasonfu19860310.tim;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.jasonfu19860310.project.Project;
 import com.jasonfu19860310.project.ProjectManager;
-import com.jasonfu19860310.tim.createproject.CreateProjectActivity;
+import com.jasonfu19860310.tim.view.CreateProjectActivity;
 
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.ViewGroup;
+import android.widget.ListView;
 
 public class MainActivity extends Activity {
 
-    @Override
+	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -24,16 +28,34 @@ public class MainActivity extends Activity {
 
 
     private void showAllProjects() {
-    	List<Project> projects = ProjectManager.getInstance().getAllProjects();
-    	for (Project project : projects) {
-    		project.showOn(this, (ViewGroup) findViewById(R.id.project_list));
-    	}
+    	ListView list = (ListView) findViewById(R.id.project_list_main);
+    	PorjectListAdapter listAdapter = new PorjectListAdapter(this, getData());
+    	list.setAdapter(listAdapter);
 	}
 
 
+	private List<? extends Map<String, ?>> getData() {
+		List<Project> projects = ProjectManager.getInstance().getAllProjects();
+		List<Map<String, ?>> projectList = new ArrayList<Map<String, ?>>();
+		for (Project project : projects) {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put(PorjectListAdapter.PROJECT_NAME, project.getName());
+			map.put(PorjectListAdapter.DAYS_PASSED, 
+					"Day-[" + String.valueOf(project.getTotalPassedDays()) + "]");
+			int unfinishedTimeOfToday = 
+					ProjectManager.getInstance().getTimeOn(Calendar.getInstance(), project.getId());
+			map.put(PorjectListAdapter.UNFINISHED_TIME_OF_TODAY, 
+					"Today remain: [" + String.valueOf(unfinishedTimeOfToday) + "] minutes");
+			int totalFinishedTime = project.getTotalFinishedMinitues();
+			int totalTime = project.getTotalMinitues();
+			map.put(PorjectListAdapter.FINISHED_PERCENT, String.valueOf(totalFinishedTime/totalTime) + "%");
+			projectList.add(map);
+		}
+		return projectList;
+	}
+
 	@Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
