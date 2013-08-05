@@ -178,8 +178,10 @@ public abstract class ProjectInfo extends Activity {
 			showWarningMessage(R.string.warning, R.string.warning_input_hours);
 			return false;
 		}
-		project.setHours(Integer.valueOf(hours));
-		project.setMinitues(Integer.valueOf(minutes));
+		if (hours != null)
+			project.setHours(Integer.valueOf(hours));
+		if (minutes != null)
+			project.setMinitues(Integer.valueOf(minutes));
 		return true;
 	}
 

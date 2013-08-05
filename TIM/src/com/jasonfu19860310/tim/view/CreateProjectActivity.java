@@ -16,6 +16,7 @@ public class CreateProjectActivity extends ProjectInfo {
 	public void onSaveProject(View v) {
 		if (isValidProject()) {
 			ProjectManager.getInstance().saveNewProject(project);
+			finish();
 		}
 	}
 

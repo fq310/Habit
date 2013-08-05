@@ -69,6 +69,7 @@ public class ModifyProjectActivity extends ProjectInfo {
 	public void onSaveProject(View v) {
 		if (isValidProject()) {
 			ProjectManager.getInstance().updateProject(project);
+			finish();
 		}
 	}
 
