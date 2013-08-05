@@ -37,5 +37,10 @@
     <string name="project_list_percent">100%</string>
     <string name="executed_days">[days]</string>
     <string name="unfinished_time">unfinished_time</string>
+    <string name="title_activity_execute_project">ExecuteProjectActivity</string>
+    
+    
+    <string name="Total_Finished_Time">Total Finished Time</string>
+    <string name="Total_Passed_Days">Total Passed Days</string>
 
 </resources>

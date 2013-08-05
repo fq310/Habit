@@ -2,7 +2,6 @@ package com.jasonfu19860310.tim.view;
 
 import java.util.Calendar;
 
-import com.jasonfu19860310.project.ProjectManager;
 import com.jasonfu19860310.tim.R;
 
 import android.view.View;
@@ -11,11 +10,11 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 
 public class ModifyProjectActivity extends ProjectInfo {
-
+	
 	public ModifyProjectActivity() {
 		super();
 		int id = getIntent().getIntExtra("id", 0);
-		project = ProjectManager.getInstance().getProject(id);
+		project = getProjectManager().getProject(id);
 		initialInfo();
 	}
 
@@ -68,9 +67,9 @@ public class ModifyProjectActivity extends ProjectInfo {
 	@Override
 	public void onSaveProject(View v) {
 		if (isValidProject()) {
-			ProjectManager.getInstance().updateProject(project);
+			getProjectManager().updateProject(project);
 			finish();
 		}
 	}
-
+	
 }

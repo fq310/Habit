@@ -4,6 +4,7 @@ package com.jasonfu19860310.tim.view;
 import java.util.Calendar;
 
 import com.jasonfu19860310.project.Project;
+import com.jasonfu19860310.project.ProjectManager;
 import com.jasonfu19860310.tim.R;
 
 import android.os.Bundle;
@@ -25,11 +26,13 @@ public abstract class ProjectInfo extends Activity {
 	public static final String MODIFY = "modify";
 	public static final String OPERATION = "operation";
 	protected Project project;
+	private ProjectManager projectManager;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_project_info);
+		projectManager = new ProjectManager(this);
 	}
 
 	public void onSetStartDate(View v) {
@@ -194,6 +197,10 @@ public abstract class ProjectInfo extends Activity {
 		return text.toString();
 	}
 	
+	protected ProjectManager getProjectManager() {
+		return projectManager;
+	}
+	
 }
 
 class DateSetListener implements OnDateSetListener {
@@ -210,5 +217,5 @@ class DateSetListener implements OnDateSetListener {
 		Button button = (Button) activity.findViewById(buttonId);
 		button.setText(year + "/" + month + "/" + day);
 	}
-	
+
 }

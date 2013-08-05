@@ -29,6 +29,10 @@
             android:name="com.jasonfu19860310.tim.view.ModifyProjectActivity"
             android:label="@string/title_activity_modify_project" >
         </activity>
+        <activity
+            android:name="com.jasonfu19860310.tim.view.ExecuteProjectActivity"
+            android:label="@string/title_activity_execute_project" >
+        </activity>
     </application>
 
 </manifest>

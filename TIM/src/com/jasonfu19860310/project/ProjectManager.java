@@ -4,11 +4,14 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import com.jasonfu19860310.db.ProjectDBHelper;
+
+import android.content.Context;
+
 public class ProjectManager {
-	private static ProjectManager projectManager = new ProjectManager();
-	private ProjectManager() {}
-	public static ProjectManager getInstance() {
-		return projectManager;
+	private ProjectDBHelper db;
+	public ProjectManager(Context context) {
+		 db = new ProjectDBHelper(context);
 	}
 	
 	public List<Project> getAllProjects() {
@@ -74,5 +77,9 @@ public class ProjectManager {
 	
 	private boolean dateYearNotEqual(Calendar startDate, Calendar currentDate) {
 		return currentDate.get(Calendar.YEAR) != startDate.get(Calendar.YEAR);
+	}
+	
+	public ProjectDBHelper getDb() {
+		return db;
 	}
 }

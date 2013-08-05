@@ -18,9 +18,13 @@ public class ProjectDBHelper extends SQLiteOpenHelper {
 		    ProjectEntry.COLUMN_NAME_NAME + TEXT_TYPE + COMMA_SEP +
 		    ProjectEntry.COLUMN_NAME_START_DATE + TEXT_TYPE + COMMA_SEP +
 		    ProjectEntry.COLUMN_NAME_END_DATE + TEXT_TYPE + COMMA_SEP +
-		    ProjectEntry.COLUMN_NAME_DAYS + TEXT_TYPE+ ")";
+		    ProjectEntry.COLUMN_NAME_DAYS + TEXT_TYPE + COMMA_SEP +
+		    ProjectEntry.COLUMN_NAME_HOURS + TEXT_TYPE + COMMA_SEP +
+		    ProjectEntry.COLUMN_NAME_MINITUES + TEXT_TYPE + COMMA_SEP +
+		    ProjectEntry.COLUMN_NAME_TOTAL_MINITUES + TEXT_TYPE + COMMA_SEP +
+		    ProjectEntry.COLUMN_NAME_TOTAL_FINISHED_MINITUES + TEXT_TYPE + COMMA_SEP +
+		    ProjectEntry.COLUMN_NAME_TOTAL_PASSED_DAYS + TEXT_TYPE + COMMA_SEP + ")";
 		    
-
 	public ProjectDBHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
 	}

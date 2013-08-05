@@ -9,12 +9,17 @@ import java.util.Map;
 import com.jasonfu19860310.project.Project;
 import com.jasonfu19860310.project.ProjectManager;
 import com.jasonfu19860310.tim.view.CreateProjectActivity;
+import com.jasonfu19860310.tim.view.ExecuteProjectActivity;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 public class MainActivity extends Activity {
@@ -31,11 +36,13 @@ public class MainActivity extends Activity {
     	ListView list = (ListView) findViewById(R.id.project_list_main);
     	PorjectListAdapter listAdapter = new PorjectListAdapter(this, getData());
     	list.setAdapter(listAdapter);
+    	list.setOnItemClickListener(new ItemClickListener(this));
 	}
 
 
 	private List<? extends Map<String, ?>> getData() {
-		List<Project> projects = ProjectManager.getInstance().getAllProjects();
+		ProjectManager projectManager = new ProjectManager(this);
+		List<Project> projects = projectManager.getAllProjects();
 		List<Map<String, ?>> projectList = new ArrayList<Map<String, ?>>();
 		for (Project project : projects) {
 			Map<String, Object> map = new HashMap<String, Object>();
@@ -43,7 +50,7 @@ public class MainActivity extends Activity {
 			map.put(PorjectListAdapter.DAYS_PASSED, 
 					"Day-[" + String.valueOf(project.getTotalPassedDays()) + "]");
 			int unfinishedTimeOfToday = 
-					ProjectManager.getInstance().getTimeOn(Calendar.getInstance(), project.getId());
+					projectManager.getTimeOn(Calendar.getInstance(), project.getId());
 			map.put(PorjectListAdapter.UNFINISHED_TIME_OF_TODAY, 
 					"Today remain: [" + String.valueOf(unfinishedTimeOfToday) + "] minutes");
 			int totalFinishedTime = project.getTotalFinishedMinitues();
@@ -64,5 +71,17 @@ public class MainActivity extends Activity {
 		Intent intent = new Intent(this, CreateProjectActivity.class);
 		startActivity(intent);
 	}
-    
+}
+
+class ItemClickListener implements OnItemClickListener {
+	public ItemClickListener(Context context) {
+		this.context = context;
+	}
+	private Context context;
+	@Override
+	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+		Intent intent = new Intent(context, ExecuteProjectActivity.class);
+		context.startActivity(intent);
+	}
+	
 }
