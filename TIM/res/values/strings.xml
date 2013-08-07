@@ -42,5 +42,7 @@
     
     <string name="Total_Finished_Time">Total Finished Time</string>
     <string name="Total_Passed_Days">Total Passed Days</string>
+    
+    <string name="noData">No projects found, please add a new one.</string>
 
 </resources>

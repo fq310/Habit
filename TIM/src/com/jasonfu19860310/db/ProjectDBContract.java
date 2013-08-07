@@ -11,6 +11,7 @@ public class ProjectDBContract {
         public static final String COLUMN_NAME_NAME = "name";
         public static final String COLUMN_NAME_START_DATE = "startDate";
         public static final String COLUMN_NAME_END_DATE = "endDate";
+        public static final String COLUMN_NAME_WORKDAYS = "workdays";
         public static final String COLUMN_NAME_DAYS = "days";
         public static final String COLUMN_NAME_HOURS = "hours";
         public static final String COLUMN_NAME_MINITUES = "minitues";

@@ -28,7 +28,7 @@ public class ModifyProjectActivity extends ProjectInfo {
 	}
 
 	private void initialWeekdays() {
-		int[] days = project.getWeekdays();
+		int[] days = project.getWorkdays();
 		setCheckBox(days[0], R.id.checkBox_create_project1);
 		setCheckBox(days[1], R.id.checkBox_create_project2);
 		setCheckBox(days[2], R.id.checkBox_create_project3);

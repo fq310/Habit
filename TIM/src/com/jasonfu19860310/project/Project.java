@@ -3,7 +3,7 @@ package com.jasonfu19860310.project;
 import java.util.Calendar;
 
 public class Project {
-	private int id;
+	private long id;
 	private String name = "project";
 	private Calendar startDate = Calendar.getInstance();
 	private Calendar endDate = Calendar.getInstance();
@@ -12,13 +12,8 @@ public class Project {
 	private int totalMinitues = 0;
 	private int totalFinishedMinitues = 0;
 	private int totalPassedDays = 0;
+	private String workdays = "0000000";
 	
-	private int[] weekdays = new int[7];
-	{
-		for (int i = 0; i < weekdays.length; ++i) {
-			weekdays[i] = 0;
-		}
-	}
 	public Calendar getEndDate() {
 		return endDate;
 	}
@@ -27,7 +22,7 @@ public class Project {
 		return hours;
 	}
 
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 
@@ -43,16 +38,26 @@ public class Project {
 		return startDate;
 	}
 
-	public int[] getWeekdays() {
-		return weekdays;
+	public int[] getWorkdays() {
+		int length = workdays.length();
+		int[] result = new int[length];
+		for (int i = 0; i < length; ++i) {
+			result[i] = Integer.valueOf(workdays.charAt(i));
+		}
+		return result;
 	}
+	
+	public String getWorkdaysString() {
+		return workdays;
+	}
+	
 	public void setEndDate(Calendar endDate) {
 		this.endDate = endDate;
 	}
 	public void setHours(int hours) {
 		this.hours = hours;
 	}
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 	public void setMinitues(int minitues) {
@@ -66,8 +71,8 @@ public class Project {
 		this.startDate = startDate;
 	}
 	
-	public void setWeekdays(int[] weekdays) {
-		this.weekdays = weekdays;
+	public void setWorkdays(String workdays) {
+		this.workdays = workdays;
 	}
 	
 	public int getTotalMinitues() {

@@ -1,18 +1,10 @@
 package com.jasonfu19860310.tim;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import com.jasonfu19860310.project.Project;
-import com.jasonfu19860310.project.ProjectManager;
 import com.jasonfu19860310.tim.view.CreateProjectActivity;
 import com.jasonfu19860310.tim.view.ExecuteProjectActivity;
 
 import android.os.Bundle;
-import android.app.Activity;
+import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.Menu;
@@ -20,47 +12,20 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ListView;
 
-public class MainActivity extends Activity {
+public class MainActivity extends ListActivity {
+	public static final int ADD = 1;
+	private PorjectListAdapter listAdapter;
 
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        showAllProjects();
+        listAdapter = new PorjectListAdapter(this); 
+        this.setListAdapter(listAdapter);
+        this.getListView().setOnItemClickListener(new ItemClickListener(this));
     }
-
-
-    private void showAllProjects() {
-    	ListView list = (ListView) findViewById(R.id.project_list_main);
-    	PorjectListAdapter listAdapter = new PorjectListAdapter(this, getData());
-    	list.setAdapter(listAdapter);
-    	list.setOnItemClickListener(new ItemClickListener(this));
-	}
-
-
-	private List<? extends Map<String, ?>> getData() {
-		ProjectManager projectManager = new ProjectManager(this);
-		List<Project> projects = projectManager.getAllProjects();
-		List<Map<String, ?>> projectList = new ArrayList<Map<String, ?>>();
-		for (Project project : projects) {
-			Map<String, Object> map = new HashMap<String, Object>();
-			map.put(PorjectListAdapter.PROJECT_NAME, project.getName());
-			map.put(PorjectListAdapter.DAYS_PASSED, 
-					"Day-[" + String.valueOf(project.getTotalPassedDays()) + "]");
-			int unfinishedTimeOfToday = 
-					projectManager.getTimeOn(Calendar.getInstance(), project.getId());
-			map.put(PorjectListAdapter.UNFINISHED_TIME_OF_TODAY, 
-					"Today remain: [" + String.valueOf(unfinishedTimeOfToday) + "] minutes");
-			int totalFinishedTime = project.getTotalFinishedMinitues();
-			int totalTime = project.getTotalMinitues();
-			map.put(PorjectListAdapter.FINISHED_PERCENT, String.valueOf(totalFinishedTime/totalTime) + "%");
-			projectList.add(map);
-		}
-		return projectList;
-	}
-
+	
 	@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
@@ -69,7 +34,16 @@ public class MainActivity extends Activity {
 	
 	public void onOptionAddProject(MenuItem i) {
 		Intent intent = new Intent(this, CreateProjectActivity.class);
-		startActivity(intent);
+		this.startActivityForResult(intent, ADD);
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		switch (requestCode) {
+		case ADD:
+			listAdapter.reloadData();
+			break;
+		}
 	}
 }
 
@@ -85,3 +59,4 @@ class ItemClickListener implements OnItemClickListener {
 	}
 	
 }
+

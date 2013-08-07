@@ -10,6 +10,7 @@ public class ProjectDBHelper extends SQLiteOpenHelper {
 	private static String DATABASE_NAME = "project.db";
 	public static final int DATABASE_VERSION = 1;
 	private static final String TEXT_TYPE = " TEXT";
+	private static final String INT_TYPE = " INT";
 	private static final String COMMA_SEP = ",";
 	private static final String SQL_CREATE_ENTRIES =
 		    "CREATE TABLE " + ProjectEntry.TABLE_NAME + " (" +
@@ -18,12 +19,13 @@ public class ProjectDBHelper extends SQLiteOpenHelper {
 		    ProjectEntry.COLUMN_NAME_NAME + TEXT_TYPE + COMMA_SEP +
 		    ProjectEntry.COLUMN_NAME_START_DATE + TEXT_TYPE + COMMA_SEP +
 		    ProjectEntry.COLUMN_NAME_END_DATE + TEXT_TYPE + COMMA_SEP +
-		    ProjectEntry.COLUMN_NAME_DAYS + TEXT_TYPE + COMMA_SEP +
-		    ProjectEntry.COLUMN_NAME_HOURS + TEXT_TYPE + COMMA_SEP +
-		    ProjectEntry.COLUMN_NAME_MINITUES + TEXT_TYPE + COMMA_SEP +
-		    ProjectEntry.COLUMN_NAME_TOTAL_MINITUES + TEXT_TYPE + COMMA_SEP +
-		    ProjectEntry.COLUMN_NAME_TOTAL_FINISHED_MINITUES + TEXT_TYPE + COMMA_SEP +
-		    ProjectEntry.COLUMN_NAME_TOTAL_PASSED_DAYS + TEXT_TYPE + COMMA_SEP + ")";
+		    ProjectEntry.COLUMN_NAME_DAYS + INT_TYPE + COMMA_SEP +
+		    ProjectEntry.COLUMN_NAME_HOURS + INT_TYPE + COMMA_SEP +
+		    ProjectEntry.COLUMN_NAME_WORKDAYS + TEXT_TYPE + COMMA_SEP +
+		    ProjectEntry.COLUMN_NAME_MINITUES + INT_TYPE + COMMA_SEP +
+		    ProjectEntry.COLUMN_NAME_TOTAL_MINITUES + INT_TYPE + COMMA_SEP +
+		    ProjectEntry.COLUMN_NAME_TOTAL_FINISHED_MINITUES + INT_TYPE + COMMA_SEP +
+		    ProjectEntry.COLUMN_NAME_TOTAL_PASSED_DAYS + INT_TYPE + ")";
 		    
 	public ProjectDBHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);

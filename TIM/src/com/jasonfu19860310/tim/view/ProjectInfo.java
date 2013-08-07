@@ -145,7 +145,7 @@ public abstract class ProjectInfo extends Activity {
 	}
 	
 	private boolean verifyWeekdays() {
-		int[] weekDays = project.getWeekdays();
+		int[] weekDays = project.getWorkdays();
 		LinearLayout weeks1 = (LinearLayout) findViewById(R.id.layout_create_project_week1);
 		for (int i = 0; i < weeks1.getChildCount(); ++i) {
 			CheckBox check = (CheckBox) weeks1.getChildAt(i);
