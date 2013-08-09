@@ -7,7 +7,7 @@ public class ProjectDBContract {
 	
 	public static abstract class ProjectEntry implements BaseColumns {
         public static final String TABLE_NAME = "project";
-        public static final String COLUMN_NAME_ENTRY_ID = "id";
+        public static final String COLUMN_NAME_ID = "id";
         public static final String COLUMN_NAME_NAME = "name";
         public static final String COLUMN_NAME_START_DATE = "startDate";
         public static final String COLUMN_NAME_END_DATE = "endDate";

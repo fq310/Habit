@@ -15,7 +15,6 @@ public class ProjectDBHelper extends SQLiteOpenHelper {
 	private static final String SQL_CREATE_ENTRIES =
 		    "CREATE TABLE " + ProjectEntry.TABLE_NAME + " (" +
 		    ProjectEntry._ID + " INTEGER PRIMARY KEY," +
-		    ProjectEntry.COLUMN_NAME_ENTRY_ID + TEXT_TYPE + COMMA_SEP +
 		    ProjectEntry.COLUMN_NAME_NAME + TEXT_TYPE + COMMA_SEP +
 		    ProjectEntry.COLUMN_NAME_START_DATE + TEXT_TYPE + COMMA_SEP +
 		    ProjectEntry.COLUMN_NAME_END_DATE + TEXT_TYPE + COMMA_SEP +

@@ -44,10 +44,17 @@
     <string name="Total_Passed_Days">Total Passed Days</string>
     
     <string name="noData">No projects found, please add a new one.</string>
-    <string name="inital_time">00:00:00</string>
+    
+    <!-- execute project strings  -->
+    <string name="inital_time">00:00</string>
     <string name="startTiming">Start</string>
     <string name="saveTiming">Save</string>
     <string name="clearTiming">Clear</string>
+    <string name="inputManually">Input</string>
+    <string name="colon">:</string>
+    <string name="input_time">Please Input Time</string>
+    <string name="hint_hours">(hours)</string>
+    <string name="hint_minute">(minutes)</string>
     
 
 </resources>
