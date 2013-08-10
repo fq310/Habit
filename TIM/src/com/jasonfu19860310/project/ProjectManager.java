@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import com.jasonfu19860310.db.ProjectDBContract.ProjectEntry;
+import com.jasonfu19860310.db.DBHelper;
+import com.jasonfu19860310.db.DBContract.ProjectEntry;
 import com.jasonfu19860310.db.ProjectDBHelper;
 
 import android.content.ContentValues;
@@ -13,7 +14,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 public class ProjectManager {
-	private ProjectDBHelper databaseHelper;
+	private DBHelper databaseHelper;
 	public ProjectManager(Context context) {
 		 databaseHelper = new ProjectDBHelper(context);
 	}
@@ -64,6 +65,15 @@ public class ProjectManager {
 		String workdays = cursor.getString(
 				cursor.getColumnIndexOrThrow(ProjectEntry.COLUMN_NAME_WORKDAYS)
 		);
+		String timerStarted = cursor.getString(
+				cursor.getColumnIndexOrThrow(ProjectEntry.COLUMN_NAME_TIMER_STARTED)
+		);
+		String timerPaused = cursor.getString(
+				cursor.getColumnIndexOrThrow(ProjectEntry.COLUMN_NAME_TIMER_PAUSED)
+		);
+		int timerMinutes = cursor.getInt(
+				cursor.getColumnIndexOrThrow(ProjectEntry.COLUMN_NAME_TIMER_MINUTES)
+		);
 		Project project = new Project();
 		project.setId(id);
 		project.setName(name);
@@ -75,6 +85,9 @@ public class ProjectManager {
 		project.setTotalMinitues(totalMinitues);
 		project.setTotalPassedDays(totalPassedDays);
 		project.setWorkdays(workdays);
+		project.setTimer_started(Boolean.valueOf(timerStarted));
+		project.setTimer_paused(Boolean.valueOf(timerPaused));
+		project.setTimer_minutes(timerMinutes);
 		return project;
 	}
 	
@@ -91,6 +104,9 @@ public class ProjectManager {
 		values.put(ProjectEntry.COLUMN_NAME_TOTAL_FINISHED_MINITUES, project.getTotalFinishedMinitues());
 		values.put(ProjectEntry.COLUMN_NAME_TOTAL_MINITUES, project.getTotalMinitues());
 		values.put(ProjectEntry.COLUMN_NAME_TOTAL_PASSED_DAYS, project.getTotalPassedDays());
+		values.put(ProjectEntry.COLUMN_NAME_TIMER_STARTED, project.isTimer_started());
+		values.put(ProjectEntry.COLUMN_NAME_TIMER_PAUSED, project.isTimer_paused());
+		values.put(ProjectEntry.COLUMN_NAME_TIMER_MINUTES, project.getTotalMinitues());
 		database.insert(ProjectEntry.TABLE_NAME, null, values);
 	}
 	
@@ -100,7 +116,7 @@ public class ProjectManager {
 	
 	public void updateProject(Project project) {
 		project.setTotalMinitues(getTotalTime(project));
-		project.setTotalPassedDays(getDaysBwtween(project.getStartDate(), Calendar.getInstance()));
+		project.setTotalPassedDays(DateUtil.getDaysBwtween(project.getStartDate(), Calendar.getInstance()));
 		
 	}
 	
@@ -112,32 +128,30 @@ public class ProjectManager {
 	}
 	
 	private int getTotalTime(Project project) {
-		int days = getDaysBwtween(project.getStartDate(), project.getEndDate()) + 1;
+		int days = DateUtil.getDaysBwtween(project.getStartDate(), project.getEndDate()) + 1;
 		return days * (project.getHours() * 60 + project.getMinitues());
 	}
 	
-	private int getDaysBwtween(Calendar startDate, Calendar currentDate) {
-		int days = currentDate.get(Calendar.DAY_OF_YEAR) - 
-				startDate.get(Calendar.DAY_OF_YEAR);
-		if (dateYearNotEqual(startDate, currentDate)) {
-			startDate = (Calendar) startDate.clone();
-			do {
-				days += startDate.getActualMaximum(Calendar.DAY_OF_YEAR);
-				startDate.add(Calendar.YEAR, 1);
-			} while (dateYearNotEqual(currentDate, startDate));
-		}
-		return days;
-	}
-	
-	private boolean dateYearNotEqual(Calendar startDate, Calendar currentDate) {
-		return currentDate.get(Calendar.YEAR) != startDate.get(Calendar.YEAR);
-	}
-	
-	public ProjectDBHelper getDb() {
+	public DBHelper getDb() {
 		return databaseHelper;
 	}
 
 	public int getUnfinishedMinitesToday(long id) {
 		return 60;
+	}
+
+	public void stopTimer() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public boolean isStarted(long projectID) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public boolean isPaused(long projectID) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

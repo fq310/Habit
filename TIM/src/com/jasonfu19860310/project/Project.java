@@ -12,6 +12,9 @@ public class Project {
 	private int totalMinitues = 0;
 	private int totalFinishedMinitues = 0;
 	private int totalPassedDays = 0;
+	private boolean timer_started;
+	private boolean timer_paused;
+	private int timer_minutes;
 	private String workdays = "0000000";
 	
 	public Calendar getEndDate() {
@@ -97,5 +100,29 @@ public class Project {
 
 	public void setTotalPassedDays(int totalPassedDays) {
 		this.totalPassedDays = totalPassedDays;
+	}
+	
+	public boolean isTimer_started() {
+		return timer_started;
+	}
+
+	public void setTimer_started(boolean timer_started) {
+		this.timer_started = timer_started;
+	}
+
+	public boolean isTimer_paused() {
+		return timer_paused;
+	}
+
+	public void setTimer_paused(boolean timer_paused) {
+		this.timer_paused = timer_paused;
+	}
+
+	public int getTimer_minutes() {
+		return timer_minutes;
+	}
+
+	public void setTimer_minutes(int timer_minutes) {
+		this.timer_minutes = timer_minutes;
 	}
 }

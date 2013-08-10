@@ -2,8 +2,8 @@ package com.jasonfu19860310.db;
 
 import android.provider.BaseColumns;
 
-public class ProjectDBContract {
-	public ProjectDBContract() {}
+public class DBContract {
+	public DBContract() {}
 	
 	public static abstract class ProjectEntry implements BaseColumns {
         public static final String TABLE_NAME = "project";
@@ -18,5 +18,17 @@ public class ProjectDBContract {
         public static final String COLUMN_NAME_TOTAL_MINITUES = "total_minitues";
         public static final String COLUMN_NAME_TOTAL_FINISHED_MINITUES = "total_finished_minitues";
         public static final String COLUMN_NAME_TOTAL_PASSED_DAYS = "total_passed_days";
+        public static final String COLUMN_NAME_TIMER_STARTED = "timer_started";
+        public static final String COLUMN_NAME_TIMER_PAUSED = "timer_paused";
+        public static final String COLUMN_NAME_TIMER_MINUTES = "timer_minutes";
+    }
+	
+	public static abstract class RecordEntry implements BaseColumns {
+        public static final String TABLE_NAME = "record";
+        public static final String COLUMN_NAME_ID = "id";
+        public static final String COLUMN_NAME_PROJECT_ID = "project_id";
+        public static final String COLUMN_NAME_RECORD_DATE = "date";
+        public static final String COLUMN_NAME_RECORD_TIME_CONSUMING = "time_consuming";
     }
 }
+
