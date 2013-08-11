@@ -11,9 +11,8 @@ public class RecordManager {
 	public RecordManager(Context context) {
 		databaseHelper = new RecordDBHelper(context);
 	}
-	public boolean addNewRecord(int timerTotalMinutes) {
+	public void addNewRecord(long id, long currentSeconds) {
 		databaseHelper.getWritableDatabase();
-		return false;
 	}
 
 }

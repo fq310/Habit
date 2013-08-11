@@ -14,7 +14,8 @@ public class Project {
 	private int totalPassedDays = 0;
 	private boolean timer_started;
 	private boolean timer_paused;
-	private int timer_minutes;
+	private long timer_seconds;
+	private Calendar timerStartDate = Calendar.getInstance();
 	private String workdays = "0000000";
 	
 	public Calendar getEndDate() {
@@ -118,11 +119,19 @@ public class Project {
 		this.timer_paused = timer_paused;
 	}
 
-	public int getTimer_minutes() {
-		return timer_minutes;
+	public long getTimer_seconds() {
+		return timer_seconds;
 	}
 
-	public void setTimer_minutes(int timer_minutes) {
-		this.timer_minutes = timer_minutes;
+	public void setTimer_seconds(long timer_seconds) {
+		this.timer_seconds = timer_seconds;
+	}
+	
+	public Calendar getTimerStartDate() {
+		return timerStartDate;
+	}
+
+	public void setTimerStartDate(Calendar timerStartDate) {
+		this.timerStartDate = timerStartDate;
 	}
 }

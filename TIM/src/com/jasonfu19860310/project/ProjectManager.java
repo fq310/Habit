@@ -71,8 +71,11 @@ public class ProjectManager {
 		String timerPaused = cursor.getString(
 				cursor.getColumnIndexOrThrow(ProjectEntry.COLUMN_NAME_TIMER_PAUSED)
 		);
-		int timerMinutes = cursor.getInt(
-				cursor.getColumnIndexOrThrow(ProjectEntry.COLUMN_NAME_TIMER_MINUTES)
+		long timerMinutes = cursor.getLong(
+				cursor.getColumnIndexOrThrow(ProjectEntry.COLUMN_NAME_TIMER_SECONDS)
+		);
+		long timerStartDate = cursor.getLong(
+				cursor.getColumnIndexOrThrow(ProjectEntry.COLUMN_NAME_TIMER_START_DATE)
 		);
 		Project project = new Project();
 		project.setId(id);
@@ -87,7 +90,8 @@ public class ProjectManager {
 		project.setWorkdays(workdays);
 		project.setTimer_started(Boolean.valueOf(timerStarted));
 		project.setTimer_paused(Boolean.valueOf(timerPaused));
-		project.setTimer_minutes(timerMinutes);
+		project.setTimer_seconds(timerMinutes);
+		project.getTimerStartDate().setTimeInMillis(timerStartDate);
 		return project;
 	}
 	
@@ -106,11 +110,12 @@ public class ProjectManager {
 		values.put(ProjectEntry.COLUMN_NAME_TOTAL_PASSED_DAYS, project.getTotalPassedDays());
 		values.put(ProjectEntry.COLUMN_NAME_TIMER_STARTED, project.isTimer_started());
 		values.put(ProjectEntry.COLUMN_NAME_TIMER_PAUSED, project.isTimer_paused());
-		values.put(ProjectEntry.COLUMN_NAME_TIMER_MINUTES, project.getTotalMinitues());
+		values.put(ProjectEntry.COLUMN_NAME_TIMER_SECONDS, project.getTimer_seconds());
+		values.put(ProjectEntry.COLUMN_NAME_TIMER_START_DATE, project.getTimerStartDate().getTimeInMillis());
 		database.insert(ProjectEntry.TABLE_NAME, null, values);
 	}
 	
-	public Project getProject(int id) {
+	public Project getProject(long projectID) {
 		return new Project();
 	}
 	

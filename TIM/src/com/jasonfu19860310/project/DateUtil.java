@@ -19,4 +19,10 @@ public class DateUtil {
 	private static boolean dateYearNotEqual(Calendar startDate, Calendar currentDate) {
 		return currentDate.get(Calendar.YEAR) != startDate.get(Calendar.YEAR);
 	}
+	
+	
+	public static String[] getHourAndMinute(String time) {
+		String[] times = time.split(":");
+		return times;
+	}
 }

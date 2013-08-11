@@ -70,7 +70,7 @@
         android:paddingRight="20dp">
 
         <Button
-            android:id="@+id/button_start"
+            android:id="@+id/button_execute_start"
             android:layout_weight="1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
