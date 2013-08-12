@@ -7,7 +7,6 @@ public class DBContract {
 	
 	public static abstract class ProjectEntry implements BaseColumns {
         public static final String TABLE_NAME = "project";
-        public static final String COLUMN_NAME_ID = "id";
         public static final String COLUMN_NAME_NAME = "name";
         public static final String COLUMN_NAME_START_DATE = "startDate";
         public static final String COLUMN_NAME_END_DATE = "endDate";
@@ -26,7 +25,6 @@ public class DBContract {
 	
 	public static abstract class RecordEntry implements BaseColumns {
         public static final String TABLE_NAME = "record";
-        public static final String COLUMN_NAME_ID = "id";
         public static final String COLUMN_NAME_PROJECT_ID = "project_id";
         public static final String COLUMN_NAME_RECORD_DATE = "date";
         public static final String COLUMN_NAME_RECORD_TIME_CONSUMING = "time_consuming";

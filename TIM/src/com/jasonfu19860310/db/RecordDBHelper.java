@@ -15,7 +15,7 @@ public class RecordDBHelper extends DBHelper {
 			    RecordEntry.COLUMN_NAME_RECORD_DATE + BIGINT_TYPE + COMMA_SEP +
 			    RecordEntry.COLUMN_NAME_RECORD_TIME_CONSUMING + INT_TYPE + COMMA_SEP +
 			    "FOREIGN KEY (" + RecordEntry.COLUMN_NAME_PROJECT_ID + ") REFERENCES "+ 
-			    ProjectEntry.TABLE_NAME + "(" + ProjectEntry.COLUMN_NAME_ID + ")" + ")";
+			    ProjectEntry.TABLE_NAME + "(" + ProjectEntry._ID + ")" + ")";
 	}
 
 }

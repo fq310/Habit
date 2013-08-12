@@ -53,8 +53,9 @@ class ItemClickListener implements OnItemClickListener {
 	}
 	private Context context;
 	@Override
-	public void onItemClick(AdapterView<?> list, View arg1, int arg2, long arg3) {
+	public void onItemClick(AdapterView<?> list, View view, int position, long id) {
 		Intent intent = new Intent(context, ExecuteProjectActivity.class);
+		intent.putExtra("id", id);
 		context.startActivity(intent);
 	}
 	

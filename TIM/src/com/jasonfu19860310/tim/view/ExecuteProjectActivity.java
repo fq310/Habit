@@ -53,17 +53,34 @@ public class ExecuteProjectActivity extends Activity {
 
 	private void initialTimer() {
 		boolean projectPaused = project.isTimer_paused();
-		if (projectPaused || project.getTimer_seconds() > 0) {
-			changeStartButtonTo(START);
+		boolean projectStarted = project.isTimer_started();
+		if (projectPaused) {
 			long totalSeconds = project.getTimer_seconds();
-			long tempHour = totalSeconds / 60*60;
-			long tempMinute = (totalSeconds % 3600) / 60;
-			long tempSecond = (totalSeconds % 3600) % 60;
-			String hours = (String) (tempHour == 0 ? "00" : tempHour);
-			String minutes = (String) (tempMinute == 0 ? "00" : tempMinute);
-			String seconds = (String) (tempSecond == 0 ? "00" : tempSecond);
-			currentTime.setText(hours + COLON + minutes + COLON + seconds);
+			updateTime(totalSeconds);
+			changeStartButtonTo(START);
 		}
+		if (projectStarted) {
+			Calendar startDate = project.getTimerStartDate();
+			Calendar currentDate = Calendar.getInstance();
+			long totalTime = currentDate.getTimeInMillis() - startDate.getTimeInMillis();
+			project.setTimer_seconds(totalTime);
+			updateTime(totalTime);
+			changeStartButtonTo(PAUSE);
+			timer.schedule(timerTask, 0, 1000); 
+		}
+	}
+
+	private void updateTime(long totalSeconds) {
+		String hours = stringOf(totalSeconds / 60*60);
+		String minutes = stringOf((totalSeconds % 3600) / 60);
+		String seconds = stringOf((totalSeconds % 3600) % 60);
+		currentTime.setText(hours + COLON + minutes + COLON + seconds);
+	}
+
+	private String stringOf(long time) {
+		String result = Long.toString(time);
+		if (result.length() < 2) return "0" + result;
+		return result;
 	}
 
 	private void changeStartButtonTo(String status) {
@@ -85,15 +102,15 @@ public class ExecuteProjectActivity extends Activity {
 			project.setTimerStartDate(Calendar.getInstance());
 			timer.schedule(timerTask, 0, 1000); 
 		} else if (startStatus.equals(PAUSE)) {
+			timer.cancel();
 			changeStartButtonTo(START);
 			project.setTimer_started(false);
 			project.setTimer_paused(true);
-			project.setTimer_seconds(getCurrentSeconds());
-			timer.cancel();
+			project.setTimer_seconds(getSecondsFromTextView());
 		}
 	}
 	
-	private long getCurrentSeconds() {
+	private long getSecondsFromTextView() {
 		String timeString = currentTime.getText().toString();
 		String[] time = timeString.split(COLON);
 		int seconds = Integer.valueOf(time[0]) * 3600 +
@@ -108,39 +125,32 @@ public class ExecuteProjectActivity extends Activity {
 
 	public void onClearClicked(View view) {
 		currentTime.setText(R.string.inital_time);
+		initialRecordStatus();
+	}
+
+	private void initialRecordStatus() {
 		project.setTimer_seconds(0);
 		project.setTimer_started(false);
 		project.setTimer_paused(false);
 	}
 	
 	public void onSaveClicked(View view) {
+		timer.cancel();
 		String[] time = DateUtil.getHourAndMinute(((TextView) currentTime).getText().toString());
 		int hour = Integer.valueOf(time[0]);
 		int minute = Integer.valueOf(time[1]);
-		if (hour == 0 && minute == 0) {
+		int seconds = Integer.valueOf(time[2]);
+		if (hour == 0 && minute == 0 && seconds == 0) {
 			createWarningDialog(R.string.execute_error_msg_title, 
 					R.string.execute_error_msg);
 			return;
 		}
-		if (invalidMinute(minute)) {
-			createWarningDialog(R.string.execute_error_msg_title, 
-					R.string.execute_error_msg_minute);
-			return;
-		}
-
-		projectManager.stopTimer();
-		recordManager.addNewRecord(project.getId(), getCurrentSeconds());
-		project.setTimer_seconds(0);
-		project.setTimer_started(false);
-		project.setTimer_paused(false);
+		recordManager.addNewRecord(project, getSecondsFromTextView());
 		changeStartButtonTo(START);
 		projectManager.updateProject(project);
+		initialRecordStatus();
 		createWarningDialog(R.string.execute_error_msg_success, 
 				R.string.execute_error_msg_ok);
-	}
-
-	private boolean invalidMinute(int minute) {
-		return minute < 0 || minute > 60;
 	}
 
 	private void createWarningDialog(int title, int message) {
@@ -227,7 +237,7 @@ public class ExecuteProjectActivity extends Activity {
 	
 	@Override
 	protected void onDestroy() {
-		project.setTimer_seconds(getCurrentSeconds());
+		project.setTimer_seconds(getSecondsFromTextView());
 		projectManager.updateProject(project);
 		super.onDestroy();
 	}
@@ -247,15 +257,22 @@ class RecordTimer extends TimerTask {
 	@Override
 	public void run() {
 		String[] oldTime = DateUtil.getHourAndMinute(currentTime.getText().toString());
-		int hour = Integer.valueOf(oldTime[0]);
-		int minute = Integer.valueOf(oldTime[1]);
-		if (0 <= minute && minute < 59) {
-			++minute;
-		} else if (minute == 59){
-			minute = 0;
-			++hour;
+		int hours = Integer.valueOf(oldTime[0]);
+		int minutes = Integer.valueOf(oldTime[1]);
+		int seconds = Integer.valueOf(oldTime[2]);
+		if (0 <= seconds && seconds < 59) {
+			++ seconds;
+		} else if (seconds == 59) {
+			seconds = 0;
+			++ minutes;
 		}
-		currentTime.setText(hour + ":" + minute);
+		if (0 <= minutes && minutes < 59) {
+			++minutes;
+		} else if (minutes == 59){
+			minutes = 0;
+			++hours;
+		}
+		currentTime.setText(hours + ":" + minutes + ":" + seconds);
 		project.setTimer_seconds(project.getTimer_seconds() + 1);
 	}
 	

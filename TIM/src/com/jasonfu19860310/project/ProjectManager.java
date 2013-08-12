@@ -53,10 +53,10 @@ public class ProjectManager {
 		int minitues = cursor.getInt(
 				cursor.getColumnIndexOrThrow(ProjectEntry.COLUMN_NAME_MINITUES)
 		);
-		int totalMinitues = cursor.getInt(
+		long totalMinitues = cursor.getLong(
 				cursor.getColumnIndexOrThrow(ProjectEntry.COLUMN_NAME_TOTAL_MINITUES)
 		);
-		int totalFinishedMinitues = cursor.getInt(
+		long totalFinishedMinitues = cursor.getLong(
 				cursor.getColumnIndexOrThrow(ProjectEntry.COLUMN_NAME_TOTAL_FINISHED_MINITUES)
 		);
 		int totalPassedDays = cursor.getInt(
@@ -116,11 +116,19 @@ public class ProjectManager {
 	}
 	
 	public Project getProject(long projectID) {
-		return new Project();
+		SQLiteDatabase database = databaseHelper.getWritableDatabase();
+		String selection = ProjectEntry._ID + "=?";
+		String id = String.valueOf(projectID);
+		String[] selectionArgs = {id};
+		Cursor cursor = database.query(ProjectEntry.TABLE_NAME, null, selection, selectionArgs, null, null, null);
+		if (cursor.moveToFirst()) {
+			return readProjectFrom(cursor);
+		}
+		return null;
 	}
 	
 	public void updateProject(Project project) {
-		project.setTotalMinitues(getTotalTime(project));
+		project.setTotalFinishedMinitues(project.getTotalFinishedMinitues() + project.getTimer_seconds()/60);
 		project.setTotalPassedDays(DateUtil.getDaysBwtween(project.getStartDate(), Calendar.getInstance()));
 		
 	}

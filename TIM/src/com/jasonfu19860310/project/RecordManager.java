@@ -11,7 +11,7 @@ public class RecordManager {
 	public RecordManager(Context context) {
 		databaseHelper = new RecordDBHelper(context);
 	}
-	public void addNewRecord(long id, long currentSeconds) {
+	public void addNewRecord(Project project, long currentSeconds) {
 		databaseHelper.getWritableDatabase();
 	}
 

@@ -3,14 +3,15 @@ package com.jasonfu19860310.project;
 import java.util.Calendar;
 
 public class Project {
+	public static final String ID = "id";
 	private long id;
 	private String name = "project";
 	private Calendar startDate = Calendar.getInstance();
 	private Calendar endDate = Calendar.getInstance();
 	private int hours;
 	private int minitues;
-	private int totalMinitues = 0;
-	private int totalFinishedMinitues = 0;
+	private long totalMinitues = 0;
+	private long totalFinishedMinitues = 0;
 	private int totalPassedDays = 0;
 	private boolean timer_started;
 	private boolean timer_paused;
@@ -46,7 +47,7 @@ public class Project {
 		int length = workdays.length();
 		int[] result = new int[length];
 		for (int i = 0; i < length; ++i) {
-			result[i] = Integer.valueOf(workdays.charAt(i));
+			result[i] = Integer.valueOf(String.valueOf(workdays.charAt(i)));
 		}
 		return result;
 	}
@@ -79,19 +80,27 @@ public class Project {
 		this.workdays = workdays;
 	}
 	
-	public int getTotalMinitues() {
+	public void setWorkdays(int[] workdays) {
+		StringBuilder result = new StringBuilder();
+		for (int i : workdays) {
+			result.append(i);
+		}
+		this.workdays = result.toString();
+	}
+	
+	public long getTotalMinitues() {
 		return totalMinitues;
 	}
 
-	public void setTotalMinitues(int totalMinitues) {
+	public void setTotalMinitues(long totalMinitues) {
 		this.totalMinitues = totalMinitues;
 	}
 
-	public int getTotalFinishedMinitues() {
+	public long getTotalFinishedMinitues() {
 		return totalFinishedMinitues;
 	}
 
-	public void setTotalFinishedMinitues(int totalFinishedMinitues) {
+	public void setTotalFinishedMinitues(long totalFinishedMinitues) {
 		this.totalFinishedMinitues = totalFinishedMinitues;
 	}
 	

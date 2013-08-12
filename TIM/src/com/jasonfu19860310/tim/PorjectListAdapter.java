@@ -41,7 +41,7 @@ public class PorjectListAdapter extends BaseAdapter {
 
 	@Override
 	public long getItemId(int position) {
-		return position;
+		return projects.get(position).getId();
 	}
 
 	@Override
@@ -59,7 +59,7 @@ public class PorjectListAdapter extends BaseAdapter {
 		name.setText(project.getName());
 		
 		TextView todayUnfinishedTime = (TextView) itemView.findViewById(R.id.projectlist_unfinishedtime);
-		todayUnfinishedTime.setText("Today remain: [" + projectManager.getUnfinishedMinitesToday(project.getId()) + "] minutes");
+		todayUnfinishedTime.setText("Today remain: [" + getUnfinishedMinitesToday(project) + "] minutes");
 		
 		TextView passedDays = (TextView) itemView.findViewById(R.id.projectlist_days);
 		passedDays.setText("Day-[" + project.getTotalPassedDays() + "]");
@@ -68,6 +68,10 @@ public class PorjectListAdapter extends BaseAdapter {
 		finishedPercent.setText(project.getTotalFinishedMinitues()/project.getTotalMinitues() * 100 + "%");
 		
 		return itemView;
+	}
+
+	private String getUnfinishedMinitesToday(Project project) {
+		return null;
 	}
 
 	public void reloadData() {
