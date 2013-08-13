@@ -12,6 +12,7 @@ import com.jasonfu19860310.project.RecordManager;
 import com.jasonfu19860310.tim.R;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -36,18 +37,20 @@ public class ExecuteProjectActivity extends Activity {
 	private Timer timer = new Timer();
 	private TimerTask timerTask;
 	private Button startButton;
+	private Handler handler;  
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_execute_project);
+		handler = new Handler();
 		currentTime = (TextView) findViewById(R.id.execute_project_textView_time);
 		startButton = (Button)findViewById(R.id.button_execute_start);
 		projectID = getIntent().getLongExtra("id", -1);
 		recordManager = new RecordManager(this);
 		projectManager = new ProjectManager(this);
 		project = projectManager.getProject(projectID);
-		timerTask = new RecordTimer(currentTime, project);
+		timerTask = new RecordTimer(currentTime, project, handler);
 		initialTimer();
 	}
 
@@ -66,7 +69,7 @@ public class ExecuteProjectActivity extends Activity {
 			project.setTimer_seconds(totalTime);
 			updateTime(totalTime);
 			changeStartButtonTo(PAUSE);
-			timer.schedule(timerTask, 0, 1000); 
+			timer.schedule(timerTask, 500, 1000); 
 		}
 	}
 
@@ -100,7 +103,9 @@ public class ExecuteProjectActivity extends Activity {
 			project.setTimer_started(true);
 			project.setTimer_paused(false);
 			project.setTimerStartDate(Calendar.getInstance());
-			timer.schedule(timerTask, 0, 1000); 
+			timer = new Timer();
+			timerTask = new RecordTimer(currentTime, project, handler);
+			timer.schedule(timerTask, 500, 1000); 
 		} else if (startStatus.equals(PAUSE)) {
 			timer.cancel();
 			changeStartButtonTo(START);
@@ -115,7 +120,7 @@ public class ExecuteProjectActivity extends Activity {
 		String[] time = timeString.split(COLON);
 		int seconds = Integer.valueOf(time[0]) * 3600 +
 			Integer.valueOf(time[1]) * 60 + 
-			Integer.valueOf(time[0]);
+			Integer.valueOf(time[2]);
 		return seconds;
 	}
 
@@ -247,33 +252,42 @@ public class ExecuteProjectActivity extends Activity {
 class RecordTimer extends TimerTask {
 	private TextView currentTime;
 	private Project project;
+	private Handler handler;
 
-	public RecordTimer(TextView currentTime, Project project) {
+	public RecordTimer(TextView currentTime, Project project, Handler handler) {
 		super();
 		this.currentTime = currentTime;
 		this.project = project;
+		this.handler = handler;
 	}
 
 	@Override
 	public void run() {
-		String[] oldTime = DateUtil.getHourAndMinute(currentTime.getText().toString());
-		int hours = Integer.valueOf(oldTime[0]);
-		int minutes = Integer.valueOf(oldTime[1]);
-		int seconds = Integer.valueOf(oldTime[2]);
-		if (0 <= seconds && seconds < 59) {
-			++ seconds;
-		} else if (seconds == 59) {
-			seconds = 0;
-			++ minutes;
-		}
-		if (0 <= minutes && minutes < 59) {
-			++minutes;
-		} else if (minutes == 59){
-			minutes = 0;
-			++hours;
-		}
-		currentTime.setText(hours + ":" + minutes + ":" + seconds);
-		project.setTimer_seconds(project.getTimer_seconds() + 1);
+		handler.post(new Runnable() {
+			@Override
+			public void run() {
+				String[] oldTime = DateUtil.getHourAndMinute(currentTime.getText().toString());
+				int hours = Integer.valueOf(oldTime[0]);
+				int minutes = Integer.valueOf(oldTime[1]);
+				int seconds = Integer.valueOf(oldTime[2]);
+				if (0 <= seconds && seconds < 59) {
+					++ seconds;
+				} else if (seconds == 59) {
+					seconds = 0;
+					++ minutes;
+				}
+				if (minutes == 59){
+					minutes = 0;
+					++hours;
+				}
+				currentTime.setText(
+					(hours < 10 ? ("0" + hours) : hours) + ":" + 
+					(minutes < 10 ? ("0" + minutes) : minutes) + ":" + 
+					(seconds < 10 ? ("0" + seconds) : seconds)
+				);		
+				project.setTimer_seconds(project.getTimer_seconds() + 1);
+			}
+		});
 	}
 	
 }
