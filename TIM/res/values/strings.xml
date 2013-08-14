@@ -55,11 +55,14 @@
     <string name="input_time">Please Input Time</string>
     <string name="hint_hours">(hours)</string>
     <string name="hint_minute">(minutes)</string>
+    <string name="hint_second">(seconds)</string>
     <string name="execute_error_msg">Time is too short to be saved.</string>
     <string name="execute_error_msg_title">Error</string>
     <string name="execute_error_msg_minute">Invalid Minutes</string>
+     <string name="execute_error_msg_time">Please enter valid minutes/second.</string>
     <string name="execute_error_msg_ok">Record Saved!</string>
     <string name="execute_error_msg_success"></string>
+    
     
 
 </resources>

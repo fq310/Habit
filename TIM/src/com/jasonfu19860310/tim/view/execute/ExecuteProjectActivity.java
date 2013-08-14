@@ -1,4 +1,4 @@
-package com.jasonfu19860310.tim.view;
+package com.jasonfu19860310.tim.view.execute;
 
 
 import java.util.Calendar;
@@ -14,14 +14,9 @@ import com.jasonfu19860310.tim.R;
 import android.os.Bundle;
 import android.os.Handler;
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 public class ExecuteProjectActivity extends Activity {
@@ -59,7 +54,7 @@ public class ExecuteProjectActivity extends Activity {
 		boolean projectStarted = project.isTimer_started();
 		if (projectPaused) {
 			long totalSeconds = project.getTimer_seconds();
-			updateTime(totalSeconds);
+			updateTimeLabel(totalSeconds);
 			changeStartButtonTo(START);
 		}
 		if (projectStarted) {
@@ -67,13 +62,13 @@ public class ExecuteProjectActivity extends Activity {
 			Calendar currentDate = Calendar.getInstance();
 			long totalTime = currentDate.getTimeInMillis() - startDate.getTimeInMillis();
 			project.setTimer_seconds(totalTime);
-			updateTime(totalTime);
+			updateTimeLabel(totalTime);
 			changeStartButtonTo(PAUSE);
 			timer.schedule(timerTask, 500, 1000); 
 		}
 	}
 
-	private void updateTime(long totalSeconds) {
+	private void updateTimeLabel(long totalSeconds) {
 		String hours = stringOf(totalSeconds / 60*60);
 		String minutes = stringOf((totalSeconds % 3600) / 60);
 		String seconds = stringOf((totalSeconds % 3600) % 60);
@@ -151,95 +146,23 @@ public class ExecuteProjectActivity extends Activity {
 			return;
 		}
 		recordManager.addNewRecord(project, getSecondsFromTextView());
-		changeStartButtonTo(START);
 		projectManager.updateProject(project);
+		changeStartButtonTo(START);
 		initialRecordStatus();
+		updateTimeLabel(0);
 		createWarningDialog(R.string.execute_error_msg_success, 
 				R.string.execute_error_msg_ok);
 	}
 
 	private void createWarningDialog(int title, int message) {
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setMessage(message)
-		       .setTitle(title);
-		builder.setPositiveButton(R.string.ok, null);
-		AlertDialog dialog = builder.create();
-		dialog.show();
+		WarningDialog.open(title, message, this);
 	}
 	
 	public void onInputManuallyClicked(View view) {
-		AlertDialog.Builder builder = initialDialogBuilder();
-		AlertDialog dialog = builder.create();
-		dialog.show();
-		addMinutesChangeListener(currentTime, dialog);
-		addHoursChangeListener(currentTime, dialog);
-		
+		InputTimeDialog input = new InputTimeDialog(currentTime, this);
+		input.openDialog();
 	}
 
-	private AlertDialog.Builder initialDialogBuilder() {
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setTitle(R.string.input_time)
-			.setView(getLayoutInflater().inflate(R.layout.input_time, null));
-		final String oldTime = currentTime.getText().toString();
-		addButtonClickListener(builder, currentTime, oldTime);
-		return builder;
-	}
-
-	private void addButtonClickListener(AlertDialog.Builder builder,
-			final TextView currentTime, final String oldTime) {
-		builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-	           public void onClick(DialogInterface dialog, int id) {
-	           }
-	       });
-		builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-	           public void onClick(DialogInterface dialog, int id) {
-	        	   currentTime.setText(oldTime);
-	           }
-	       });
-	}
-
-	private void addHoursChangeListener(final TextView currentTime,
-			AlertDialog dialog) {
-		final EditText hours = (EditText) dialog.findViewById(R.id.input_time_editText_hour);
-		hours.addTextChangedListener(new TextWatcher() {
-			@Override
-			public void afterTextChanged(Editable s) {
-				String[] times = DateUtil.getHourAndMinute(currentTime.getText().toString());
-				currentTime.setText(hours.getText().toString().trim() + COLON + times[1]);
-			}
-			@Override
-			public void beforeTextChanged(CharSequence s, int start, int count,
-					int after) {
-			}
-			@Override
-			public void onTextChanged(CharSequence s, int start, int before,
-					int count) {
-				
-			}});
-	}
-
-	private void addMinutesChangeListener(final TextView currentTime,
-			AlertDialog dialog) {
-		final EditText minutes = 
-				(EditText) dialog.findViewById(R.id.input_time_editText_minitue);
-		minutes.addTextChangedListener(new TextWatcher() {
-			@Override
-			public void afterTextChanged(Editable s) {
-				String[] times = DateUtil.getHourAndMinute(currentTime.getText().toString());
-				currentTime.setText(times[0] + COLON + 
-						minutes.getText().toString().trim());
-			}
-			@Override
-			public void beforeTextChanged(CharSequence s, int start, int count,
-					int after) {
-			}
-			@Override
-			public void onTextChanged(CharSequence s, int start, int before,
-					int count) {
-				
-			}});
-	}
-	
 	@Override
 	protected void onDestroy() {
 		project.setTimer_seconds(getSecondsFromTextView());
@@ -247,47 +170,4 @@ public class ExecuteProjectActivity extends Activity {
 		super.onDestroy();
 	}
 
-}
-
-class RecordTimer extends TimerTask {
-	private TextView currentTime;
-	private Project project;
-	private Handler handler;
-
-	public RecordTimer(TextView currentTime, Project project, Handler handler) {
-		super();
-		this.currentTime = currentTime;
-		this.project = project;
-		this.handler = handler;
-	}
-
-	@Override
-	public void run() {
-		handler.post(new Runnable() {
-			@Override
-			public void run() {
-				String[] oldTime = DateUtil.getHourAndMinute(currentTime.getText().toString());
-				int hours = Integer.valueOf(oldTime[0]);
-				int minutes = Integer.valueOf(oldTime[1]);
-				int seconds = Integer.valueOf(oldTime[2]);
-				if (0 <= seconds && seconds < 59) {
-					++ seconds;
-				} else if (seconds == 59) {
-					seconds = 0;
-					++ minutes;
-				}
-				if (minutes == 59){
-					minutes = 0;
-					++hours;
-				}
-				currentTime.setText(
-					(hours < 10 ? ("0" + hours) : hours) + ":" + 
-					(minutes < 10 ? ("0" + minutes) : minutes) + ":" + 
-					(seconds < 10 ? ("0" + seconds) : seconds)
-				);		
-				project.setTimer_seconds(project.getTimer_seconds() + 1);
-			}
-		});
-	}
-	
 }

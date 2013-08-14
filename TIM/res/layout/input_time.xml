@@ -31,5 +31,22 @@
         android:layout_weight="3"
         android:hint="@string/hint_minute"
         android:inputType="number" />
+    
+    <TextView
+        android:id="@+id/input_time_textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/colon"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <EditText
+        android:id="@+id/input_time_editText_seconds"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="3"
+        android:hint="@string/hint_second"
+        android:inputType="number" />
 
 </LinearLayout>

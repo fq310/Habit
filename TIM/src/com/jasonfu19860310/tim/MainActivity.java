@@ -1,7 +1,7 @@
 package com.jasonfu19860310.tim;
 
 import com.jasonfu19860310.tim.view.CreateProjectActivity;
-import com.jasonfu19860310.tim.view.ExecuteProjectActivity;
+import com.jasonfu19860310.tim.view.execute.ExecuteProjectActivity;
 
 import android.os.Bundle;
 import android.app.ListActivity;
