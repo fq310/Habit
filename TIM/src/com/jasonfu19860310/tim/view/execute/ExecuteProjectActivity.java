@@ -24,7 +24,7 @@ public class ExecuteProjectActivity extends Activity {
 	private static final String PAUSE = "Pause";
 	private static final String START = "Start";
 	private static final String COLON = ":";
-	private TextView currentTime;
+	private TextView currentTime;	//TODO abstract this to a class type
 	private long projectID;
 	private RecordManager recordManager;
 	private ProjectManager projectManager;

@@ -152,19 +152,4 @@ public class ProjectManager {
 	public int getUnfinishedMinitesToday(long id) {
 		return 60;
 	}
-
-	public void stopTimer() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public boolean isStarted(long projectID) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	public boolean isPaused(long projectID) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 }
