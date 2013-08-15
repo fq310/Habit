@@ -1,6 +1,5 @@
 package com.jasonfu19860310.tim.view.execute;
 
-import com.jasonfu19860310.project.DateUtil;
 import com.jasonfu19860310.tim.R;
 
 import android.app.Activity;
@@ -9,16 +8,15 @@ import android.content.DialogInterface;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
-import android.widget.TextView;
 
 public class InputTimeDialog {
-	public InputTimeDialog(TextView currentTime, Activity context) {
-		this.currentTime = currentTime;
+	public InputTimeDialog(TimeText currentTime, Activity context) {
+		this.timeText = currentTime;
 		this.context = context;
 	}
 
 	protected static final String COLON = ":";
-	private TextView currentTime;
+	private TimeText timeText;
 	private Activity context;
 	private EditText hours;
 	private EditText minutes;
@@ -28,70 +26,44 @@ public class InputTimeDialog {
 		AlertDialog.Builder builder = initialDialogBuilder();
 		AlertDialog dialog = builder.create();
 		dialog.show();
-		addMinutesChangeListener(currentTime, dialog);
-		addHoursChangeListener(currentTime, dialog);
-		addSecoondsChangeListener(currentTime, dialog);
+		addMinutesChangeListener(dialog);
+		addHoursChangeListener(dialog);
+		addSecoondsChangeListener(dialog);
 	}
 	
 	private AlertDialog.Builder initialDialogBuilder() {
 		AlertDialog.Builder builder = new AlertDialog.Builder(context);
 		builder.setTitle(R.string.input_time)
 			.setView(context.getLayoutInflater().inflate(R.layout.input_time, null));
-		final String oldTime = currentTime.getText().toString();
-		addButtonClickListener(builder, currentTime, oldTime);
+		final String oldTime = timeText.getTime();
+		addButtonClickListener(builder, oldTime);
 		return builder;
 	}
 
-	private void addButtonClickListener(AlertDialog.Builder builder,
-			final TextView currentTime, final String oldTime) {
+	private void addButtonClickListener(AlertDialog.Builder builder, final String oldTime) {
 		builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
 	           public void onClick(DialogInterface dialog, int id) {
-	        	   if (!validInput()) {
-	        		   currentTime.setText(oldTime);
+	        	   if (!timeText.isValidValue()) {
+	        		   timeText.setTime(oldTime);
 	        		   WarningDialog.open(R.string.execute_error_msg_title, 
 	        				   R.string.execute_error_msg_time, context);
 	        	   }
 	           }
 
-			private boolean validInput() {
-				return isValidHour(getIntValue(hours)) &&
-	        			   isValidTime(getIntValue(minutes)) &&
-	        			   isValidTime(getIntValue(seconds));
-			}
-
-			private int getIntValue(EditText text) {
-				String value = text.getText().toString();
-				if (value == null || value.length() == 0) {
-					return 0;
-				} else {
-					return Integer.valueOf(value);
-				}
-			}
-			
-			private boolean isValidTime(int value) {
-				return 0 <= value && value <= 59;
-			}
-			
-			private boolean isValidHour(int value) {
-				return 0 <= value;
-			}
 	    });
 		builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
 	           public void onClick(DialogInterface dialog, int id) {
-	        	   currentTime.setText(oldTime);
+	        	   timeText.setTime(oldTime);
 	           }
 	       });
 	}
 
-	private void addHoursChangeListener(final TextView currentTime,
-			AlertDialog dialog) {
+	private void addHoursChangeListener(AlertDialog dialog) {
 		hours = (EditText) dialog.findViewById(R.id.input_time_editText_hour);
 		hours.addTextChangedListener(new TextWatcher() {
 			@Override
 			public void afterTextChanged(Editable s) {
-				String[] times = DateUtil.getHourAndMinute(currentTime.getText().toString());
-				currentTime.setText(hours.getText().toString().trim()
-						+ COLON + times[1] + COLON + times[2]);
+				timeText.updateHourOnly(hours.getText().toString().trim());
 			}
 			@Override
 			public void beforeTextChanged(CharSequence s, int start, int count,
@@ -104,15 +76,12 @@ public class InputTimeDialog {
 			}});
 	}
 
-	private void addMinutesChangeListener(final TextView currentTime,
-			AlertDialog dialog) {
+	private void addMinutesChangeListener(AlertDialog dialog) {
 		minutes = (EditText) dialog.findViewById(R.id.input_time_editText_minitue);
 		minutes.addTextChangedListener(new TextWatcher() {
 			@Override
 			public void afterTextChanged(Editable s) {
-				String[] times = DateUtil.getHourAndMinute(currentTime.getText().toString());
-				currentTime.setText(times[0] + COLON + 
-						minutes.getText().toString().trim() +  COLON + times[2]);
+				timeText.updateMinutesOnly(minutes.getText().toString().trim());
 			}
 			@Override
 			public void beforeTextChanged(CharSequence s, int start, int count,
@@ -125,15 +94,12 @@ public class InputTimeDialog {
 			}});
 	}
 	
-	private void addSecoondsChangeListener(final TextView currentTime,
-			AlertDialog dialog) {
+	private void addSecoondsChangeListener(AlertDialog dialog) {
 		seconds = (EditText) dialog.findViewById(R.id.input_time_editText_seconds);
 		seconds.addTextChangedListener(new TextWatcher() {
 			@Override
 			public void afterTextChanged(Editable s) {
-				String[] times = DateUtil.getHourAndMinute(currentTime.getText().toString());
-				currentTime.setText(times[0] + COLON + times[1] + COLON + 
-						seconds.getText().toString().trim());
+				timeText.updateSecondsOnly(seconds.getText().toString().trim());
 			}
 			@Override
 			public void beforeTextChanged(CharSequence s, int start, int count,

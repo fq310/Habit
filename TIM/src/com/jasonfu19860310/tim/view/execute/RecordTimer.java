@@ -1,21 +1,17 @@
 package com.jasonfu19860310.tim.view.execute;
 
 import java.util.TimerTask;
-
 import android.os.Handler;
-import android.widget.TextView;
-
-import com.jasonfu19860310.project.DateUtil;
 import com.jasonfu19860310.project.Project;
 
 public class RecordTimer extends TimerTask {
-	private TextView currentTime;
+	private TimeText timeText;
 	private Project project;
 	private Handler handler;
 
-	public RecordTimer(TextView currentTime, Project project, Handler handler) {
+	public RecordTimer(TimeText timeText, Project project, Handler handler) {
 		super();
-		this.currentTime = currentTime;
+		this.timeText = timeText;
 		this.project = project;
 		this.handler = handler;
 	}
@@ -25,10 +21,9 @@ public class RecordTimer extends TimerTask {
 		handler.post(new Runnable() {
 			@Override
 			public void run() {
-				String[] oldTime = DateUtil.getHourAndMinute(currentTime.getText().toString());
-				int hours = Integer.valueOf(oldTime[0]);
-				int minutes = Integer.valueOf(oldTime[1]);
-				int seconds = Integer.valueOf(oldTime[2]);
+				int hours = timeText.getIntHour();
+				int minutes = timeText.getIntMinute();
+				int seconds = timeText.getIntSecond();
 				if (0 <= seconds && seconds < 59) {
 					++ seconds;
 				} else if (seconds == 59) {
@@ -39,11 +34,7 @@ public class RecordTimer extends TimerTask {
 					minutes = 0;
 					++hours;
 				}
-				currentTime.setText(
-					(hours < 10 ? ("0" + hours) : hours) + ":" + 
-					(minutes < 10 ? ("0" + minutes) : minutes) + ":" + 
-					(seconds < 10 ? ("0" + seconds) : seconds)
-				);		
+				timeText.setTime(hours, minutes, seconds);
 				project.setTimer_seconds(project.getTimer_seconds() + 1);
 			}
 		});
