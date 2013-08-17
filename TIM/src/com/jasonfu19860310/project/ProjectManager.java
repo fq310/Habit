@@ -53,11 +53,11 @@ public class ProjectManager {
 		int minitues = cursor.getInt(
 				cursor.getColumnIndexOrThrow(ProjectEntry.COLUMN_NAME_MINITUES)
 		);
-		long totalMinitues = cursor.getLong(
-				cursor.getColumnIndexOrThrow(ProjectEntry.COLUMN_NAME_TOTAL_MINITUES)
+		long totalSeconds = cursor.getLong(
+				cursor.getColumnIndexOrThrow(ProjectEntry.COLUMN_NAME_TOTAL_SECONDS)
 		);
-		long totalFinishedMinitues = cursor.getLong(
-				cursor.getColumnIndexOrThrow(ProjectEntry.COLUMN_NAME_TOTAL_FINISHED_MINITUES)
+		long totalFinishedSeconds = cursor.getLong(
+				cursor.getColumnIndexOrThrow(ProjectEntry.COLUMN_NAME_TOTAL_FINISHED_SECONDS)
 		);
 		int totalPassedDays = cursor.getInt(
 				cursor.getColumnIndexOrThrow(ProjectEntry.COLUMN_NAME_TOTAL_PASSED_DAYS)
@@ -84,8 +84,8 @@ public class ProjectManager {
 		project.getEndDate().setTimeInMillis(endDate);
 		project.setHours(hours);
 		project.setMinitues(minitues);
-		project.setTotalFinishedMinitues(totalFinishedMinitues);
-		project.setTotalMinitues(totalMinitues);
+		project.setTotalFinishedSeconds(totalFinishedSeconds);
+		project.setTotalSeconds(totalSeconds);
 		project.setTotalPassedDays(totalPassedDays);
 		project.setWorkdays(workdays);
 		project.setTimer_started(Boolean.valueOf(timerStarted));
@@ -96,8 +96,13 @@ public class ProjectManager {
 	}
 	
 	public void saveNewProject(Project project) {
-		project.setTotalMinitues(getTotalTime(project));
+		project.setTotalSeconds(getTotalTime(project));
 		SQLiteDatabase database = databaseHelper.getWritableDatabase();
+		ContentValues values = getUpdateValues(project);
+		database.insert(ProjectEntry.TABLE_NAME, null, values);
+	}
+
+	private ContentValues getUpdateValues(Project project) {
 		ContentValues values = new ContentValues();
 		values.put(ProjectEntry.COLUMN_NAME_NAME, project.getName());
 		values.put(ProjectEntry.COLUMN_NAME_START_DATE, project.getStartDate().getTimeInMillis());
@@ -105,14 +110,14 @@ public class ProjectManager {
 		values.put(ProjectEntry.COLUMN_NAME_HOURS, project.getHours());
 		values.put(ProjectEntry.COLUMN_NAME_MINITUES, project.getMinitues());
 		values.put(ProjectEntry.COLUMN_NAME_WORKDAYS, project.getWorkdaysString());
-		values.put(ProjectEntry.COLUMN_NAME_TOTAL_FINISHED_MINITUES, project.getTotalFinishedMinitues());
-		values.put(ProjectEntry.COLUMN_NAME_TOTAL_MINITUES, project.getTotalMinitues());
+		values.put(ProjectEntry.COLUMN_NAME_TOTAL_FINISHED_SECONDS, project.getTotalFinishedSeconds());
+		values.put(ProjectEntry.COLUMN_NAME_TOTAL_SECONDS, project.getTotalSeconds());
 		values.put(ProjectEntry.COLUMN_NAME_TOTAL_PASSED_DAYS, project.getTotalPassedDays());
 		values.put(ProjectEntry.COLUMN_NAME_TIMER_STARTED, project.isTimer_started());
 		values.put(ProjectEntry.COLUMN_NAME_TIMER_PAUSED, project.isTimer_paused());
 		values.put(ProjectEntry.COLUMN_NAME_TIMER_SECONDS, project.getTimer_seconds());
 		values.put(ProjectEntry.COLUMN_NAME_TIMER_START_DATE, project.getTimerStartDate().getTimeInMillis());
-		database.insert(ProjectEntry.TABLE_NAME, null, values);
+		return values;
 	}
 	
 	public Project getProject(long projectID) {
@@ -128,8 +133,6 @@ public class ProjectManager {
 	}
 	
 	public void updateProject(Project project) {
-		project.setTotalFinishedMinitues(project.getTotalFinishedMinitues() + project.getTimer_seconds()/60);
-		project.setTotalPassedDays(DateUtil.getDaysBwtween(project.getStartDate(), Calendar.getInstance()));
 		
 	}
 	
@@ -151,5 +154,31 @@ public class ProjectManager {
 
 	public int getUnfinishedMinitesToday(long id) {
 		return 60;
+	}
+
+	public void updateProjectAfterSave(Project project) {
+		project.setTotalFinishedSeconds(project.getTotalFinishedSeconds() + project.getTimer_seconds());
+		project.setTotalPassedDays(DateUtil.getDaysBwtween(project.getStartDate(), Calendar.getInstance()));
+		SQLiteDatabase database = databaseHelper.getWritableDatabase();
+		ContentValues values = getUpdateValues(project);
+		updateTable(project, database, values);
+	}
+
+	private void updateTable(Project project, SQLiteDatabase database,
+			ContentValues values) {
+		String selection = ProjectEntry._ID + "=?";
+		String id = String.valueOf(project.getId());
+		String[] selectionArgs = {id};
+		database.update(ProjectEntry.TABLE_NAME, values, selection, selectionArgs);
+	}
+
+	public void updateProjectAfterExitActivity(Project project) {
+		SQLiteDatabase database = databaseHelper.getWritableDatabase();
+		ContentValues values = new ContentValues();
+		values.put(ProjectEntry.COLUMN_NAME_TIMER_STARTED, project.isTimer_started());
+		values.put(ProjectEntry.COLUMN_NAME_TIMER_PAUSED, project.isTimer_paused());
+		values.put(ProjectEntry.COLUMN_NAME_TIMER_SECONDS, project.getTimer_seconds());
+		values.put(ProjectEntry.COLUMN_NAME_TIMER_START_DATE, project.getTimerStartDate().getTimeInMillis());
+		updateTable(project, database, values);
 	}
 }

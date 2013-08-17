@@ -65,7 +65,7 @@ public class PorjectListAdapter extends BaseAdapter {
 		passedDays.setText("Day-[" + project.getTotalPassedDays() + "]");
 		
 		TextView finishedPercent = (TextView) itemView.findViewById(R.id.project_list_percent);
-		finishedPercent.setText(project.getTotalFinishedMinitues()/project.getTotalMinitues() * 100 + "%");
+		finishedPercent.setText(project.getTotalFinishedSeconds()/project.getTotalSeconds() * 100 + "%");
 		
 		return itemView;
 	}

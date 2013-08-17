@@ -22,7 +22,7 @@ public class ExecuteProjectActivity extends Activity {
 
 	private static final String PAUSE = "Pause";
 	private static final String START = "Start";
-	private TimeText timeText;	//TODO abstract this to a class type
+	private TimeText timeText;
 	private long projectID;
 	private RecordManager recordManager;
 	private ProjectManager projectManager;
@@ -65,10 +65,6 @@ public class ExecuteProjectActivity extends Activity {
 			changeStartButtonTo(PAUSE);
 			timer.schedule(timerTask, 500, 1000); 
 		}
-	}
-
-	private void updateTimeLabel(long totalSeconds) {
-		timeText.setTime(totalSeconds);
 	}
 
 	private void changeStartButtonTo(String status) {
@@ -117,19 +113,16 @@ public class ExecuteProjectActivity extends Activity {
 	
 	public void onSaveClicked(View view) {
 		timer.cancel();
-		int hour = timeText.getIntHour();
-		int minute = timeText.getIntMinute();
-		int seconds = timeText.getIntSecond();
-		if (hour == 0 && minute == 0 && seconds == 0) {
+		if (timeText.isZeroTime()) {
 			createWarningDialog(R.string.execute_error_msg_title, 
 					R.string.execute_error_msg);
 			return;
 		}
-		recordManager.addNewRecord(project, timeText.getTotalSeconds());
-		projectManager.updateProject(project);
+		recordManager.addNewRecord(project.getId(), timeText.getTotalSeconds());
+		projectManager.updateProjectAfterSave(project);
 		changeStartButtonTo(START);
 		initialRecordStatus();
-		updateTimeLabel(0);
+		timeText.setTime(0);
 		createWarningDialog(R.string.execute_error_msg_success, 
 				R.string.execute_error_msg_ok);
 	}
@@ -146,7 +139,7 @@ public class ExecuteProjectActivity extends Activity {
 	@Override
 	protected void onDestroy() {
 		project.setTimer_seconds(timeText.getTotalSeconds());
-		projectManager.updateProject(project);
+		projectManager.updateProjectAfterExitActivity(project);
 		super.onDestroy();
 	}
 

@@ -119,4 +119,12 @@ public class TimeText {
 	private boolean isValidSecond(int value) {
 		return isValidMinute(value);
 	}
+	
+	public boolean isZeroTime() {
+		int hour = getIntHour();
+		int minute = getIntMinute();
+		int seconds = getIntSecond();
+		if (hour == 0 && minute == 0 && seconds == 0) return true;
+		return false;
+	}
 }

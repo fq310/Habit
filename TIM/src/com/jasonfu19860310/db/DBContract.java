@@ -14,8 +14,8 @@ public class DBContract {
         public static final String COLUMN_NAME_DAYS = "days";
         public static final String COLUMN_NAME_HOURS = "hours";
         public static final String COLUMN_NAME_MINITUES = "minitues";
-        public static final String COLUMN_NAME_TOTAL_MINITUES = "total_minitues";
-        public static final String COLUMN_NAME_TOTAL_FINISHED_MINITUES = "total_finished_minitues";
+        public static final String COLUMN_NAME_TOTAL_SECONDS = "total_seconds";
+        public static final String COLUMN_NAME_TOTAL_FINISHED_SECONDS = "total_finished_seconds";
         public static final String COLUMN_NAME_TOTAL_PASSED_DAYS = "total_passed_days";
         public static final String COLUMN_NAME_TIMER_STARTED = "timer_started";
         public static final String COLUMN_NAME_TIMER_PAUSED = "timer_paused";

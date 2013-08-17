@@ -10,8 +10,8 @@ public class Project {
 	private Calendar endDate = Calendar.getInstance();
 	private int hours;
 	private int minitues;
-	private long totalMinitues = 0;
-	private long totalFinishedMinitues = 0;
+	private long totalSeconds = 0;
+	private long totalFinishedSeconds = 0;
 	private int totalPassedDays = 0;
 	private boolean timer_started;
 	private boolean timer_paused;
@@ -88,20 +88,20 @@ public class Project {
 		this.workdays = result.toString();
 	}
 	
-	public long getTotalMinitues() {
-		return totalMinitues;
+	public long getTotalSeconds() {
+		return totalSeconds;
 	}
 
-	public void setTotalMinitues(long totalMinitues) {
-		this.totalMinitues = totalMinitues;
+	public void setTotalSeconds(long totalSeconds) {
+		this.totalSeconds = totalSeconds;
 	}
 
-	public long getTotalFinishedMinitues() {
-		return totalFinishedMinitues;
+	public long getTotalFinishedSeconds() {
+		return totalFinishedSeconds;
 	}
 
-	public void setTotalFinishedMinitues(long totalFinishedMinitues) {
-		this.totalFinishedMinitues = totalFinishedMinitues;
+	public void setTotalFinishedSeconds(long totalFinishedSeconds) {
+		this.totalFinishedSeconds = totalFinishedSeconds;
 	}
 	
 	public int getTotalPassedDays() {
