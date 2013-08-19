@@ -89,8 +89,18 @@ abstract public class ExecuteState implements IExecuteState{
 	@Override
 	public void input() {
 		activity.getCurrentState().pause();
+		activity.setCurrentState(activity.getPauseState());
 		InputTimeDialog input = new InputTimeDialog(timeText, activity);
 		input.openDialog();
+	}
+	
+	@Override
+	public void pause() {
+		timerTask.cancel();
+		changeStartButtonTo(PAUSE);
+		project.setTimer_started(false);
+		project.setTimer_paused(true);
+		activity.setCurrentState(activity.getPauseState());		
 	}
 
 }

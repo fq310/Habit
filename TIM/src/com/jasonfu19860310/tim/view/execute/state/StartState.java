@@ -22,24 +22,6 @@ public class StartState extends ExecuteState {
 	}
 
 	@Override
-	public void stop() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void save() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void destroy() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public void onCreate() {
 		Calendar startDate = project.getTimerStartDate();
 		Calendar currentDate = Calendar.getInstance();
@@ -48,20 +30,6 @@ public class StartState extends ExecuteState {
 		timeText.setTime(totalSeconds);
 		changeStartButtonTo(PAUSE);
 		timerTask.startNewTimer();
-	}
-
-	@Override
-	public void input() {
-		activity.setCurrentState(activity.getPauseState());
-	}
-
-	@Override
-	public void pause() {
-		timerTask.cancel();
-		changeStartButtonTo(PAUSE);
-		project.setTimer_started(false);
-		project.setTimer_paused(true);
-		activity.setCurrentState(activity.getPauseState());		
 	}
 
 }

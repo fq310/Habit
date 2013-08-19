@@ -30,7 +30,7 @@
             android:label="@string/title_activity_modify_project" >
         </activity>
         <activity
-            android:name="com.jasonfu19860310.tim.view.ExecuteProjectActivity"
+            android:name="com.jasonfu19860310.tim.view.execute.ExecuteProjectActivity"
             android:label="@string/title_activity_execute_project" >
         </activity>
     </application>

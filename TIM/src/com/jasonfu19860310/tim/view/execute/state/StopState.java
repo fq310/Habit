@@ -12,42 +12,12 @@ public class StopState extends ExecuteState {
 
 	@Override
 	public void start() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void stop() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void save() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void destroy() {
-		// TODO Auto-generated method stub
-		
+		activity.setCurrentState(activity.getStartState());
+		activity.getCurrentState().start();
 	}
 
 	@Override
 	public void onCreate() {
-	}
-
-	@Override
-	public void input() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void pause() {
-		// TODO Auto-generated method stub
-		
 	}
 
 }

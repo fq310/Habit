@@ -22,38 +22,10 @@ public class PausedState extends ExecuteState {
 	}
 
 	@Override
-	public void stop() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void save() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void destroy() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public void onCreate() {
 		long totalSeconds = project.getTimer_seconds();
 		timeText.setTime(totalSeconds);
 		changeStartButtonTo(START);
-	}
-
-	@Override
-	public void input() {
-		
-	}
-
-	@Override
-	public void pause() {
-		
 	}
 
 }
