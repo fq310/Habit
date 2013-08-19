@@ -49,7 +49,6 @@ public class InputTimeDialog {
 	        				   R.string.execute_error_msg_time, context);
 	        	   }
 	           }
-
 	    });
 		builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
 	           public void onClick(DialogInterface dialog, int id) {

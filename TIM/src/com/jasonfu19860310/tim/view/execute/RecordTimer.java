@@ -1,5 +1,6 @@
 package com.jasonfu19860310.tim.view.execute;
 
+import java.util.Timer;
 import java.util.TimerTask;
 import android.os.Handler;
 import com.jasonfu19860310.project.Project;
@@ -8,6 +9,8 @@ public class RecordTimer extends TimerTask {
 	private TimeText timeText;
 	private Project project;
 	private Handler handler;
+	private Timer timer = new Timer();
+	private RecordTimer timerTask;
 
 	public RecordTimer(TimeText timeText, Project project, Handler handler) {
 		super();
@@ -38,5 +41,10 @@ public class RecordTimer extends TimerTask {
 				project.setTimer_seconds(project.getTimer_seconds() + 1);
 			}
 		});
+	}
+	
+	public void startNewTimer() {
+		timerTask = new RecordTimer(timeText, project, handler);
+		timer.schedule(timerTask, 500, 1000); 
 	}
 }
