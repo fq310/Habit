@@ -1,35 +1,38 @@
 package com.jasonfu19860310.tim.view.execute.state;
 
 import java.util.Calendar;
-
-import android.os.Handler;
-
 import com.jasonfu19860310.tim.view.execute.ExecuteProjectActivity;
 
 public class StartState extends ExecuteState {
 
-	public StartState(ExecuteProjectActivity activity, Handler handler) {
-		super(activity, handler);
+	public StartState(ExecuteProjectActivity activity) {
+		super(activity);
 	}
 
 	@Override
 	public void start() {
-		timerTask.cancel();
-		changeStartButtonTo(PAUSE);
-		project.setTimer_started(false);
-		project.setTimer_paused(true);
-		project.setTimer_seconds(timeText.getTotalSeconds());
+		recordTimer.cancelTimer();
+		changeStartButtonTo(START);
+		currentProject.setTimer_started(false);
+		currentProject.setTimer_paused(true);
+		currentProject.setTimer_seconds(timeText.getTotalSeconds());
+		activity.setCurrentState(activity.getPauseState());
 	}
 
 	@Override
 	public void onCreate() {
-		Calendar startDate = project.getTimerStartDate();
+		Calendar timerDestroyDate = currentProject.getTimerDestroyDate();
 		Calendar currentDate = Calendar.getInstance();
-		long totalSeconds = currentDate.getTimeInMillis() - startDate.getTimeInMillis();
-		project.setTimer_seconds(totalSeconds);
+		long totalSeconds = (currentDate.getTimeInMillis() - timerDestroyDate.getTimeInMillis()) / 1000 + currentProject.getTimer_seconds();
+		currentProject.setTimer_seconds(totalSeconds);
 		timeText.setTime(totalSeconds);
 		changeStartButtonTo(PAUSE);
-		timerTask.startNewTimer();
+		recordTimer.startTimer();
+	}
+	
+	@Override
+	public String toString() {
+		return "start";
 	}
 
 }

@@ -20,7 +20,7 @@ public class DBContract {
         public static final String COLUMN_NAME_TIMER_STARTED = "timer_started";
         public static final String COLUMN_NAME_TIMER_PAUSED = "timer_paused";
         public static final String COLUMN_NAME_TIMER_SECONDS = "timer_seconds";
-        public static final String COLUMN_NAME_TIMER_START_DATE = "timer_start_date";
+        public static final String COLUMN_NAME_TIMER_DESTORY_DATE = "timer_destroy_date";
     }
 	
 	public static abstract class RecordEntry implements BaseColumns {

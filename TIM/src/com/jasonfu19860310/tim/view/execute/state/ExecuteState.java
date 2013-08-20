@@ -1,9 +1,8 @@
 package com.jasonfu19860310.tim.view.execute.state;
 
-import android.os.Handler;
-import android.widget.Button;
-import android.widget.TextView;
+import java.util.Calendar;
 
+import android.widget.Button;
 import com.jasonfu19860310.project.Project;
 import com.jasonfu19860310.project.ProjectManager;
 import com.jasonfu19860310.project.RecordManager;
@@ -18,26 +17,22 @@ abstract public class ExecuteState implements IExecuteState{
 	protected static final String PAUSE = "Pause";
 	protected static final String START = "Start";
 	protected ExecuteProjectActivity activity;
-	
-	protected TimeText timeText;
-	private long projectID;
 	private RecordManager recordManager;
 	private ProjectManager projectManager;
-	protected Project project;
+	protected Project currentProject;
 	
-	protected RecordTimer timerTask;
 	private Button startButton;
+	protected TimeText timeText;
+	protected RecordTimer recordTimer;
 	
-	public ExecuteState(ExecuteProjectActivity activity, Handler handler) {
+	public ExecuteState(ExecuteProjectActivity activity) {
 		this.activity = activity;
-		TextView timeTextView = (TextView) activity.findViewById(R.id.execute_project_textView_time);
-		timeText = new TimeText(timeTextView);        
 		startButton = (Button)activity.findViewById(R.id.button_execute_start);
-		projectID = activity.getIntent().getLongExtra("id", -1);
-		recordManager = new RecordManager(activity);
-		projectManager = new ProjectManager(activity);
-		project = projectManager.getProject(projectID);
-		timerTask = new RecordTimer(timeText, project, handler);
+		recordManager = activity.getRecordManager();
+		projectManager = activity.getProjectManager();
+		timeText = activity.getTimeText();
+		recordTimer = activity.getRecordTimer();
+		currentProject = activity.getProject();
 	}
 	
 	protected void changeStartButtonTo(String status) {
@@ -46,7 +41,9 @@ abstract public class ExecuteState implements IExecuteState{
 	
 	@Override
 	public void clear() {
-		timeText.setTime(R.string.inital_time);
+		recordTimer.cancelTimer();
+		changeStartButtonTo(START);
+		timeText.setTime(0);
 		initialRecordStatus();
 		activity.setCurrentState(activity.getStopState());
 	}
@@ -54,25 +51,26 @@ abstract public class ExecuteState implements IExecuteState{
 	@Override
 	public void save() {
 		activity.setCurrentState(activity.getStopState());
-		timerTask.cancel();
+		recordTimer.cancelTimer();
 		if (timeText.isZeroTime()) {
 			createWarningDialog(R.string.execute_error_msg_title, 
 					R.string.execute_error_msg);
 			return;
 		}
-		recordManager.addNewRecord(project.getId(), timeText.getTotalSeconds());
-		projectManager.updateProjectAfterSave(project);
+		recordManager.addNewRecord(currentProject.getId(), timeText.getTotalSeconds());
+		projectManager.updateProjectAfterSave(currentProject);
 		changeStartButtonTo(START);
 		initialRecordStatus();
 		timeText.setTime(0);
+		activity.setCurrentState(activity.getStopState());
 		createWarningDialog(R.string.execute_error_msg_success, 
 				R.string.execute_error_msg_ok);
 	}
 	
 	private void initialRecordStatus() {
-		project.setTimer_seconds(0);
-		project.setTimer_started(false);
-		project.setTimer_paused(false);
+		currentProject.setTimer_seconds(0);
+		currentProject.setTimer_started(false);
+		currentProject.setTimer_paused(false);
 	}
 	
 	private void createWarningDialog(int title, int message) {
@@ -82,24 +80,26 @@ abstract public class ExecuteState implements IExecuteState{
 
 	@Override
 	public void destroy() {
-		project.setTimer_seconds(timeText.getTotalSeconds());
-		projectManager.updateProjectAfterExitActivity(project);
+		currentProject.setTimer_seconds(timeText.getTotalSeconds());
+		currentProject.setTimerDestroyDate(Calendar.getInstance());
+		projectManager.updateProjectAfterExitActivity(currentProject);
 	}
 	
 	@Override
 	public void input() {
-		activity.getCurrentState().pause();
+		recordTimer.cancelTimer();
 		activity.setCurrentState(activity.getPauseState());
+		changeStartButtonTo(START);
 		InputTimeDialog input = new InputTimeDialog(timeText, activity);
 		input.openDialog();
 	}
 	
 	@Override
 	public void pause() {
-		timerTask.cancel();
+		recordTimer.cancelTimer();
 		changeStartButtonTo(PAUSE);
-		project.setTimer_started(false);
-		project.setTimer_paused(true);
+		currentProject.setTimer_started(false);
+		currentProject.setTimer_paused(true);
 		activity.setCurrentState(activity.getPauseState());		
 	}
 

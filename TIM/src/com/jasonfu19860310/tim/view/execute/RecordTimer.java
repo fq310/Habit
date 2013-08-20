@@ -43,8 +43,13 @@ public class RecordTimer extends TimerTask {
 		});
 	}
 	
-	public void startNewTimer() {
+	public void startTimer() {
 		timerTask = new RecordTimer(timeText, project, handler);
+		timer = new Timer();
 		timer.schedule(timerTask, 500, 1000); 
+	}
+	
+	public void cancelTimer() {
+		timer.cancel();
 	}
 }

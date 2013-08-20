@@ -1,6 +1,5 @@
 package com.jasonfu19860310.tim.view.execute;
 
-import com.jasonfu19860310.tim.R;
 import android.widget.TextView;
 
 public class TimeText {
@@ -41,8 +40,9 @@ public class TimeText {
 			);
 	}
 
-	private String formatTime(int hours) {
-		return (String) (hours < 10 ? ("0" + hours) : hours);
+	private String formatTime(int time) {
+		String timeString = String.valueOf(time);
+		return time < 10 ? ("0" + timeString) : timeString;
 	}
 	
 	public long getTotalSeconds() {
@@ -51,12 +51,9 @@ public class TimeText {
 				time[1] * 60 + time[2];
 		return seconds;
 	}
-	public void setTime(int initalTime) {
-		timeText.setText(R.string.inital_time);
-	}
 	
 	public void setTime(long totalSeconds) {
-		String hours = stringOf(totalSeconds / 60*60);
+		String hours = stringOf(totalSeconds / (60*60));
 		String minutes = stringOf((totalSeconds % 3600) / 60);
 		String seconds = stringOf((totalSeconds % 3600) % 60);
 		timeText.setText(hours + COLON + minutes + COLON + seconds); 

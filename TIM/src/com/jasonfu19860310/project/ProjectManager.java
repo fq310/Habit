@@ -74,8 +74,8 @@ public class ProjectManager {
 		long timerMinutes = cursor.getLong(
 				cursor.getColumnIndexOrThrow(ProjectEntry.COLUMN_NAME_TIMER_SECONDS)
 		);
-		long timerStartDate = cursor.getLong(
-				cursor.getColumnIndexOrThrow(ProjectEntry.COLUMN_NAME_TIMER_START_DATE)
+		long timerDestroyDate = cursor.getLong(
+				cursor.getColumnIndexOrThrow(ProjectEntry.COLUMN_NAME_TIMER_DESTORY_DATE)
 		);
 		Project project = new Project();
 		project.setId(id);
@@ -91,7 +91,7 @@ public class ProjectManager {
 		project.setTimer_started(Boolean.valueOf(timerStarted));
 		project.setTimer_paused(Boolean.valueOf(timerPaused));
 		project.setTimer_seconds(timerMinutes);
-		project.getTimerStartDate().setTimeInMillis(timerStartDate);
+		project.getTimerDestroyDate().setTimeInMillis(timerDestroyDate);
 		return project;
 	}
 	
@@ -116,7 +116,7 @@ public class ProjectManager {
 		values.put(ProjectEntry.COLUMN_NAME_TIMER_STARTED, project.isTimer_started());
 		values.put(ProjectEntry.COLUMN_NAME_TIMER_PAUSED, project.isTimer_paused());
 		values.put(ProjectEntry.COLUMN_NAME_TIMER_SECONDS, project.getTimer_seconds());
-		values.put(ProjectEntry.COLUMN_NAME_TIMER_START_DATE, project.getTimerStartDate().getTimeInMillis());
+		values.put(ProjectEntry.COLUMN_NAME_TIMER_DESTORY_DATE, project.getTimerDestroyDate().getTimeInMillis());
 		return values;
 	}
 	
@@ -175,10 +175,10 @@ public class ProjectManager {
 	public void updateProjectAfterExitActivity(Project project) {
 		SQLiteDatabase database = databaseHelper.getWritableDatabase();
 		ContentValues values = new ContentValues();
-		values.put(ProjectEntry.COLUMN_NAME_TIMER_STARTED, project.isTimer_started());
-		values.put(ProjectEntry.COLUMN_NAME_TIMER_PAUSED, project.isTimer_paused());
+		values.put(ProjectEntry.COLUMN_NAME_TIMER_STARTED, String.valueOf(project.isTimer_started()));
+		values.put(ProjectEntry.COLUMN_NAME_TIMER_PAUSED, String.valueOf(project.isTimer_paused()));
 		values.put(ProjectEntry.COLUMN_NAME_TIMER_SECONDS, project.getTimer_seconds());
-		values.put(ProjectEntry.COLUMN_NAME_TIMER_START_DATE, project.getTimerStartDate().getTimeInMillis());
+		values.put(ProjectEntry.COLUMN_NAME_TIMER_DESTORY_DATE, project.getTimerDestroyDate().getTimeInMillis());
 		updateTable(project, database, values);
 	}
 }

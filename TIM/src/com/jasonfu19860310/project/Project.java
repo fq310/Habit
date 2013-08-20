@@ -16,7 +16,7 @@ public class Project {
 	private boolean timer_started;
 	private boolean timer_paused;
 	private long timer_seconds;
-	private Calendar timerStartDate = Calendar.getInstance();
+	private Calendar timerDestroyDate = Calendar.getInstance();
 	private String workdays = "0000000";
 	
 	public Calendar getEndDate() {
@@ -136,11 +136,11 @@ public class Project {
 		this.timer_seconds = timer_seconds;
 	}
 	
-	public Calendar getTimerStartDate() {
-		return timerStartDate;
+	public Calendar getTimerDestroyDate() {
+		return timerDestroyDate;
 	}
 
-	public void setTimerStartDate(Calendar timerStartDate) {
-		this.timerStartDate = timerStartDate;
+	public void setTimerDestroyDate(Calendar date) {
+		this.timerDestroyDate = date;
 	}
 }

@@ -61,7 +61,7 @@
         android:paddingRight="20dp"
         android:text="@string/inital_time"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textSize="70sp" />
+        android:textSize="60sp" />
     
     <LinearLayout
         android:layout_width="match_parent"
