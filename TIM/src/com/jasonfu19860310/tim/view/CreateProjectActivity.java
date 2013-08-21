@@ -4,7 +4,7 @@ import android.view.View;
 
 import com.jasonfu19860310.project.Project;
 
-public class CreateProjectActivity extends ProjectInfo {
+public class CreateProjectActivity extends BaseActivity {
 
 	public CreateProjectActivity() {
 		super();

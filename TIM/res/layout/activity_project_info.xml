@@ -95,68 +95,6 @@
 
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/select_days_of_week"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
-
-    <LinearLayout
-        android:id="@+id/layout_create_project_week1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" >
-
-         <CheckBox
-	        android:id="@+id/checkBox_create_project1"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:text="@string/Monday" />
-
-	    <CheckBox
-	        android:id="@+id/checkBox_create_project2"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:text="@string/Tuesday" />
-	
-	    <CheckBox
-	        android:id="@+id/checkBox_create_project3"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:text="@string/Wednesday" />
-
-        <CheckBox
-		        android:id="@+id/checkBox_create_project4"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:text="@string/Thursday" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/layout_create_project_week2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" >
-
-        <CheckBox
-            android:id="@+id/checkBox_create_project5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/Friday" />
-
-        <CheckBox
-            android:id="@+id/checkBox_create_project6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/Saturday" />
-
-        <CheckBox
-            android:id="@+id/checkBox_create_project7"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/Sunday" />
-
-    </LinearLayout>
-
     <LinearLayout
         android:id="@+id/layout_create_project_week3"
         android:layout_width="wrap_content"

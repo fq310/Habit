@@ -16,12 +16,15 @@ import android.content.DialogInterface;
 import android.text.Editable;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 
-public abstract class ProjectInfo extends Activity {
+/**
+ * Base class for create and modify activity
+ * @author qiangf
+ *
+ */
+public abstract class BaseActivity extends Activity {
 	public static final String CREATE = "create";
 	public static final String MODIFY = "modify";
 	public static final String OPERATION = "operation";
@@ -65,8 +68,7 @@ public abstract class ProjectInfo extends Activity {
 				&& verifyStartDate()
 				&& verifyEndDate()
 				&& verifyTimePerDay() 
-				&& verifyDates()
-				&& verifyWeekdays();
+				&& verifyDates();
 	}
 
 	private boolean verifyDates() {
@@ -128,7 +130,7 @@ public abstract class ProjectInfo extends Activity {
 			String[] dates = date.split("/");
 			Calendar newDate = Calendar.getInstance();
 			newDate.set(Integer.valueOf(dates[0]), 
-					Integer.valueOf(dates[1]), 
+					Integer.valueOf(dates[1]) - 1, 
 					Integer.valueOf(dates[2]));
 			return newDate;
 		} else {
@@ -144,37 +146,6 @@ public abstract class ProjectInfo extends Activity {
 		return  (EditText) findViewById(id);
 	}
 	
-	private boolean verifyWeekdays() {
-		int[] workDays = project.getWorkdays();
-		LinearLayout weeks1 = (LinearLayout) findViewById(R.id.layout_create_project_week1);
-		for (int i = 0; i < weeks1.getChildCount(); ++i) {
-			CheckBox check = (CheckBox) weeks1.getChildAt(i);
-			if (check.isChecked()) workDays[i] = 1;
-		}
-		
-		LinearLayout weeks2 = (LinearLayout) findViewById(R.id.layout_create_project_week2);
-		for (int i = 0; i < weeks2.getChildCount(); ++i) {
-			CheckBox check = (CheckBox) weeks2.getChildAt(i);
-			if (check.isChecked()) workDays[i + 3] = 1;
-		}
-		
-		if (noneDaysSelected(workDays)) {
-			showWarningMessage(R.string.warning, R.string.warning_input_weekDays);
-			return false;
-		}
-		project.setWorkdays(workDays);
-		return true;
-	}
-
-	private boolean noneDaysSelected(int[] weekDays) {
-		int sum = 0;
-		for (int i : weekDays) {
-			sum += i;
-		}
-		if (sum == 0) return true;
-		return false;
-	}
-
 	private boolean verifyTimePerDay() {
 		String hours = getDateFromText(R.id.text_create_project_hours);
 		String minutes = getDateFromText(R.id.text_create_project_minutues);
@@ -216,7 +187,7 @@ class DateSetListener implements OnDateSetListener {
 	@Override
 	public void onDateSet(DatePicker arg0, int year, int month, int day) {
 		Button button = (Button) activity.findViewById(buttonId);
-		button.setText(year + "/" + month + "/" + day);
+		button.setText(year + "/" + (month+1) + "/" + day);
 	}
 
 }

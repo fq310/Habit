@@ -55,23 +55,22 @@ public class PorjectListAdapter extends BaseAdapter {
 		}
 		
 		Project project = projects.get(position);
-		TextView name = (TextView) itemView.findViewById(R.id.projectlist_name);
-		name.setText(project.getName());
-		
-		TextView todayUnfinishedTime = (TextView) itemView.findViewById(R.id.projectlist_unfinishedtime);
-		todayUnfinishedTime.setText("Today remain: [" + getUnfinishedMinitesToday(project) + "] minutes");
-		
-		TextView passedDays = (TextView) itemView.findViewById(R.id.projectlist_days);
-		passedDays.setText("Day-[" + project.getTotalPassedDays() + "]");
+		String projectName = project.getName();
+		TextView nameTextView = (TextView) itemView.findViewById(R.id.projectlist_name);
+		boolean timerPaused = project.isTimer_paused();
+		boolean timerStarted = project.isTimer_started();
+		if (timerPaused) {
+			projectName = projectName + " [PAUSED]";  
+		}
+		if (timerStarted) {
+			projectName = projectName + " [STARTED]"; 
+		}
+		nameTextView.setText(projectName);
 		
 		TextView finishedPercent = (TextView) itemView.findViewById(R.id.project_list_percent);
 		finishedPercent.setText(project.getTotalFinishedSeconds()/project.getTotalSeconds() * 100 + "%");
 		
 		return itemView;
-	}
-
-	private String getUnfinishedMinitesToday(Project project) {
-		return null;
 	}
 
 	public void reloadData() {

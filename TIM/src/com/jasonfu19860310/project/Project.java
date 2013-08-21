@@ -17,7 +17,6 @@ public class Project {
 	private boolean timer_paused;
 	private long timer_seconds;
 	private Calendar timerDestroyDate = Calendar.getInstance();
-	private String workdays = "0000000";
 	
 	public Calendar getEndDate() {
 		return endDate;
@@ -43,19 +42,6 @@ public class Project {
 		return startDate;
 	}
 
-	public int[] getWorkdays() {
-		int length = workdays.length();
-		int[] result = new int[length];
-		for (int i = 0; i < length; ++i) {
-			result[i] = Integer.valueOf(String.valueOf(workdays.charAt(i)));
-		}
-		return result;
-	}
-	
-	public String getWorkdaysString() {
-		return workdays;
-	}
-	
 	public void setEndDate(Calendar endDate) {
 		this.endDate = endDate;
 	}
@@ -74,18 +60,6 @@ public class Project {
 	
 	public void setStartDate(Calendar startDate) {
 		this.startDate = startDate;
-	}
-	
-	public void setWorkdays(String workdays) {
-		this.workdays = workdays;
-	}
-	
-	public void setWorkdays(int[] workdays) {
-		StringBuilder result = new StringBuilder();
-		for (int i : workdays) {
-			result.append(i);
-		}
-		this.workdays = result.toString();
 	}
 	
 	public long getTotalSeconds() {

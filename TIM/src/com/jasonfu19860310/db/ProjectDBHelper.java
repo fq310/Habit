@@ -15,7 +15,6 @@ public class ProjectDBHelper extends DBHelper {
 				    ProjectEntry.COLUMN_NAME_END_DATE + BIGINT_TYPE + COMMA_SEP +
 				    ProjectEntry.COLUMN_NAME_DAYS + INT_TYPE + COMMA_SEP +
 				    ProjectEntry.COLUMN_NAME_HOURS + INT_TYPE + COMMA_SEP +
-				    ProjectEntry.COLUMN_NAME_WORKDAYS + TEXT_TYPE + COMMA_SEP +
 				    ProjectEntry.COLUMN_NAME_MINITUES + INT_TYPE + COMMA_SEP +
 				    ProjectEntry.COLUMN_NAME_TIMER_STARTED + TEXT_TYPE + COMMA_SEP +
 				    ProjectEntry.COLUMN_NAME_TIMER_PAUSED + TEXT_TYPE + COMMA_SEP +

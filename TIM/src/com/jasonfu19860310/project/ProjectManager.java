@@ -62,9 +62,6 @@ public class ProjectManager {
 		int totalPassedDays = cursor.getInt(
 				cursor.getColumnIndexOrThrow(ProjectEntry.COLUMN_NAME_TOTAL_PASSED_DAYS)
 		);
-		String workdays = cursor.getString(
-				cursor.getColumnIndexOrThrow(ProjectEntry.COLUMN_NAME_WORKDAYS)
-		);
 		String timerStarted = cursor.getString(
 				cursor.getColumnIndexOrThrow(ProjectEntry.COLUMN_NAME_TIMER_STARTED)
 		);
@@ -87,7 +84,6 @@ public class ProjectManager {
 		project.setTotalFinishedSeconds(totalFinishedSeconds);
 		project.setTotalSeconds(totalSeconds);
 		project.setTotalPassedDays(totalPassedDays);
-		project.setWorkdays(workdays);
 		project.setTimer_started(Boolean.valueOf(timerStarted));
 		project.setTimer_paused(Boolean.valueOf(timerPaused));
 		project.setTimer_seconds(timerMinutes);
@@ -109,7 +105,6 @@ public class ProjectManager {
 		values.put(ProjectEntry.COLUMN_NAME_END_DATE, project.getEndDate().getTimeInMillis());
 		values.put(ProjectEntry.COLUMN_NAME_HOURS, project.getHours());
 		values.put(ProjectEntry.COLUMN_NAME_MINITUES, project.getMinitues());
-		values.put(ProjectEntry.COLUMN_NAME_WORKDAYS, project.getWorkdaysString());
 		values.put(ProjectEntry.COLUMN_NAME_TOTAL_FINISHED_SECONDS, project.getTotalFinishedSeconds());
 		values.put(ProjectEntry.COLUMN_NAME_TOTAL_SECONDS, project.getTotalSeconds());
 		values.put(ProjectEntry.COLUMN_NAME_TOTAL_PASSED_DAYS, project.getTotalPassedDays());
@@ -143,9 +138,9 @@ public class ProjectManager {
 		return 600;
 	}
 	
-	private int getTotalTime(Project project) {
+	private long getTotalTime(Project project) {
 		int days = DateUtil.getDaysBwtween(project.getStartDate(), project.getEndDate()) + 1;
-		return days * (project.getHours() * 60 + project.getMinitues());
+		return days * ((project.getHours() * 60 + project.getMinitues()) * 60);
 	}
 	
 	public DBHelper getDb() {

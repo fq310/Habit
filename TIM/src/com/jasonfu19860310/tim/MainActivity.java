@@ -5,7 +5,6 @@ import com.jasonfu19860310.tim.view.execute.ExecuteProjectActivity;
 
 import android.os.Bundle;
 import android.app.ListActivity;
-import android.content.Context;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,6 +14,7 @@ import android.widget.AdapterView.OnItemClickListener;
 
 public class MainActivity extends ListActivity {
 	public static final int ADD = 1;
+	public static final int EXECUTE = 2;
 	private PorjectListAdapter listAdapter;
 
 	@Override
@@ -43,20 +43,23 @@ public class MainActivity extends ListActivity {
 		case ADD:
 			listAdapter.reloadData();
 			break;
+		case EXECUTE:
+			listAdapter.reloadData();
+			break;
 		}
 	}
 }
 
 class ItemClickListener implements OnItemClickListener {
-	public ItemClickListener(Context context) {
+	public ItemClickListener(ListActivity context) {
 		this.context = context;
 	}
-	private Context context;
+	private ListActivity context;
 	@Override
 	public void onItemClick(AdapterView<?> list, View view, int position, long id) {
 		Intent intent = new Intent(context, ExecuteProjectActivity.class);
 		intent.putExtra("id", id);
-		context.startActivity(intent);
+		context.startActivityForResult(intent, MainActivity.EXECUTE);
 	}
 	
 }
