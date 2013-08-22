@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.TextView;
 
 public class ExecuteProjectActivity extends Activity {
+
 	private Handler handler;
 	protected TimeText timeText;
 	protected RecordTimer recordTimer;
@@ -37,7 +38,7 @@ public class ExecuteProjectActivity extends Activity {
 		initialUtilityObject();
 		initialState();
 	}
-
+	
 	private void initialUtilityObject() {
 		handler = new Handler();
 		long projectID = getIntent().getLongExtra("id", -1);
@@ -72,6 +73,12 @@ public class ExecuteProjectActivity extends Activity {
 		return true;
 	}
 	
+	@Override
+	public void onBackPressed() {
+		currentState.exit();
+		finish();
+	}
+	
 	public void onStartClicked(View view) {
 		currentState.start();
 	}
@@ -88,12 +95,6 @@ public class ExecuteProjectActivity extends Activity {
 		currentState.input();
 	}
 
-	@Override
-	protected void onDestroy() {
-		currentState.destroy();
-		super.onDestroy();
-	}
-	
 	public IExecuteState getStartState() {
 		return startState;
 	}

@@ -6,6 +6,6 @@ public interface IExecuteState {
 	public void save();
 	public void pause();
 	public void input();
-	public void destroy();
+	public void exit();
 	public void onCreate();
 }

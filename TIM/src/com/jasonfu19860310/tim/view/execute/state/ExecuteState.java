@@ -79,7 +79,8 @@ abstract public class ExecuteState implements IExecuteState{
 	
 
 	@Override
-	public void destroy() {
+	public void exit() {
+		recordTimer.cancelTimer();
 		currentProject.setTimer_seconds(timeText.getTotalSeconds());
 		currentProject.setTimerDestroyDate(Calendar.getInstance());
 		projectManager.updateProjectAfterExitActivity(currentProject);

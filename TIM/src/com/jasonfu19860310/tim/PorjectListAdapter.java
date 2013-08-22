@@ -14,6 +14,11 @@ import android.widget.TextView;
 
 public class PorjectListAdapter extends BaseAdapter {
 
+	@Override
+	public void notifyDataSetChanged() {
+		super.notifyDataSetChanged();
+	}
+
 	public static final String FINISHED_PERCENT = "percent";
 	public static final String DAYS_PASSED = "days";
 	public static final String UNFINISHED_TIME_OF_TODAY = "time";
@@ -54,6 +59,7 @@ public class PorjectListAdapter extends BaseAdapter {
 			itemView = convertView;
 		}
 		
+		projects = projectManager.getAllProjects();
 		Project project = projects.get(position);
 		String projectName = project.getName();
 		TextView nameTextView = (TextView) itemView.findViewById(R.id.projectlist_name);
