@@ -2,7 +2,6 @@ package com.jasonfu19860310.tim.view.execute;
 
 import com.jasonfu19860310.tim.R;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.text.Editable;
@@ -10,14 +9,14 @@ import android.text.TextWatcher;
 import android.widget.EditText;
 
 public class InputTimeDialog {
-	public InputTimeDialog(TimeText currentTime, Activity context) {
+	public InputTimeDialog(TimeText currentTime, ExecuteProjectActivity context) {
 		this.timeText = currentTime;
 		this.context = context;
 	}
 
 	protected static final String COLON = ":";
 	private TimeText timeText;
-	private Activity context;
+	private ExecuteProjectActivity context;
 	private EditText hours;
 	private EditText minutes;
 	private EditText seconds;
@@ -48,11 +47,13 @@ public class InputTimeDialog {
 	        		   WarningDialog.open(R.string.execute_error_msg_title, 
 	        				   R.string.execute_error_msg_time, context);
 	        	   }
+	        	   context.saveCurrentState();
 	           }
 	    });
 		builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
 	           public void onClick(DialogInterface dialog, int id) {
 	        	   timeText.setTime(oldTime);
+	        	   context.saveCurrentState();
 	           }
 	       });
 	}

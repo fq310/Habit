@@ -4,21 +4,23 @@ import java.util.Calendar;
 
 import com.jasonfu19860310.tim.R;
 
+import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
 public class ModifyProjectActivity extends BaseActivity {
 	
-	public ModifyProjectActivity() {
-		super();
-		int id = getIntent().getIntExtra("id", 0);
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		long id = getIntent().getLongExtra("id", -1);
 		project = getProjectManager().getProject(id);
 		initialInfo();
 	}
 
 	private void initialInfo() {
-		initialText(project.getName(), R.id.text_create_project_hours);
+		initialText(project.getName(), R.id.text_create_project_name);
 		initialDate(project.getStartDate(), R.id.button_create_project_start_date);
 		initialDate(project.getEndDate(), R.id.button_create_project_end_date);
 		initialText(project.getMinitues(), R.id.text_create_project_minutues);
@@ -37,7 +39,7 @@ public class ModifyProjectActivity extends BaseActivity {
 	private void initialDate(Calendar date, int buttonId) {
 		Button dateButton = getButton(buttonId);
 		dateButton.setText(date.get(Calendar.YEAR) + "/" + 
-							date.get(Calendar.MONTH) + "/" +
+							(date.get(Calendar.MONTH) + 1) + "/" +
 							date.get(Calendar.DAY_OF_MONTH));
 	}
 

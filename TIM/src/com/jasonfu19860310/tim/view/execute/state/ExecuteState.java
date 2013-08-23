@@ -50,7 +50,6 @@ abstract public class ExecuteState implements IExecuteState{
 
 	@Override
 	public void save() {
-		activity.setCurrentState(activity.getStopState());
 		recordTimer.cancelTimer();
 		if (timeText.isZeroTime()) {
 			createWarningDialog(R.string.execute_error_msg_title, 
@@ -89,10 +88,12 @@ abstract public class ExecuteState implements IExecuteState{
 	@Override
 	public void input() {
 		recordTimer.cancelTimer();
-		activity.setCurrentState(activity.getPauseState());
+		currentProject.setTimer_started(false);
+		currentProject.setTimer_paused(true);
 		changeStartButtonTo(START);
 		InputTimeDialog input = new InputTimeDialog(timeText, activity);
 		input.openDialog();
+		activity.setCurrentState(activity.getPauseState());
 	}
 	
 	@Override

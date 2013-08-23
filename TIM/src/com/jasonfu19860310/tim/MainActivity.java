@@ -21,6 +21,7 @@ public class MainActivity extends ListActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getActionBar().setDisplayShowHomeEnabled(false);
         listAdapter = new PorjectListAdapter(this); 
         this.setListAdapter(listAdapter);
         this.getListView().setOnItemClickListener(new ItemClickListener(this));
@@ -28,7 +29,7 @@ public class MainActivity extends ListActivity {
 	
 	@Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
+        getMenuInflater().inflate(R.menu.add_project, menu);
         return true;
     }
 	

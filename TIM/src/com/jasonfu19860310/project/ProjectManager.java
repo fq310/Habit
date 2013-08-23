@@ -128,7 +128,9 @@ public class ProjectManager {
 	}
 	
 	public void updateProject(Project project) {
-		
+		SQLiteDatabase database = databaseHelper.getWritableDatabase();
+		ContentValues values = getUpdateValues(project);
+		updateTable(project, database, values);
 	}
 	
 	public int getTimeOn(Calendar date, long id) {
@@ -153,10 +155,8 @@ public class ProjectManager {
 
 	public void updateProjectAfterSave(Project project) {
 		project.setTotalFinishedSeconds(project.getTotalFinishedSeconds() + project.getTimer_seconds());
-		project.setTotalPassedDays(DateUtil.getDaysBwtween(project.getStartDate(), Calendar.getInstance()));
-		SQLiteDatabase database = databaseHelper.getWritableDatabase();
-		ContentValues values = getUpdateValues(project);
-		updateTable(project, database, values);
+		project.setTotalPassedDays(DateUtil.getDaysBwtween(project.getStartDate(), Calendar.getInstance()) + 1);
+		updateProject(project);
 	}
 
 	private void updateTable(Project project, SQLiteDatabase database,
