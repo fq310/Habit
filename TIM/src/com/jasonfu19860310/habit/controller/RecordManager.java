@@ -20,6 +20,7 @@ public class RecordManager {
 		SQLiteDatabase database = databaseHelper.getWritableDatabase();
 		ContentValues values = getUpdateValues(id, totalSeconds);
 		database.insert(RecordEntry.TABLE_NAME, null, values);
+		database.close();
 	}
 
 	private ContentValues getUpdateValues(long projectID, long seconds) {

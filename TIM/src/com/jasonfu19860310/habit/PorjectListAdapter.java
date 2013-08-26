@@ -1,5 +1,6 @@
 package com.jasonfu19860310.habit;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 import com.jasonfu19860310.habit.controller.ProjectManager;
@@ -75,9 +76,15 @@ public class PorjectListAdapter extends BaseAdapter {
 		nameTextView.setText(projectName);
 		
 		TextView finishedPercent = (TextView) itemView.findViewById(R.id.project_list_percent);
-		finishedPercent.setText(project.getTotalFinishedSeconds()/project.getTotalSeconds() * 100 + "%");
+		finishedPercent.setText(getFinishedRate(project));
 		
 		return itemView;
+	}
+
+	private String getFinishedRate(Project project) {
+		float finishRate = ((float)project.getTotalFinishedSeconds()/project.getTotalSeconds()) * 100;
+		DecimalFormat df = new DecimalFormat("###.##");
+		return df.format(finishRate) + "%";
 	}
 
 	public void reloadData() {

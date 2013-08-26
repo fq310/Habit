@@ -33,6 +33,7 @@ public class ProjectManager {
 				allProjects.add(readProjectFrom(cursor));
 			}
 		}
+		database.close();
 		return allProjects;
 	}
 
@@ -98,6 +99,7 @@ public class ProjectManager {
 		SQLiteDatabase database = databaseHelper.getWritableDatabase();
 		ContentValues values = getUpdateValues(project);
 		database.insert(ProjectEntry.TABLE_NAME, null, values);
+		database.close();
 	}
 
 	private ContentValues getUpdateValues(Project project) {
@@ -124,12 +126,16 @@ public class ProjectManager {
 		String[] selectionArgs = {id};
 		Cursor cursor = database.query(ProjectEntry.TABLE_NAME, null, selection, selectionArgs, null, null, null);
 		if (cursor.moveToFirst()) {
-			return readProjectFrom(cursor);
+			Project project = readProjectFrom(cursor);
+			database.close();
+			return project;
 		}
+		database.close();
 		return null;
 	}
 	
 	public void updateProject(Project project) {
+		project.setTotalSeconds(getTotalTime(project));
 		SQLiteDatabase database = databaseHelper.getWritableDatabase();
 		ContentValues values = getUpdateValues(project);
 		updateTable(project, database, values);
@@ -167,6 +173,7 @@ public class ProjectManager {
 		String id = String.valueOf(project.getId());
 		String[] selectionArgs = {id};
 		database.update(ProjectEntry.TABLE_NAME, values, selection, selectionArgs);
+		database.close();
 	}
 
 	public void updateProjectAfterExitActivity(Project project) {
@@ -177,5 +184,14 @@ public class ProjectManager {
 		values.put(ProjectEntry.COLUMN_NAME_TIMER_SECONDS, project.getTimer_seconds());
 		values.put(ProjectEntry.COLUMN_NAME_TIMER_DESTORY_DATE, project.getTimerDestroyDate().getTimeInMillis());
 		updateTable(project, database, values);
+	}
+
+	public void deleteProject(Project currentProject) {
+		SQLiteDatabase database = databaseHelper.getWritableDatabase();
+		String selection = ProjectEntry._ID + "=?";
+		String id = String.valueOf(currentProject.getId());
+		String[] selectionArgs = {id};
+		database.delete(ProjectEntry.TABLE_NAME, selection, selectionArgs);
+		database.close();
 	}
 }

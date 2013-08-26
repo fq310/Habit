@@ -100,7 +100,7 @@ abstract public class ExecuteState implements IExecuteState{
 	@Override
 	public void pause() {
 		recordTimer.cancelTimer();
-		changeStartButtonTo(PAUSE);
+		changeStartButtonTo(START);
 		currentProject.setTimer_started(false);
 		currentProject.setTimer_paused(true);
 		activity.setCurrentState(activity.getPauseState());		

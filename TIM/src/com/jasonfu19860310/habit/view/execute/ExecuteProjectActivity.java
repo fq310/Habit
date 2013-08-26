@@ -16,6 +16,8 @@ import com.jasonfu19860310.tim.R;
 import android.os.Bundle;
 import android.os.Handler;
 import android.app.Activity;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.util.Log;
 import android.view.Menu;
@@ -42,10 +44,15 @@ public class ExecuteProjectActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_execute_project);
-		getActionBar().setDisplayShowHomeEnabled(false);
 		initialUtilityObject();
+		initialActionBar();
 		initialProgressBar();
 		initialState();
+	}
+
+	private void initialActionBar() {
+		getActionBar().setDisplayShowHomeEnabled(false);
+		getActionBar().setTitle(currentProject.getName());
 	}
 	
 	private void initialUtilityObject() {
@@ -65,8 +72,8 @@ public class ExecuteProjectActivity extends Activity {
 		finishedTime.setProgress((int) (currentProject.getTotalFinishedSeconds()/60));
 		
 		ProgressBar passedDays = (ProgressBar) findViewById(R.id.execute_project_progressBar2);
-		passedDays.setMax(DateUtil.getDaysBwtween(currentProject.getStartDate(), currentProject.getEndDate()) + 1);
-		passedDays.setProgress(currentProject.getTotalPassedDays());
+		passedDays.setMax(DateUtil.getDaysBwtween(currentProject.getStartDate(), currentProject.getEndDate()));
+		passedDays.setProgress(DateUtil.getDaysBwtween(currentProject.getStartDate(), Calendar.getInstance()));
 	}
 
 	private void initialState() {
@@ -93,9 +100,23 @@ public class ExecuteProjectActivity extends Activity {
 	}
 	
 	public void onModifyProject(MenuItem i) {
+		currentState.pause();
 		Intent intent = new Intent(this, ModifyProjectActivity.class);
 		intent.putExtra("id", currentProject.getId());
 		this.startActivity(intent);
+	}
+	
+	public void onDeleteProject(MenuItem i) {
+		currentState.pause();
+		WarningDialog.OKDialogWithListener(R.string.execute_warning, 
+			R.string.execute_warning_msg, this, 
+			new OnClickListener() {
+				@Override
+				public void onClick(DialogInterface arg0, int button) {
+					projectManager.deleteProject(currentProject);
+					finish();
+				}
+		});
 	}
 	
 	@Override

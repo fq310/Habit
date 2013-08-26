@@ -20,9 +20,9 @@ public class MainActivity extends ListActivity {
 
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
+		getActionBar().setDisplayShowHomeEnabled(false);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        getActionBar().setDisplayShowHomeEnabled(false);
         listAdapter = new PorjectListAdapter(this); 
         this.setListAdapter(listAdapter);
         this.getListView().setOnItemClickListener(new ItemClickListener(this));
