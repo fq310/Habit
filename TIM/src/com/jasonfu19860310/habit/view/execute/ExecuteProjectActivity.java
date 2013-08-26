@@ -1,17 +1,17 @@
-package com.jasonfu19860310.tim.view.execute;
+package com.jasonfu19860310.habit.view.execute;
 
 import java.util.Calendar;
 
-import com.jasonfu19860310.project.DateUtil;
-import com.jasonfu19860310.project.Project;
-import com.jasonfu19860310.project.ProjectManager;
-import com.jasonfu19860310.project.RecordManager;
+import com.jasonfu19860310.habit.controller.ProjectManager;
+import com.jasonfu19860310.habit.controller.RecordManager;
+import com.jasonfu19860310.habit.model.DateUtil;
+import com.jasonfu19860310.habit.model.Project;
+import com.jasonfu19860310.habit.view.ModifyProjectActivity;
+import com.jasonfu19860310.habit.view.execute.state.IExecuteState;
+import com.jasonfu19860310.habit.view.execute.state.PausedState;
+import com.jasonfu19860310.habit.view.execute.state.StartState;
+import com.jasonfu19860310.habit.view.execute.state.StopState;
 import com.jasonfu19860310.tim.R;
-import com.jasonfu19860310.tim.view.ModifyProjectActivity;
-import com.jasonfu19860310.tim.view.execute.state.IExecuteState;
-import com.jasonfu19860310.tim.view.execute.state.PausedState;
-import com.jasonfu19860310.tim.view.execute.state.StartState;
-import com.jasonfu19860310.tim.view.execute.state.StopState;
 
 import android.os.Bundle;
 import android.os.Handler;

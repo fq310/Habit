@@ -1,7 +1,7 @@
-package com.jasonfu19860310.db;
+package com.jasonfu19860310.habit.db;
 
-import com.jasonfu19860310.db.DBContract.ProjectEntry;
-import com.jasonfu19860310.db.DBContract.RecordEntry;
+import com.jasonfu19860310.habit.db.DBContract.ProjectEntry;
+import com.jasonfu19860310.habit.db.DBContract.RecordEntry;
 
 import android.content.Context;
 

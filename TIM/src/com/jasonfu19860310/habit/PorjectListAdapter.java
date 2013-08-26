@@ -1,9 +1,10 @@
-package com.jasonfu19860310.tim;
+package com.jasonfu19860310.habit;
 
 import java.util.List;
 
-import com.jasonfu19860310.project.Project;
-import com.jasonfu19860310.project.ProjectManager;
+import com.jasonfu19860310.habit.controller.ProjectManager;
+import com.jasonfu19860310.habit.model.Project;
+import com.jasonfu19860310.tim.R;
 
 import android.content.Context;
 import android.view.LayoutInflater;

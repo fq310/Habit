@@ -1,17 +1,18 @@
-package com.jasonfu19860310.tim.view.execute.state;
+package com.jasonfu19860310.habit.view.execute.state;
 
 import java.util.Calendar;
 
 import android.widget.Button;
-import com.jasonfu19860310.project.Project;
-import com.jasonfu19860310.project.ProjectManager;
-import com.jasonfu19860310.project.RecordManager;
+
+import com.jasonfu19860310.habit.controller.ProjectManager;
+import com.jasonfu19860310.habit.controller.RecordManager;
+import com.jasonfu19860310.habit.model.Project;
+import com.jasonfu19860310.habit.view.execute.ExecuteProjectActivity;
+import com.jasonfu19860310.habit.view.execute.InputTimeDialog;
+import com.jasonfu19860310.habit.view.execute.RecordTimer;
+import com.jasonfu19860310.habit.view.execute.TimeText;
+import com.jasonfu19860310.habit.view.execute.WarningDialog;
 import com.jasonfu19860310.tim.R;
-import com.jasonfu19860310.tim.view.execute.ExecuteProjectActivity;
-import com.jasonfu19860310.tim.view.execute.InputTimeDialog;
-import com.jasonfu19860310.tim.view.execute.RecordTimer;
-import com.jasonfu19860310.tim.view.execute.TimeText;
-import com.jasonfu19860310.tim.view.execute.WarningDialog;
 
 abstract public class ExecuteState implements IExecuteState{
 	protected static final String PAUSE = "Pause";

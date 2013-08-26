@@ -1,4 +1,4 @@
-package com.jasonfu19860310.db;
+package com.jasonfu19860310.habit.db;
 
 import android.content.Context;
 import android.database.DatabaseErrorHandler;

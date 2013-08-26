@@ -1,12 +1,14 @@
-package com.jasonfu19860310.project;
+package com.jasonfu19860310.habit.controller;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import com.jasonfu19860310.db.DBHelper;
-import com.jasonfu19860310.db.DBContract.ProjectEntry;
-import com.jasonfu19860310.db.ProjectDBHelper;
+import com.jasonfu19860310.habit.db.DBHelper;
+import com.jasonfu19860310.habit.db.ProjectDBHelper;
+import com.jasonfu19860310.habit.db.DBContract.ProjectEntry;
+import com.jasonfu19860310.habit.model.DateUtil;
+import com.jasonfu19860310.habit.model.Project;
 
 import android.content.ContentValues;
 import android.content.Context;

@@ -1,9 +1,10 @@
-package com.jasonfu19860310.tim.view.execute;
+package com.jasonfu19860310.habit.view.execute;
 
 import java.util.Timer;
 import java.util.TimerTask;
 import android.os.Handler;
-import com.jasonfu19860310.project.Project;
+
+import com.jasonfu19860310.habit.model.Project;
 
 public class RecordTimer extends TimerTask {
 	private TimeText timeText;

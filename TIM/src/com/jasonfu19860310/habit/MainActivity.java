@@ -1,7 +1,8 @@
-package com.jasonfu19860310.tim;
+package com.jasonfu19860310.habit;
 
-import com.jasonfu19860310.tim.view.CreateProjectActivity;
-import com.jasonfu19860310.tim.view.execute.ExecuteProjectActivity;
+import com.jasonfu19860310.habit.view.CreateProjectActivity;
+import com.jasonfu19860310.habit.view.execute.ExecuteProjectActivity;
+import com.jasonfu19860310.tim.R;
 
 import android.os.Bundle;
 import android.app.ListActivity;

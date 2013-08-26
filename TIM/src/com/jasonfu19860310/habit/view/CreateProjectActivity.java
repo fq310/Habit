@@ -1,8 +1,8 @@
-package com.jasonfu19860310.tim.view;
+package com.jasonfu19860310.habit.view;
 
 import android.view.View;
 
-import com.jasonfu19860310.project.Project;
+import com.jasonfu19860310.habit.model.Project;
 
 public class CreateProjectActivity extends BaseActivity {
 

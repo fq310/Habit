@@ -1,4 +1,4 @@
-package com.jasonfu19860310.project;
+package com.jasonfu19860310.habit.model;
 
 import java.util.Calendar;
 

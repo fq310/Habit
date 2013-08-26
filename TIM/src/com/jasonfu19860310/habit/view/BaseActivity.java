@@ -1,10 +1,10 @@
-package com.jasonfu19860310.tim.view;
+package com.jasonfu19860310.habit.view;
 
 
 import java.util.Calendar;
 
-import com.jasonfu19860310.project.Project;
-import com.jasonfu19860310.project.ProjectManager;
+import com.jasonfu19860310.habit.controller.ProjectManager;
+import com.jasonfu19860310.habit.model.Project;
 import com.jasonfu19860310.tim.R;
 
 import android.os.Bundle;

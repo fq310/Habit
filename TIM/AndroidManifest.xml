@@ -13,7 +13,7 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name" >
         <activity
-            android:name="com.jasonfu19860310.tim.MainActivity"
+            android:name="com.jasonfu19860310.habit.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,15 +22,15 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.jasonfu19860310.tim.view.CreateProjectActivity"
+            android:name="com.jasonfu19860310.habit.view.CreateProjectActivity"
             android:label="@string/title_activity_create_project" >
         </activity>
         <activity
-            android:name="com.jasonfu19860310.tim.view.ModifyProjectActivity"
+            android:name="com.jasonfu19860310.habit.view.ModifyProjectActivity"
             android:label="@string/title_activity_modify_project" >
         </activity>
         <activity
-            android:name="com.jasonfu19860310.tim.view.execute.ExecuteProjectActivity"
+            android:name="com.jasonfu19860310.habit.view.execute.ExecuteProjectActivity"
             android:label="@string/title_activity_execute_project" >
         </activity>
     </application>
