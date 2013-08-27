@@ -1,5 +1,6 @@
 package com.jasonfu19860310.habit.view.execute;
 
+import java.text.DecimalFormat;
 import java.util.Calendar;
 
 import com.jasonfu19860310.habit.controller.ProjectManager;
@@ -67,13 +68,24 @@ public class ExecuteProjectActivity extends Activity {
 	}
 
 	private void initialProgressBar() {
-		ProgressBar finishedTime = (ProgressBar) findViewById(R.id.execute_project_progressBar1);
-		finishedTime.setMax((int) (currentProject.getTotalSeconds()/60));
-		finishedTime.setProgress((int) (currentProject.getTotalFinishedSeconds()/60));
+		ProgressBar finishedTimeBar = (ProgressBar) findViewById(R.id.execute_project_progressBar1);
+		float rate = (float)currentProject.getTotalFinishedSeconds()/currentProject.getTotalSeconds() * 100;
+		finishedTimeBar.setMax(100);
+		finishedTimeBar.setProgress((int)rate);
 		
-		ProgressBar passedDays = (ProgressBar) findViewById(R.id.execute_project_progressBar2);
-		passedDays.setMax(DateUtil.getDaysBwtween(currentProject.getStartDate(), currentProject.getEndDate()));
-		passedDays.setProgress(DateUtil.getDaysBwtween(currentProject.getStartDate(), Calendar.getInstance()));
+		TextView finishedTimeText = (TextView) findViewById(R.id.execute_project_text1);
+		finishedTimeText.setText(R.string.Total_Finished_Time);
+		DecimalFormat df = new DecimalFormat("###.##");
+		finishedTimeText.append(" [" + df.format(rate) +"%]");
+		
+		ProgressBar passedDayBar = (ProgressBar) findViewById(R.id.execute_project_progressBar2);
+		passedDayBar.setMax(DateUtil.getDaysBwtween(currentProject.getStartDate(), currentProject.getEndDate()));
+		int passedDays = DateUtil.getDaysBwtween(currentProject.getStartDate(), Calendar.getInstance());
+		passedDayBar.setProgress(passedDays);
+		
+		TextView passedDayText = (TextView) findViewById(R.id.execute_project_text2);
+		passedDayText.setText(R.string.Total_Passed_Days);
+		passedDayText.append(" [" + passedDays +"]");
 	}
 
 	private void initialState() {
@@ -135,6 +147,7 @@ public class ExecuteProjectActivity extends Activity {
 
 	public void onSaveClicked(View view) {
 		currentState.save();
+		initialProgressBar();
 	}
 	
 	public void onInputManuallyClicked(View view) {
@@ -188,9 +201,8 @@ public class ExecuteProjectActivity extends Activity {
 
 	/*
 	 * After changing the state, the current state will be saved into the DB.
-	 * In case when the App is closed by unexpected user actions, we can restore 
+	 * When the App is closed by unexpected user actions, we can restore 
 	 * the state.
-	 * 
 	 */
 	public void saveCurrentState() {
 		currentProject.setTimer_seconds(timeText.getTotalSeconds());

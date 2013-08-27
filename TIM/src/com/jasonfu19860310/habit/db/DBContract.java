@@ -23,7 +23,7 @@ public class DBContract {
     }
 	
 	public static abstract class RecordEntry implements BaseColumns {
-        public static final String TABLE_NAME = "record";
+        public static final String TABLE_NAME = "records";
         public static final String COLUMN_NAME_PROJECT_ID = "project_id";
         public static final String COLUMN_NAME_RECORD_DATE = "date";
         public static final String COLUMN_NAME_RECORD_TIME_CONSUMING = "time_consuming";
