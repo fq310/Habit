@@ -1,12 +1,11 @@
 package com.jasonfu19860310.habit.view.execute.state;
 
-import java.util.Calendar;
-
-import com.jasonfu19860310.habit.view.execute.ExecuteProjectActivity;
+import com.jasonfu19860310.habit.adt.HabitDate;
+import com.jasonfu19860310.habit.view.execute.ExecuteHabitActivity;
 
 public class StartState extends ExecuteState {
 
-	public StartState(ExecuteProjectActivity activity) {
+	public StartState(ExecuteHabitActivity activity) {
 		super(activity);
 	}
 
@@ -22,8 +21,8 @@ public class StartState extends ExecuteState {
 
 	@Override
 	public void onCreate() {
-		Calendar timerDestroyDate = currentProject.getTimerDestroyDate();
-		Calendar currentDate = Calendar.getInstance();
+		HabitDate timerDestroyDate = currentProject.getTimerDestroyDate();
+		HabitDate currentDate = new HabitDate();
 		long totalSeconds = (currentDate.getTimeInMillis() - timerDestroyDate.getTimeInMillis()) / 1000 + currentProject.getTimer_seconds();
 		currentProject.setTimer_seconds(totalSeconds);
 		timeText.setTime(totalSeconds);

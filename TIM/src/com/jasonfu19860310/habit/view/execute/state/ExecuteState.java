@@ -1,13 +1,12 @@
 package com.jasonfu19860310.habit.view.execute.state;
 
-import java.util.Calendar;
-
 import android.widget.Button;
 
-import com.jasonfu19860310.habit.controller.ProjectManager;
+import com.jasonfu19860310.habit.adt.HabitDate;
+import com.jasonfu19860310.habit.controller.HabitManager;
 import com.jasonfu19860310.habit.controller.RecordManager;
-import com.jasonfu19860310.habit.model.Project;
-import com.jasonfu19860310.habit.view.execute.ExecuteProjectActivity;
+import com.jasonfu19860310.habit.model.Habit;
+import com.jasonfu19860310.habit.view.execute.ExecuteHabitActivity;
 import com.jasonfu19860310.habit.view.execute.InputTimeDialog;
 import com.jasonfu19860310.habit.view.execute.RecordTimer;
 import com.jasonfu19860310.habit.view.execute.TimeText;
@@ -17,16 +16,16 @@ import com.jasonfu19860310.tim.R;
 abstract public class ExecuteState implements IExecuteState{
 	protected static final String PAUSE = "Pause";
 	protected static final String START = "Start";
-	protected ExecuteProjectActivity activity;
+	protected ExecuteHabitActivity activity;
 	private RecordManager recordManager;
-	private ProjectManager projectManager;
-	protected Project currentProject;
+	private HabitManager projectManager;
+	protected Habit currentProject;
 	
 	private Button startButton;
 	protected TimeText timeText;
 	protected RecordTimer recordTimer;
 	
-	public ExecuteState(ExecuteProjectActivity activity) {
+	public ExecuteState(ExecuteHabitActivity activity) {
 		this.activity = activity;
 		startButton = (Button)activity.findViewById(R.id.button_execute_start);
 		recordManager = activity.getRecordManager();
@@ -82,7 +81,7 @@ abstract public class ExecuteState implements IExecuteState{
 	public void exit() {
 		recordTimer.cancelTimer();
 		currentProject.setTimer_seconds(timeText.getTotalSeconds());
-		currentProject.setTimerDestroyDate(Calendar.getInstance());
+		currentProject.setTimerDestroyDate(new HabitDate());
 		projectManager.updateProjectAfterExitActivity(currentProject);
 	}
 	

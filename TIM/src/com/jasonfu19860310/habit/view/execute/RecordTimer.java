@@ -4,16 +4,16 @@ import java.util.Timer;
 import java.util.TimerTask;
 import android.os.Handler;
 
-import com.jasonfu19860310.habit.model.Project;
+import com.jasonfu19860310.habit.model.Habit;
 
 public class RecordTimer extends TimerTask {
 	private TimeText timeText;
-	private Project project;
+	private Habit project;
 	private Handler handler;
 	private Timer timer = new Timer();
 	private RecordTimer timerTask;
 
-	public RecordTimer(TimeText timeText, Project project, Handler handler) {
+	public RecordTimer(TimeText timeText, Habit project, Handler handler) {
 		super();
 		this.timeText = timeText;
 		this.project = project;

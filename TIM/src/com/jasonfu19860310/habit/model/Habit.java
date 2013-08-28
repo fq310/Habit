@@ -1,13 +1,13 @@
 package com.jasonfu19860310.habit.model;
 
-import java.util.Calendar;
+import com.jasonfu19860310.habit.adt.HabitDate;
 
-public class Project {
+public class Habit {
 	public static final String ID = "id";
 	private long id;
 	private String name = "project";
-	private Calendar startDate = Calendar.getInstance();
-	private Calendar endDate = Calendar.getInstance();
+	private HabitDate startDate = new HabitDate();
+	private HabitDate endDate = new HabitDate();
 	private int hours;
 	private int minitues;
 	private long totalSeconds = 0;
@@ -16,9 +16,9 @@ public class Project {
 	private boolean timer_started;
 	private boolean timer_paused;
 	private long timer_seconds;
-	private Calendar timerDestroyDate = Calendar.getInstance();
+	private HabitDate timerDestroyDate = new HabitDate();
 	
-	public Calendar getEndDate() {
+	public HabitDate getEndDate() {
 		return endDate;
 	}
 	
@@ -38,11 +38,11 @@ public class Project {
 		return name;
 	}
 
-	public Calendar getStartDate() {
+	public HabitDate getStartDate() {
 		return startDate;
 	}
 
-	public void setEndDate(Calendar endDate) {
+	public void setEndDate(HabitDate endDate) {
 		this.endDate = endDate;
 	}
 	public void setHours(int hours) {
@@ -58,7 +58,7 @@ public class Project {
 		this.name = name;
 	}
 	
-	public void setStartDate(Calendar startDate) {
+	public void setStartDate(HabitDate startDate) {
 		this.startDate = startDate;
 	}
 	
@@ -110,11 +110,11 @@ public class Project {
 		this.timer_seconds = timer_seconds;
 	}
 	
-	public Calendar getTimerDestroyDate() {
+	public HabitDate getTimerDestroyDate() {
 		return timerDestroyDate;
 	}
 
-	public void setTimerDestroyDate(Calendar date) {
+	public void setTimerDestroyDate(HabitDate date) {
 		this.timerDestroyDate = date;
 	}
 }

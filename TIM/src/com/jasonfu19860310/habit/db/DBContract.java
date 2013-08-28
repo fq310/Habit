@@ -5,8 +5,8 @@ import android.provider.BaseColumns;
 public class DBContract {
 	public DBContract() {}
 	
-	public static abstract class ProjectEntry implements BaseColumns {
-        public static final String TABLE_NAME = "project";
+	public static abstract class HabitEntry implements BaseColumns {
+        public static final String TABLE_NAME = "habits";
         public static final String COLUMN_NAME_NAME = "name";
         public static final String COLUMN_NAME_START_DATE = "startDate";
         public static final String COLUMN_NAME_END_DATE = "endDate";

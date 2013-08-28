@@ -53,13 +53,17 @@ public class TimeText {
 	}
 	
 	public void setTime(long totalSeconds) {
+		timeText.setText(getTimeStringFromSeconds(totalSeconds)); 
+	}
+	
+	public static String getTimeStringFromSeconds(long totalSeconds) {
 		String hours = stringOf(totalSeconds / (60*60));
 		String minutes = stringOf((totalSeconds % 3600) / 60);
 		String seconds = stringOf((totalSeconds % 3600) % 60);
-		timeText.setText(hours + COLON + minutes + COLON + seconds); 
+		return hours + COLON + minutes + COLON + seconds;
 	}
-	
-	private String stringOf(long time) {
+ 	
+	private static String stringOf(long time) {
 		String result = Long.toString(time);
 		if (result.length() < 2) return "0" + result;
 		return result;

@@ -3,8 +3,8 @@ package com.jasonfu19860310.habit;
 import java.text.DecimalFormat;
 import java.util.List;
 
-import com.jasonfu19860310.habit.controller.ProjectManager;
-import com.jasonfu19860310.habit.model.Project;
+import com.jasonfu19860310.habit.controller.HabitManager;
+import com.jasonfu19860310.habit.model.Habit;
 import com.jasonfu19860310.tim.R;
 
 import android.content.Context;
@@ -25,14 +25,14 @@ public class PorjectListAdapter extends BaseAdapter {
 	public static final String DAYS_PASSED = "days";
 	public static final String UNFINISHED_TIME_OF_TODAY = "time";
 	public static final String PROJECT_NAME = "name";
-	private List<Project> projects;
+	private List<Habit> projects;
 	private LayoutInflater layoutInflater;  
-	private ProjectManager projectManager;
+	private HabitManager projectManager;
 	
 	public PorjectListAdapter(Context context) {
 		layoutInflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		projectManager = new ProjectManager(context);
+		projectManager = new HabitManager(context);
 		projects = projectManager.getAllProjects();
 	}
 
@@ -56,13 +56,13 @@ public class PorjectListAdapter extends BaseAdapter {
 		View itemView;
 		if ((convertView == null)) {
 			itemView = layoutInflater.inflate(
-	                R.layout.project_list_item, parent, false);
+	                R.layout.habit_list_item, parent, false);
 		} else {
 			itemView = convertView;
 		}
 		
 		projects = projectManager.getAllProjects();
-		Project project = projects.get(position);
+		Habit project = projects.get(position);
 		String projectName = project.getName();
 		TextView nameTextView = (TextView) itemView.findViewById(R.id.projectlist_name);
 		boolean timerPaused = project.isTimer_paused();
@@ -81,7 +81,7 @@ public class PorjectListAdapter extends BaseAdapter {
 		return itemView;
 	}
 
-	private String getFinishedRate(Project project) {
+	private String getFinishedRate(Habit project) {
 		float finishRate = ((float)project.getTotalFinishedSeconds()/project.getTotalSeconds()) * 100;
 		DecimalFormat df = new DecimalFormat("###.##");
 		return df.format(finishRate) + "%";

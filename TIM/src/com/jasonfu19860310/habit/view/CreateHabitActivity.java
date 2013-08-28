@@ -2,13 +2,13 @@ package com.jasonfu19860310.habit.view;
 
 import android.view.View;
 
-import com.jasonfu19860310.habit.model.Project;
+import com.jasonfu19860310.habit.model.Habit;
 
-public class CreateProjectActivity extends BaseActivity {
+public class CreateHabitActivity extends HabitBaseActivity {
 
-	public CreateProjectActivity() {
+	public CreateHabitActivity() {
 		super();
-		project = new Project();
+		project = new Habit();
 	}
 
 	@Override

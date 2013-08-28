@@ -1,13 +1,10 @@
 package com.jasonfu19860310.habit.view.execute;
 
-import java.text.DecimalFormat;
-import java.util.Calendar;
-
-import com.jasonfu19860310.habit.controller.ProjectManager;
+import com.jasonfu19860310.habit.adt.HabitDate;
+import com.jasonfu19860310.habit.controller.HabitManager;
 import com.jasonfu19860310.habit.controller.RecordManager;
-import com.jasonfu19860310.habit.model.DateUtil;
-import com.jasonfu19860310.habit.model.Project;
-import com.jasonfu19860310.habit.view.ModifyProjectActivity;
+import com.jasonfu19860310.habit.model.Habit;
+import com.jasonfu19860310.habit.view.ModifyHabitActivity;
 import com.jasonfu19860310.habit.view.execute.state.IExecuteState;
 import com.jasonfu19860310.habit.view.execute.state.PausedState;
 import com.jasonfu19860310.habit.view.execute.state.StartState;
@@ -27,13 +24,13 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-public class ExecuteProjectActivity extends Activity {
+public class ExecuteHabitActivity extends Activity {
 
 	private Handler handler;
 	protected TimeText timeText;
 	protected RecordTimer recordTimer;
-	private Project currentProject;
-	private ProjectManager projectManager;
+	private Habit currentProject;
+	private HabitManager projectManager;
 	private RecordManager recordManager;
 	
 	private IExecuteState startState;
@@ -44,7 +41,7 @@ public class ExecuteProjectActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_execute_project);
+		setContentView(R.layout.activity_execute_habit);
 		initialUtilityObject();
 		initialActionBar();
 		initialProgressBar();
@@ -59,7 +56,7 @@ public class ExecuteProjectActivity extends Activity {
 	private void initialUtilityObject() {
 		handler = new Handler();
 		long projectID = getIntent().getLongExtra("id", -1);
-		projectManager = new ProjectManager(this);
+		projectManager = new HabitManager(this);
 		recordManager = new RecordManager(this);
 		currentProject = projectManager.getProject(projectID);
 		TextView timeTextView = (TextView) findViewById(R.id.execute_project_textView_time);
@@ -75,17 +72,19 @@ public class ExecuteProjectActivity extends Activity {
 		
 		TextView finishedTimeText = (TextView) findViewById(R.id.execute_project_text1);
 		finishedTimeText.setText(R.string.Total_Finished_Time);
-		DecimalFormat df = new DecimalFormat("###.##");
-		finishedTimeText.append(" [" + df.format(rate) +"%]");
+		long totalSeconds = currentProject.getTotalFinishedSeconds();
+		finishedTimeText.append(" [" + TimeText.getTimeStringFromSeconds(totalSeconds) + "]");
 		
 		ProgressBar passedDayBar = (ProgressBar) findViewById(R.id.execute_project_progressBar2);
-		passedDayBar.setMax(DateUtil.getDaysBwtween(currentProject.getStartDate(), currentProject.getEndDate()));
-		int passedDays = DateUtil.getDaysBwtween(currentProject.getStartDate(), Calendar.getInstance());
+		HabitDate startDate = currentProject.getStartDate();
+		HabitDate endDate = currentProject.getEndDate();
+		passedDayBar.setMax(startDate.daysFrom(endDate));
+		int passedDays = startDate.daysFrom(new HabitDate());
 		passedDayBar.setProgress(passedDays);
 		
 		TextView passedDayText = (TextView) findViewById(R.id.execute_project_text2);
-		passedDayText.setText(R.string.Total_Passed_Days);
-		passedDayText.append(" [" + passedDays +"]");
+		passedDayText.setText(startDate.toString() + " - " + endDate.toString());
+		passedDayText.append(" [ Day - " + passedDays + 1 +"]");
 	}
 
 	private void initialState() {
@@ -107,13 +106,13 @@ public class ExecuteProjectActivity extends Activity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.modify_project, menu);
+		getMenuInflater().inflate(R.menu.modify_habit, menu);
 		return true;
 	}
 	
 	public void onModifyProject(MenuItem i) {
 		currentState.pause();
-		Intent intent = new Intent(this, ModifyProjectActivity.class);
+		Intent intent = new Intent(this, ModifyHabitActivity.class);
 		intent.putExtra("id", currentProject.getId());
 		this.startActivity(intent);
 	}
@@ -173,11 +172,11 @@ public class ExecuteProjectActivity extends Activity {
 		return handler;
 	}
 
-	public Project getProject() {
+	public Habit getProject() {
 		return currentProject;
 	}
 
-	public ProjectManager getProjectManager() {
+	public HabitManager getProjectManager() {
 		return projectManager;
 	}
 
@@ -206,7 +205,7 @@ public class ExecuteProjectActivity extends Activity {
 	 */
 	public void saveCurrentState() {
 		currentProject.setTimer_seconds(timeText.getTotalSeconds());
-		currentProject.setTimerDestroyDate(Calendar.getInstance());
+		currentProject.setTimerDestroyDate(new HabitDate());
 		projectManager.updateProjectAfterExitActivity(currentProject);
 	}
 	

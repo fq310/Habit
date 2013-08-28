@@ -22,16 +22,16 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.jasonfu19860310.habit.view.CreateProjectActivity"
-            android:label="@string/title_activity_create_project" >
+            android:name="com.jasonfu19860310.habit.view.CreateHabitActivity"
+            android:label="@string/title_activity_create_habit" >
         </activity>
         <activity
-            android:name="com.jasonfu19860310.habit.view.ModifyProjectActivity"
-            android:label="@string/title_activity_modify_project" >
+            android:name="com.jasonfu19860310.habit.view.ModifyHabitActivity"
+            android:label="@string/title_activity_modify_habit" >
         </activity>
         <activity
-            android:name="com.jasonfu19860310.habit.view.execute.ExecuteProjectActivity"
-            android:label="@string/title_activity_execute_project" >
+            android:name="com.jasonfu19860310.habit.view.execute.ExecuteHabitActivity"
+            android:label="@string/title_activity_execute_habit" >
         </activity>
     </application>
 

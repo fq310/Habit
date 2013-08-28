@@ -1,7 +1,6 @@
 package com.jasonfu19860310.habit.view;
 
-import java.util.Calendar;
-
+import com.jasonfu19860310.habit.adt.HabitDate;
 import com.jasonfu19860310.tim.R;
 
 import android.os.Bundle;
@@ -9,7 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-public class ModifyProjectActivity extends BaseActivity {
+public class ModifyHabitActivity extends HabitBaseActivity {
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -36,11 +35,9 @@ public class ModifyProjectActivity extends BaseActivity {
 		text.setText(data);
 	}
 
-	private void initialDate(Calendar date, int buttonId) {
+	private void initialDate(HabitDate date, int buttonId) {
 		Button dateButton = getButton(buttonId);
-		dateButton.setText(date.get(Calendar.YEAR) + "/" + 
-							(date.get(Calendar.MONTH) + 1) + "/" +
-							date.get(Calendar.DAY_OF_MONTH));
+		dateButton.setText(date.toString());
 	}
 
 	@Override

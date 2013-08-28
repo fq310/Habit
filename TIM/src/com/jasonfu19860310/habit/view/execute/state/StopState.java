@@ -1,11 +1,11 @@
 package com.jasonfu19860310.habit.view.execute.state;
 
-import com.jasonfu19860310.habit.view.execute.ExecuteProjectActivity;
+import com.jasonfu19860310.habit.view.execute.ExecuteHabitActivity;
 import com.jasonfu19860310.habit.view.execute.InputTimeDialog;
 
 public class StopState extends ExecuteState {
 	
-	public StopState(ExecuteProjectActivity activity) {
+	public StopState(ExecuteHabitActivity activity) {
 		super(activity);
 	}
 

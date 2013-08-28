@@ -9,14 +9,14 @@ import android.text.TextWatcher;
 import android.widget.EditText;
 
 public class InputTimeDialog {
-	public InputTimeDialog(TimeText currentTime, ExecuteProjectActivity context) {
+	public InputTimeDialog(TimeText currentTime, ExecuteHabitActivity context) {
 		this.timeText = currentTime;
 		this.context = context;
 	}
 
 	protected static final String COLON = ":";
 	private TimeText timeText;
-	private ExecuteProjectActivity context;
+	private ExecuteHabitActivity context;
 	private EditText hours;
 	private EditText minutes;
 	private EditText seconds;

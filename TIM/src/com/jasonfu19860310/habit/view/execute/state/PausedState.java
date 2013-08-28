@@ -1,6 +1,6 @@
 package com.jasonfu19860310.habit.view.execute.state;
 
-import com.jasonfu19860310.habit.view.execute.ExecuteProjectActivity;
+import com.jasonfu19860310.habit.view.execute.ExecuteHabitActivity;
 
 public class PausedState extends ExecuteState {
 	
@@ -9,7 +9,7 @@ public class PausedState extends ExecuteState {
 		return "pause";
 	}
 
-	public PausedState(ExecuteProjectActivity activity) {
+	public PausedState(ExecuteHabitActivity activity) {
 		super(activity);
 	}
 

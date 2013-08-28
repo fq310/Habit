@@ -1,7 +1,7 @@
 package com.jasonfu19860310.habit;
 
-import com.jasonfu19860310.habit.view.CreateProjectActivity;
-import com.jasonfu19860310.habit.view.execute.ExecuteProjectActivity;
+import com.jasonfu19860310.habit.view.CreateHabitActivity;
+import com.jasonfu19860310.habit.view.execute.ExecuteHabitActivity;
 import com.jasonfu19860310.tim.R;
 
 import android.os.Bundle;
@@ -30,12 +30,12 @@ public class MainActivity extends ListActivity {
 	
 	@Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.add_project, menu);
+        getMenuInflater().inflate(R.menu.add_habit, menu);
         return true;
     }
 	
 	public void onOptionAddProject(MenuItem i) {
-		Intent intent = new Intent(this, CreateProjectActivity.class);
+		Intent intent = new Intent(this, CreateHabitActivity.class);
 		this.startActivityForResult(intent, ADD);
 	}
 	
@@ -59,7 +59,7 @@ class ItemClickListener implements OnItemClickListener {
 	private ListActivity context;
 	@Override
 	public void onItemClick(AdapterView<?> list, View view, int position, long id) {
-		Intent intent = new Intent(context, ExecuteProjectActivity.class);
+		Intent intent = new Intent(context, ExecuteHabitActivity.class);
 		intent.putExtra("id", id);
 		context.startActivityForResult(intent, MainActivity.EXECUTE);
 	}

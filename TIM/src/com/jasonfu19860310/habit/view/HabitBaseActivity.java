@@ -1,10 +1,9 @@
 package com.jasonfu19860310.habit.view;
 
 
-import java.util.Calendar;
-
-import com.jasonfu19860310.habit.controller.ProjectManager;
-import com.jasonfu19860310.habit.model.Project;
+import com.jasonfu19860310.habit.adt.HabitDate;
+import com.jasonfu19860310.habit.controller.HabitManager;
+import com.jasonfu19860310.habit.model.Habit;
 import com.jasonfu19860310.tim.R;
 
 import android.os.Bundle;
@@ -24,19 +23,19 @@ import android.widget.EditText;
  * @author qiangf
  *
  */
-public abstract class BaseActivity extends Activity {
+public abstract class HabitBaseActivity extends Activity {
 	public static final String CREATE = "create";
 	public static final String MODIFY = "modify";
 	public static final String OPERATION = "operation";
-	protected Project project;
-	private ProjectManager projectManager;
+	protected Habit project;
+	private HabitManager projectManager;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_project_info);
+		setContentView(R.layout.activity_habit_info);
 		getActionBar().setDisplayShowHomeEnabled(false);
-		projectManager = new ProjectManager(this);
+		projectManager = new HabitManager(this);
 	}
 
 	public void onSetStartDate(View v) {
@@ -50,12 +49,12 @@ public abstract class BaseActivity extends Activity {
 	private void showDatePickerDialog(int button2update) {
 		DateSetListener dateListener = 
 				new DateSetListener(this, button2update);
-		Calendar calendar = Calendar.getInstance();
+		HabitDate date = new HabitDate();
 		DatePickerDialog dialog = new DatePickerDialog(this,
 				dateListener,
-				calendar.get(Calendar.YEAR),
-				calendar.get(Calendar.MONTH),
-				calendar.get(Calendar.DAY_OF_MONTH));
+				date.getYear(),
+				date.getMonth(),
+				date.getDayOfMonth());
 		dialog.show();
 	}
 	
@@ -73,8 +72,8 @@ public abstract class BaseActivity extends Activity {
 	}
 
 	private boolean verifyDates() {
-		Calendar start = project.getStartDate();
-		Calendar end = project.getEndDate();
+		HabitDate start = project.getStartDate();
+		HabitDate end = project.getEndDate();
 		if (start.after(end)) {
 			showWarningMessage(R.string.warning, R.string.warning_input_dateCompare);
 			return false;
@@ -105,9 +104,9 @@ public abstract class BaseActivity extends Activity {
 	}
 	
 	private boolean verifyStartDate() {
-		Calendar newDate = getDate(R.id.button_create_project_start_date);
-		if (newDate != null) {
-			project.setStartDate(newDate);
+		String dateText = getDateText(R.id.button_create_project_start_date);
+		if (HabitDate.isValidTimeString(dateText)) {
+			project.setStartDate(new HabitDate(dateText));
 			return true;
 		}
 		showWarningMessage(R.string.warning, R.string.warning_input_startdate);
@@ -115,28 +114,19 @@ public abstract class BaseActivity extends Activity {
 	}
 	
 	private boolean verifyEndDate() {
-		Calendar newDate = getDate(R.id.button_create_project_end_date);
-		if (newDate != null) {
-			project.setEndDate(newDate);
+		String dateText = getDateText(R.id.button_create_project_end_date);
+		if (HabitDate.isValidTimeString(dateText)) {
+			project.setEndDate(new HabitDate(dateText));
 			return true;
 		}
 		showWarningMessage(R.string.warning, R.string.warning_input_enddate);
 		return false;
 	}
 
-	private Calendar getDate(int dateButton) {
+	private String getDateText(int dateButton) {
 		Button button = getButton(dateButton);
 		String date = button.getText().toString();
-		if (date.matches("\\d+/\\d+/\\d+")) {
-			String[] dates = date.split("/");
-			Calendar newDate = Calendar.getInstance();
-			newDate.set(Integer.valueOf(dates[0]), 
-					Integer.valueOf(dates[1]) - 1, 
-					Integer.valueOf(dates[2]));
-			return newDate;
-		} else {
-			return null;
-		}
+		return date;
 	}
 	
 	protected Button getButton(int id) {
@@ -170,7 +160,7 @@ public abstract class BaseActivity extends Activity {
 		return text.toString();
 	}
 	
-	protected ProjectManager getProjectManager() {
+	protected HabitManager getProjectManager() {
 		return projectManager;
 	}
 	
