@@ -8,8 +8,8 @@ import com.jasonfu19860310.habit.adt.HabitDate;
 import com.jasonfu19860310.habit.db.DBHelper;
 import com.jasonfu19860310.habit.db.HabitDBHelper;
 import com.jasonfu19860310.habit.db.DBContract.HabitEntry;
-import com.jasonfu19860310.habit.model.Habit;
 
+import com.jasonfu19860310.habit.model.Habit;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -150,7 +150,7 @@ public class HabitManager {
 	
 	private long getTotalTime(Habit project) {
 		int totalDays = project.getStartDate().daysFrom(project.getEndDate());
-		return (totalDays + 1) * ((project.getHours() * 60 + project.getMinitues()) * 60);
+		return totalDays * ((project.getHours() * 60 + project.getMinitues()) * 60);
 	}
 	
 	public DBHelper getDb() {
@@ -163,7 +163,7 @@ public class HabitManager {
 
 	public void updateProjectAfterSave(Habit project) {
 		project.setTotalFinishedSeconds(project.getTotalFinishedSeconds() + project.getTimer_seconds());
-		project.setTotalPassedDays(project.getStartDate().daysFrom(new HabitDate()) + 1);
+		project.setTotalPassedDays(project.getStartDate().daysFrom(new HabitDate()));
 		updateProject(project);
 	}
 
@@ -187,9 +187,14 @@ public class HabitManager {
 	}
 
 	public void deleteProject(Habit currentProject) {
+		long projectID = currentProject.getId();
+		deleteProjectByID(projectID);
+	}
+
+	public void deleteProjectByID(long projectID) {
 		SQLiteDatabase database = databaseHelper.getWritableDatabase();
 		String selection = HabitEntry._ID + "=?";
-		String id = String.valueOf(currentProject.getId());
+		String id = String.valueOf(projectID);
 		String[] selectionArgs = {id};
 		database.delete(HabitEntry.TABLE_NAME, selection, selectionArgs);
 		database.close();

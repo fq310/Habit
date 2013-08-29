@@ -1,5 +1,6 @@
 package com.jasonfu19860310.habit;
 
+import com.jasonfu19860310.habit.controller.HabitManager;
 import com.jasonfu19860310.habit.view.CreateHabitActivity;
 import com.jasonfu19860310.habit.view.execute.ExecuteHabitActivity;
 import com.jasonfu19860310.tim.R;
@@ -7,25 +8,39 @@ import com.jasonfu19860310.tim.R;
 import android.os.Bundle;
 import android.app.ListActivity;
 import android.content.Intent;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 
 public class MainActivity extends ListActivity {
+	private long selectedHabitID;
 	public static final int ADD = 1;
 	public static final int EXECUTE = 2;
 	private PorjectListAdapter listAdapter;
+	private HabitManager habitManager;
 
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
 		getActionBar().setDisplayShowHomeEnabled(false);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        habitManager = new HabitManager(this);
         listAdapter = new PorjectListAdapter(this); 
         this.setListAdapter(listAdapter);
         this.getListView().setOnItemClickListener(new ItemClickListener(this));
+        this.registerForContextMenu(getListView());
+        this.getListView().setOnItemLongClickListener(new OnItemLongClickListener() {
+			@Override
+			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
+					int arg2, long id) {
+				selectedHabitID = id;
+				return false;
+			}});
     }
 	
 	@Override
@@ -34,7 +49,7 @@ public class MainActivity extends ListActivity {
         return true;
     }
 	
-	public void onOptionAddProject(MenuItem i) {
+	public void onOptionAddHabit(MenuItem i) {
 		Intent intent = new Intent(this, CreateHabitActivity.class);
 		this.startActivityForResult(intent, ADD);
 	}
@@ -49,6 +64,19 @@ public class MainActivity extends ListActivity {
 			listAdapter.reloadData();
 			break;
 		}
+	}
+	
+	@Override
+	public boolean onContextItemSelected(MenuItem item) {
+		habitManager.deleteProjectByID(selectedHabitID);
+		listAdapter.reloadData();
+		return true;
+	}
+
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View v,
+			ContextMenuInfo menuInfo) {
+		menu.add(R.string.deleteHabit);
 	}
 }
 

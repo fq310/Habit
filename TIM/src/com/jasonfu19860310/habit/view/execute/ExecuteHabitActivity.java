@@ -73,18 +73,19 @@ public class ExecuteHabitActivity extends Activity {
 		TextView finishedTimeText = (TextView) findViewById(R.id.execute_project_text1);
 		finishedTimeText.setText(R.string.Total_Finished_Time);
 		long totalSeconds = currentProject.getTotalFinishedSeconds();
-		finishedTimeText.append(" [" + TimeText.getTimeStringFromSeconds(totalSeconds) + "]");
+		finishedTimeText.append(" [ " + TimeText.getTimeStringFromSeconds(totalSeconds) + " ]");
 		
 		ProgressBar passedDayBar = (ProgressBar) findViewById(R.id.execute_project_progressBar2);
 		HabitDate startDate = currentProject.getStartDate();
 		HabitDate endDate = currentProject.getEndDate();
 		passedDayBar.setMax(startDate.daysFrom(endDate));
 		int passedDays = startDate.daysFrom(new HabitDate());
+		if (passedDays < 0) passedDays = 0;
 		passedDayBar.setProgress(passedDays);
 		
 		TextView passedDayText = (TextView) findViewById(R.id.execute_project_text2);
 		passedDayText.setText(startDate.toString() + " - " + endDate.toString());
-		passedDayText.append(" [ Day - " + passedDays + 1 +"]");
+		passedDayText.append(" [ Day - " + passedDays +" ]");
 	}
 
 	private void initialState() {
@@ -110,15 +111,14 @@ public class ExecuteHabitActivity extends Activity {
 		return true;
 	}
 	
-	public void onModifyProject(MenuItem i) {
-		currentState.pause();
+	public void onModifyHabit(MenuItem i) {
+		if (inValidStatus()) return;
 		Intent intent = new Intent(this, ModifyHabitActivity.class);
 		intent.putExtra("id", currentProject.getId());
 		this.startActivity(intent);
 	}
 	
-	public void onDeleteProject(MenuItem i) {
-		currentState.pause();
+	public void onDeleteHabit(MenuItem i) {
 		WarningDialog.OKDialogWithListener(R.string.execute_warning, 
 			R.string.execute_warning_msg, this, 
 			new OnClickListener() {
@@ -128,6 +128,13 @@ public class ExecuteHabitActivity extends Activity {
 					finish();
 				}
 		});
+	}
+	
+	private boolean inValidStatus() {
+		if (currentState == stopState) return false;
+		WarningDialog.open(R.string.execute_warning, 
+				R.string.execute_warning_save, this);
+		return true;
 	}
 	
 	@Override

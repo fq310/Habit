@@ -1,14 +1,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item
-        android:id="@+id/ModifyProjectMenu"
-        android:title="@string/modifyProject" 
-        android:onClick="onModifyProject" 
+        android:id="@+id/ModifyHabitMenu"
+        android:title="@string/modifyHabit" 
+        android:onClick="onModifyHabit" 
         android:showAsAction="ifRoom|withText"/>
     <item
-        android:id="@+id/DeleteProjectMenu"
-        android:title="@string/deleteProject" 
-        android:onClick="onDeleteProject" 
+        android:id="@+id/DeleteHabittMenu"
+        android:title="@string/deleteHabit" 
+        android:onClick="onDeleteHabit" 
         android:showAsAction="ifRoom|withText"/>
 
 </menu>

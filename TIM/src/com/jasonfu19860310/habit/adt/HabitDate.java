@@ -26,7 +26,7 @@ public class HabitDate {
 		if (date.getTimeInMillis() > getTimeInMillis()) {
 			return getDaysBwtween(this.date, date.getCalendar());
 		} else {
-			return getDaysBwtween(date.getCalendar(), this.date);
+			return -getDaysBwtween(date.getCalendar(), this.date);
 		}
 	}
 	
@@ -35,7 +35,9 @@ public class HabitDate {
 		newDate.setTimeInMillis(date.getTimeInMillis());
 		return newDate;
 	}
-
+	/*
+	 * [] : contains the start and end day
+	 */
 	private int getDaysBwtween(Calendar startDate, Calendar currentDate) {
 		int days = currentDate.get(Calendar.DAY_OF_YEAR) - 
 				startDate.get(Calendar.DAY_OF_YEAR);
@@ -46,7 +48,7 @@ public class HabitDate {
 				startDate.add(Calendar.YEAR, 1);
 			} while (dateYearNotEqual(currentDate, startDate));
 		}
-		return days;
+		return days + 1;
 	}
 	
 	private boolean dateYearNotEqual(Calendar startDate, Calendar currentDate) {
