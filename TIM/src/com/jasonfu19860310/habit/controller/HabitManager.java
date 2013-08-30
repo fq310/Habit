@@ -21,23 +21,23 @@ public class HabitManager {
 		 databaseHelper = new HabitDBHelper(context);
 	}
 	
-	public List<Habit> getAllProjects() {
+	public List<Habit> getAllHabits() {
 		SQLiteDatabase database = databaseHelper.getWritableDatabase();
 		String sortOrder =
 				HabitEntry.COLUMN_NAME_NAME + " DESC";
 		Cursor cursor = database.query(HabitEntry.TABLE_NAME, null, null, null, null, null, sortOrder);
 		ArrayList<Habit> allProjects = new ArrayList<Habit>();
 		if (cursor.moveToFirst()) {
-			allProjects.add(readProjectFrom(cursor));
+			allProjects.add(readHabitFrom(cursor));
 			while (cursor.moveToNext()) {
-				allProjects.add(readProjectFrom(cursor));
+				allProjects.add(readHabitFrom(cursor));
 			}
 		}
 		database.close();
 		return allProjects;
 	}
 
-	private Habit readProjectFrom(Cursor cursor) {
+	private Habit readHabitFrom(Cursor cursor) {
 		long id = cursor.getLong(
 				cursor.getColumnIndexOrThrow(HabitEntry._ID)
 		);
@@ -126,7 +126,7 @@ public class HabitManager {
 		String[] selectionArgs = {id};
 		Cursor cursor = database.query(HabitEntry.TABLE_NAME, null, selection, selectionArgs, null, null, null);
 		if (cursor.moveToFirst()) {
-			Habit project = readProjectFrom(cursor);
+			Habit project = readHabitFrom(cursor);
 			database.close();
 			return project;
 		}

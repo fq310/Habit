@@ -8,6 +8,7 @@ import com.jasonfu19860310.habit.model.Habit;
 import com.jasonfu19860310.tim.R;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,40 +16,35 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 public class PorjectListAdapter extends BaseAdapter {
-
-	@Override
-	public void notifyDataSetChanged() {
-		super.notifyDataSetChanged();
-	}
-
 	public static final String FINISHED_PERCENT = "percent";
 	public static final String DAYS_PASSED = "days";
 	public static final String UNFINISHED_TIME_OF_TODAY = "time";
 	public static final String PROJECT_NAME = "name";
-	private List<Habit> projects;
+	private List<Habit> habits;
 	private LayoutInflater layoutInflater;  
-	private HabitManager projectManager;
+	private HabitManager habitManager;
+	private HaibtListColorAnimator animator = new HaibtListColorAnimator();
 	
 	public PorjectListAdapter(Context context) {
 		layoutInflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		projectManager = new HabitManager(context);
-		projects = projectManager.getAllProjects();
+		habitManager = new HabitManager(context);
+		habits = habitManager.getAllHabits();
 	}
 
 	@Override
 	public int getCount() {
-		return projects.size();
+		return habits.size();
 	}
 
 	@Override
 	public Object getItem(int position) {
-		return projects.get(position);
+		return habits.get(position);
 	}
 
 	@Override
 	public long getItemId(int position) {
-		return projects.get(position).getId();
+		return habits.get(position).getId();
 	}
 
 	@Override
@@ -60,23 +56,26 @@ public class PorjectListAdapter extends BaseAdapter {
 		} else {
 			itemView = convertView;
 		}
+		itemView.setBackgroundColor(Color.rgb(0, 0, 0));
 		
-		projects = projectManager.getAllProjects();
-		Habit project = projects.get(position);
-		String projectName = project.getName();
+		habits = habitManager.getAllHabits();
+		Habit habit = habits.get(position);
+		String habitName = habit.getName();
 		TextView nameTextView = (TextView) itemView.findViewById(R.id.projectlist_name);
-		boolean timerPaused = project.isTimer_paused();
-		boolean timerStarted = project.isTimer_started();
+		boolean timerPaused = habit.isTimer_paused();
+		boolean timerStarted = habit.isTimer_started();
 		if (timerPaused) {
-			projectName = projectName + " [PAUSED]";  
+			habitName = habitName + " [PAUSED]";  
+			animator.pauseAnimate(itemView, habit.getId());
 		}
 		if (timerStarted) {
-			projectName = projectName + " [STARTED]"; 
+			habitName = habitName + " [STARTED]"; 
+			animator.startAnimate(itemView, habit.getId());
 		}
-		nameTextView.setText(projectName);
+		nameTextView.setText(habitName);
 		
 		TextView finishedPercent = (TextView) itemView.findViewById(R.id.project_list_percent);
-		finishedPercent.setText(getFinishedRate(project));
+		finishedPercent.setText(getFinishedRate(habit));
 		
 		return itemView;
 	}
@@ -88,8 +87,9 @@ public class PorjectListAdapter extends BaseAdapter {
 	}
 
 	public void reloadData() {
-		projects = projectManager.getAllProjects();
+		habits = habitManager.getAllHabits();
+		animator.removeOutdatedAnimator(habits);
 		notifyDataSetChanged();
 	}
-
+	
 }

@@ -101,20 +101,20 @@
         android:layout_height="wrap_content" >
 
         <Button style="?android:attr/buttonBarButtonStyle"
-            android:id="@+id/button_create_project_done"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="onSaveProject"
-            android:layout_weight="1"
-            android:text="@string/done" />
-
-        <Button style="?android:attr/buttonBarButtonStyle"
             android:id="@+id/button_create_project_cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="onCancelProject"
             android:layout_weight="1"
             android:text="@string/cancel" />
+        
+        <Button style="?android:attr/buttonBarButtonStyle"
+            android:id="@+id/button_create_project_done"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onSaveProject"
+            android:layout_weight="1"
+            android:text="@string/done" />
 
     </LinearLayout>
 
