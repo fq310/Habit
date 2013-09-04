@@ -21,20 +21,17 @@ public class HaibtListColorAnimator {
 	private static int pauseColorB = Color.rgb(0, 0, 0);
 	
 	public void startAnimate(View itemView, long  id) {
-		removeIfExisted(id, itemView);
 		ValueAnimator animator = getColorAnimator(itemView, startColorA, startColorB);
 	    addIntoMap(id, animator);
 	}
 
 	private void addIntoMap(long id, ValueAnimator animator) {
-		animatorMap.put(id, animator);
-	}
-
-	private void removeIfExisted(long id, View itemView) {
-		if (animatorMap.get(id) != null) {
-			animatorMap.get(id).cancel();
-			itemView.setBackgroundColor(startColorB);
+		Animator oldAnimator = animatorMap.get(id);
+		if (oldAnimator != null) {
+			oldAnimator.end();
+			animatorMap.remove(id);
 		}
+		animatorMap.put(id, animator);
 	}
 
 	private ValueAnimator getColorAnimator(View view, int colorA, int colorB) {
@@ -48,7 +45,6 @@ public class HaibtListColorAnimator {
 	}
 	
 	public void pauseAnimate(View itemView, long id) {
-		removeIfExisted(id, itemView);
 		ValueAnimator animator = getColorAnimator(itemView, pauseColorA, pauseColorB);
 	    addIntoMap(id, animator);
 	}
@@ -56,8 +52,11 @@ public class HaibtListColorAnimator {
 	public void removeOutdatedAnimator(List<Habit> habits) {
 		for (Habit habit : habits) {
 			if (habit.isTimer_paused() || habit.isTimer_started()) continue;
-			if (animatorMap.get(habit.getId()) != null)
-				animatorMap.get(habit.getId()).cancel();
+			Animator animator = animatorMap.get(habit.getId());
+			if (animator != null) {
+				animator.cancel();
+				animatorMap.remove(habit.getId());
+			}
 		}
 	}
 }

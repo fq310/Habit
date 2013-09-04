@@ -112,8 +112,8 @@ public class HabitManager {
 		values.put(HabitEntry.COLUMN_NAME_TOTAL_FINISHED_SECONDS, project.getTotalFinishedSeconds());
 		values.put(HabitEntry.COLUMN_NAME_TOTAL_SECONDS, project.getTotalSeconds());
 		values.put(HabitEntry.COLUMN_NAME_TOTAL_PASSED_DAYS, project.getTotalPassedDays());
-		values.put(HabitEntry.COLUMN_NAME_TIMER_STARTED, project.isTimer_started());
-		values.put(HabitEntry.COLUMN_NAME_TIMER_PAUSED, project.isTimer_paused());
+		values.put(HabitEntry.COLUMN_NAME_TIMER_STARTED,  String.valueOf(project.isTimer_started()));
+		values.put(HabitEntry.COLUMN_NAME_TIMER_PAUSED,  String.valueOf(project.isTimer_paused()));
 		values.put(HabitEntry.COLUMN_NAME_TIMER_SECONDS, project.getTimer_seconds());
 		values.put(HabitEntry.COLUMN_NAME_TIMER_DESTORY_DATE, project.getTimerDestroyDate().getTimeInMillis());
 		return values;

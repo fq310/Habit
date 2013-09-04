@@ -31,17 +31,21 @@ public class MainActivity extends ListActivity {
         setContentView(R.layout.activity_main);
         habitManager = new HabitManager(this);
         listAdapter = new PorjectListAdapter(this); 
-        this.setListAdapter(listAdapter);
-        this.getListView().setOnItemClickListener(new ItemClickListener(this));
-        this.registerForContextMenu(getListView());
-        this.getListView().setOnItemLongClickListener(new OnItemLongClickListener() {
+        initialHabitList();
+    }
+
+	private void initialHabitList() {
+		setListAdapter(listAdapter);
+        getListView().setOnItemClickListener(new ItemClickListener(this));
+        registerForContextMenu(getListView());
+        getListView().setOnItemLongClickListener(new OnItemLongClickListener() {
 			@Override
 			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
 					int arg2, long id) {
 				selectedHabitID = id;
 				return false;
-			}});
-    }
+		}});
+	}
 	
 	@Override
     public boolean onCreateOptionsMenu(Menu menu) {
