@@ -128,4 +128,22 @@ public class TimeText {
 		if (hour == 0 && minute == 0 && seconds == 0) return true;
 		return false;
 	}
+
+
+	public void increaseOneSecond() {
+		int hours = getIntHour();
+		int minutes = getIntMinute();
+		int seconds = getIntSecond();
+		if (0 <= seconds && seconds < 59) {
+			++ seconds;
+		} else if (seconds == 59) {
+			seconds = 0;
+			++ minutes;
+		}
+		if (minutes == 59){
+			minutes = 0;
+			++hours;
+		}
+		setTime(hours, minutes, seconds);
+	}
 }

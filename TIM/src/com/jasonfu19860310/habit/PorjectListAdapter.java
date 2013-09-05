@@ -16,6 +16,12 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 public class PorjectListAdapter extends BaseAdapter {
+
+	@Override
+	public void notifyDataSetChanged() {
+		super.notifyDataSetChanged();
+	}
+
 	public static final String FINISHED_PERCENT = "percent";
 	public static final String DAYS_PASSED = "days";
 	public static final String UNFINISHED_TIME_OF_TODAY = "time";
@@ -56,6 +62,7 @@ public class PorjectListAdapter extends BaseAdapter {
 		} else {
 			itemView = convertView;
 		}
+		itemView.clearAnimation();
 		itemView.setBackgroundColor(Color.rgb(0, 0, 0));
 		
 		habits = habitManager.getAllHabits();

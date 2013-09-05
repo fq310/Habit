@@ -117,4 +117,8 @@ public class Habit {
 	public void setTimerDestroyDate(HabitDate date) {
 		this.timerDestroyDate = date;
 	}
+
+	public long getTimeSpentPerDay() {
+		return this.getHours()*3600 + this.getMinitues()*60;
+	}
 }

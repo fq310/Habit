@@ -28,10 +28,11 @@ public class HaibtListColorAnimator {
 	private void addIntoMap(long id, ValueAnimator animator) {
 		Animator oldAnimator = animatorMap.get(id);
 		if (oldAnimator != null) {
-			oldAnimator.end();
+			oldAnimator.cancel();
 			animatorMap.remove(id);
 		}
 		animatorMap.put(id, animator);
+		animator.start();
 	}
 
 	private ValueAnimator getColorAnimator(View view, int colorA, int colorB) {
@@ -40,7 +41,6 @@ public class HaibtListColorAnimator {
 	    animator.setEvaluator(new ArgbEvaluator());
 	    animator.setRepeatCount(ValueAnimator.INFINITE);
 	    animator.setRepeatMode(ValueAnimator.REVERSE);
-	    animator.start();
 		return animator;
 	}
 	
@@ -51,7 +51,6 @@ public class HaibtListColorAnimator {
 	
 	public void removeOutdatedAnimator(List<Habit> habits) {
 		for (Habit habit : habits) {
-			if (habit.isTimer_paused() || habit.isTimer_started()) continue;
 			Animator animator = animatorMap.get(habit.getId());
 			if (animator != null) {
 				animator.cancel();

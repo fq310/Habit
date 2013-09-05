@@ -32,6 +32,8 @@ public class ExecuteHabitActivity extends Activity {
 	private Habit currentProject;
 	private HabitManager projectManager;
 	private RecordManager recordManager;
+	private boolean isNotifiedTodayFinished = false;
+	private long todayFinishedTime;
 	
 	private IExecuteState startState;
 	private IExecuteState stopState;
@@ -61,7 +63,8 @@ public class ExecuteHabitActivity extends Activity {
 		currentProject = projectManager.getProject(projectID);
 		TextView timeTextView = (TextView) findViewById(R.id.execute_project_textView_time);
 		timeText = new TimeText(timeTextView);
-		recordTimer = new RecordTimer(timeText, currentProject, handler);
+		recordTimer = new RecordTimer(this);
+		todayFinishedTime = recordManager.getFinishedSecondsToday(projectID);
 	}
 
 	private void initialProgressBar() {
@@ -216,4 +219,20 @@ public class ExecuteHabitActivity extends Activity {
 		projectManager.updateProjectAfterExitActivity(currentProject);
 	}
 	
+	protected void increaseOneSecond() {
+		handler.post(new Runnable() {
+			@Override
+			public void run() {
+				timeText.increaseOneSecond();
+				currentProject.setTimer_seconds(currentProject.getTimer_seconds() + 1);
+				long targetTimeToday = currentProject.getTimeSpentPerDay();
+				long finishedTime = timeText.getTotalSeconds() + todayFinishedTime;
+				Log.i("fqtime", "current : " + timeText.getTotalSeconds() + ". total finished: " + finishedTime + ". Target: " + targetTimeToday);
+				if (isNotifiedTodayFinished == false &&  finishedTime >= targetTimeToday) {
+					Log.i("fqtime", "target meet");
+					isNotifiedTodayFinished = true;
+				}
+			}
+		});
+	}
 }

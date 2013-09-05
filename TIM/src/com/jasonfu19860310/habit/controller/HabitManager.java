@@ -6,7 +6,6 @@ import java.util.List;
 
 import com.jasonfu19860310.habit.adt.HabitDate;
 import com.jasonfu19860310.habit.db.DBHelper;
-import com.jasonfu19860310.habit.db.HabitDBHelper;
 import com.jasonfu19860310.habit.db.DBContract.HabitEntry;
 
 import com.jasonfu19860310.habit.model.Habit;
@@ -18,7 +17,7 @@ import android.database.sqlite.SQLiteDatabase;
 public class HabitManager {
 	private DBHelper databaseHelper;
 	public HabitManager(Context context) {
-		 databaseHelper = new HabitDBHelper(context);
+		 databaseHelper = new DBHelper(context);
 	}
 	
 	public List<Habit> getAllHabits() {
