@@ -46,7 +46,7 @@ public class ExecuteHabitActivity extends Activity {
 		setContentView(R.layout.activity_execute_habit);
 		initialUtilityObject();
 		initialActionBar();
-		initialProgressBar();
+		initialProgressBars();
 		initialState();
 	}
 
@@ -64,20 +64,28 @@ public class ExecuteHabitActivity extends Activity {
 		TextView timeTextView = (TextView) findViewById(R.id.execute_project_textView_time);
 		timeText = new TimeText(timeTextView);
 		recordTimer = new RecordTimer(this);
-		todayFinishedTime = recordManager.getFinishedSecondsToday(projectID);
 	}
 
-	private void initialProgressBar() {
-		ProgressBar finishedTimeBar = (ProgressBar) findViewById(R.id.execute_project_progressBar1);
-		float rate = (float)currentProject.getTotalFinishedSeconds()/currentProject.getTotalSeconds() * 100;
-		finishedTimeBar.setMax(100);
-		finishedTimeBar.setProgress((int)rate);
+	private void initialProgressBars() {
+		intialTodayFinishedTimeBar();
+		initialTotalFinishedTimeBar();
+		initialTotalPassedDaysBar();
+	}
+
+	private void intialTodayFinishedTimeBar() {
+		todayFinishedTime = recordManager.getFinishedSecondsToday(currentProject.getId());
+		long totalTimePerDay = currentProject.getTimeSpentPerDay();
+		int finishedRate = (int) (((float)todayFinishedTime/totalTimePerDay)*100);
+		ProgressBar todayFinishedBar = (ProgressBar) findViewById(R.id.execute_project_progressBar_today_finished);
+		todayFinishedBar.setMax(100);
+		todayFinishedBar.setProgress(finishedRate);
 		
-		TextView finishedTimeText = (TextView) findViewById(R.id.execute_project_text1);
-		finishedTimeText.setText(R.string.Total_Finished_Time);
-		long totalSeconds = currentProject.getTotalFinishedSeconds();
-		finishedTimeText.append(" [ " + TimeText.getTimeStringFromSeconds(totalSeconds) + " ]");
-		
+		TextView passedDayText = (TextView) findViewById(R.id.execute_project_text_today_fnished);
+		passedDayText.setText(R.string.today_Finished_Time);
+		passedDayText.append(" [" + finishedRate + " %]");
+	}
+
+	private void initialTotalPassedDaysBar() {
 		ProgressBar passedDayBar = (ProgressBar) findViewById(R.id.execute_project_progressBar2);
 		HabitDate startDate = currentProject.getStartDate();
 		HabitDate endDate = currentProject.getEndDate();
@@ -89,6 +97,18 @@ public class ExecuteHabitActivity extends Activity {
 		TextView passedDayText = (TextView) findViewById(R.id.execute_project_text2);
 		passedDayText.setText(startDate.toString() + " - " + endDate.toString());
 		passedDayText.append(" [ Day - " + passedDays +" ]");
+	}
+
+	private void initialTotalFinishedTimeBar() {
+		ProgressBar finishedTimeBar = (ProgressBar) findViewById(R.id.execute_project_progressBar1);
+		float rate = (float)currentProject.getTotalFinishedSeconds()/currentProject.getTotalSeconds() * 100;
+		finishedTimeBar.setMax(100);
+		finishedTimeBar.setProgress((int)rate);
+		
+		TextView finishedTimeText = (TextView) findViewById(R.id.execute_project_text1);
+		finishedTimeText.setText(R.string.Total_Finished_Time);
+		long totalSeconds = currentProject.getTotalFinishedSeconds();
+		finishedTimeText.append(" [ " + TimeText.getTimeStringFromSeconds(totalSeconds) + " ]");
 	}
 
 	private void initialState() {
@@ -156,7 +176,7 @@ public class ExecuteHabitActivity extends Activity {
 
 	public void onSaveClicked(View view) {
 		currentState.save();
-		initialProgressBar();
+		initialProgressBars();
 	}
 	
 	public void onInputManuallyClicked(View view) {

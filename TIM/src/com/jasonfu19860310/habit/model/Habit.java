@@ -121,4 +121,5 @@ public class Habit {
 	public long getTimeSpentPerDay() {
 		return this.getHours()*3600 + this.getMinitues()*60;
 	}
+
 }

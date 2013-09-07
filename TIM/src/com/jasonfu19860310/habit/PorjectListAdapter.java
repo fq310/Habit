@@ -17,6 +17,10 @@ import android.widget.TextView;
 
 public class PorjectListAdapter extends BaseAdapter {
 
+	private static final int COLOR_BLACK = Color.rgb(0, 0, 0);
+	private static final int COLOR_YELLOW = Color.rgb(184, 133, 10);
+	private static final int COLOR_GREEN = Color.rgb(64, 116, 52);
+
 	@Override
 	public void notifyDataSetChanged() {
 		super.notifyDataSetChanged();
@@ -29,7 +33,6 @@ public class PorjectListAdapter extends BaseAdapter {
 	private List<Habit> habits;
 	private LayoutInflater layoutInflater;  
 	private HabitManager habitManager;
-	private HaibtListColorAnimator animator = new HaibtListColorAnimator();
 	
 	public PorjectListAdapter(Context context) {
 		layoutInflater = (LayoutInflater) context
@@ -63,7 +66,7 @@ public class PorjectListAdapter extends BaseAdapter {
 			itemView = convertView;
 		}
 		itemView.clearAnimation();
-		itemView.setBackgroundColor(Color.rgb(0, 0, 0));
+		itemView.setBackgroundColor(COLOR_BLACK);
 		
 		habits = habitManager.getAllHabits();
 		Habit habit = habits.get(position);
@@ -72,12 +75,12 @@ public class PorjectListAdapter extends BaseAdapter {
 		boolean timerPaused = habit.isTimer_paused();
 		boolean timerStarted = habit.isTimer_started();
 		if (timerPaused) {
-			habitName = habitName + " [PAUSED]";  
-			animator.pauseAnimate(itemView, habit.getId());
+			habitName = habitName + " [PAUSED]";
+			itemView.setBackgroundColor(COLOR_YELLOW);
 		}
 		if (timerStarted) {
 			habitName = habitName + " [STARTED]"; 
-			animator.startAnimate(itemView, habit.getId());
+			itemView.setBackgroundColor(COLOR_GREEN);
 		}
 		nameTextView.setText(habitName);
 		
@@ -95,7 +98,6 @@ public class PorjectListAdapter extends BaseAdapter {
 
 	public void reloadData() {
 		habits = habitManager.getAllHabits();
-		animator.removeOutdatedAnimator(habits);
 		notifyDataSetChanged();
 	}
 	
