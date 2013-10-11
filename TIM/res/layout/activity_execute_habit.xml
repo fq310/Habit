@@ -83,8 +83,7 @@
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
         android:text="@string/inital_time"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textSize="60sp" />
+        android:textAppearance="?android:attr/textAppearanceLarge" />
     
     <LinearLayout
         android:layout_width="match_parent"
@@ -94,19 +93,22 @@
 
         <Button
             android:id="@+id/button_execute_start"
-            android:layout_weight="1"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="?android:attr/buttonBarButtonStyle"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_weight="1"
             android:onClick="onStartClicked"
             android:text="@string/startTiming" />
 
         <Button
             android:id="@+id/button_clear"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
             android:layout_weight="1"
-            style="?android:attr/buttonBarButtonStyle"
             android:onClick="onClearClicked"
             android:text="@string/clearTiming" />
 
@@ -120,10 +122,11 @@
 
         <Button
             android:id="@+id/button_inputManually"
-            android:layout_weight="1"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="?android:attr/buttonBarButtonStyle"
+            android:layout_marginRight="5dp"
+            android:layout_weight="1"
             android:onClick="onInputManuallyClicked"
             android:text="@string/inputManually" />
         

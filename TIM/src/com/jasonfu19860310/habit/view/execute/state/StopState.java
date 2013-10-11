@@ -11,7 +11,7 @@ public class StopState extends ExecuteState {
 
 	@Override
 	public void start() {
-		changeStartButtonTo(PAUSE);
+		changeStartButtonTo(START_STATUS.PAUSE);
 		currentProject.setTimer_started(true);
 		currentProject.setTimer_paused(false);
 		currentProject.setTimer_seconds(timeText.getTotalSeconds());

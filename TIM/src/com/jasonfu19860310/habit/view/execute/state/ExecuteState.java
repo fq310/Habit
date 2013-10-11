@@ -5,6 +5,7 @@ import android.widget.Button;
 import com.jasonfu19860310.habit.adt.HabitDate;
 import com.jasonfu19860310.habit.controller.HabitManager;
 import com.jasonfu19860310.habit.controller.RecordManager;
+import com.jasonfu19860310.habit.helper.ColorHelper;
 import com.jasonfu19860310.habit.model.Habit;
 import com.jasonfu19860310.habit.view.execute.ExecuteHabitActivity;
 import com.jasonfu19860310.habit.view.execute.InputTimeDialog;
@@ -14,8 +15,9 @@ import com.jasonfu19860310.habit.view.execute.WarningDialog;
 import com.jasonfu19860310.tim.R;
 
 abstract public class ExecuteState implements IExecuteState{
-	protected static final String PAUSE = "Pause";
-	protected static final String START = "Start";
+	protected enum START_STATUS {
+		PAUSE, START
+	}
 	protected ExecuteHabitActivity activity;
 	private RecordManager recordManager;
 	private HabitManager projectManager;
@@ -35,17 +37,22 @@ abstract public class ExecuteState implements IExecuteState{
 		currentProject = activity.getProject();
 	}
 	
-	protected void changeStartButtonTo(String status) {
-		startButton.setText(status);
+	protected void changeStartButtonTo(START_STATUS status) {
+		startButton.setText(status.name());
+		if (status == START_STATUS.PAUSE) 
+			setStartButtonColor(ColorHelper.color_yellow);
+		if (status == START_STATUS.START) 
+			setStartButtonColor(ColorHelper.color_green);
 	}
 	
 	@Override
 	public void clear() {
 		recordTimer.cancelTimer();
-		changeStartButtonTo(START);
+		changeStartButtonTo(START_STATUS.START);
 		timeText.setTime(0);
 		initialRecordStatus();
 		activity.setCurrentState(activity.getStopState());
+		setStartButtonColor(ColorHelper.color_green);
 	}
 
 	@Override
@@ -58,7 +65,7 @@ abstract public class ExecuteState implements IExecuteState{
 		}
 		recordManager.addNewRecord(currentProject.getId(), timeText.getTotalSeconds());
 		projectManager.updateProjectAfterSave(currentProject);
-		changeStartButtonTo(START);
+		changeStartButtonTo(START_STATUS.START);
 		initialRecordStatus();
 		timeText.setTime(0);
 		activity.setCurrentState(activity.getStopState());
@@ -90,10 +97,15 @@ abstract public class ExecuteState implements IExecuteState{
 		recordTimer.cancelTimer();
 		currentProject.setTimer_started(false);
 		currentProject.setTimer_paused(true);
-		changeStartButtonTo(START);
+		changeStartButtonTo(START_STATUS.START);
 		InputTimeDialog input = new InputTimeDialog(timeText, activity);
 		input.openDialog();
 		activity.setCurrentState(activity.getPauseState());
+	}
+	
+	private void setStartButtonColor(int color) {
+		((Button)activity.findViewById(R.id.button_execute_start))
+			.setBackgroundColor(color);
 	}
 	
 }

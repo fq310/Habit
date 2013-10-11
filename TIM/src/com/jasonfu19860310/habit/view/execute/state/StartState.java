@@ -12,7 +12,7 @@ public class StartState extends ExecuteState {
 	@Override
 	public void start() {
 		recordTimer.cancelTimer();
-		changeStartButtonTo(START);
+		changeStartButtonTo(START_STATUS.START);
 		currentProject.setTimer_started(false);
 		currentProject.setTimer_paused(true);
 		currentProject.setTimer_seconds(timeText.getTotalSeconds());
@@ -26,7 +26,7 @@ public class StartState extends ExecuteState {
 		long totalSeconds = (currentDate.getTimeInMillis() - timerDestroyDate.getTimeInMillis()) / 1000 + currentProject.getTimer_seconds();
 		currentProject.setTimer_seconds(totalSeconds);
 		timeText.setTime(totalSeconds);
-		changeStartButtonTo(PAUSE);
+		changeStartButtonTo(START_STATUS.PAUSE);
 		recordTimer.startTimer();
 	}
 	

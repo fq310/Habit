@@ -15,7 +15,7 @@ public class PausedState extends ExecuteState {
 
 	@Override
 	public void start() {
-		changeStartButtonTo(PAUSE);
+		changeStartButtonTo(START_STATUS.PAUSE);
 		currentProject.setTimer_started(true);
 		currentProject.setTimer_paused(false);
 		recordTimer.startTimer();
@@ -26,7 +26,7 @@ public class PausedState extends ExecuteState {
 	public void onCreate() {
 		long totalSeconds = currentProject.getTimer_seconds();
 		timeText.setTime(totalSeconds);
-		changeStartButtonTo(START);
+		changeStartButtonTo(START_STATUS.START);
 	}
 
 }
