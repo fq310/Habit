@@ -24,8 +24,8 @@
     <string name="Saturday">6</string>
     <string name="Sunday">7</string>
     <string name="blank_text"></string>
-    <string name="set_start_date">Set Start Date</string>
-    <string name="set_end_date">Set End Date</string>
+    <string name="set_start_date">Touch to Set Start Date</string>
+    <string name="set_end_date">Touch to Set End Date</string>
     <string name="index_1">1. </string>
     <string name="index_2">2. </string>
     <string name="index_3">3. </string>
