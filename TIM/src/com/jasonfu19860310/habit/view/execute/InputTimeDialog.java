@@ -63,7 +63,9 @@ public class InputTimeDialog {
 		hours.addTextChangedListener(new TextWatcher() {
 			@Override
 			public void afterTextChanged(Editable s) {
-				timeText.updateHourOnly(hours.getText().toString().trim());
+				String hour = getTime(hours);
+				if (hour.length() == 0) return;
+				timeText.updateHourOnly(hour);
 			}
 			@Override
 			public void beforeTextChanged(CharSequence s, int start, int count,
@@ -81,8 +83,10 @@ public class InputTimeDialog {
 		minutes.addTextChangedListener(new TextWatcher() {
 			@Override
 			public void afterTextChanged(Editable s) {
-				timeText.updateMinutesOnly(minutes.getText().toString().trim());
+				String minute = getTime(minutes);
+				timeText.updateMinutesOnly(minute);
 			}
+
 			@Override
 			public void beforeTextChanged(CharSequence s, int start, int count,
 					int after) {
@@ -94,12 +98,21 @@ public class InputTimeDialog {
 			}});
 	}
 	
+	private String getTime(EditText timeText) {
+		String timeString = timeText.getText().toString().trim();
+		if (timeString.length() == 0) {
+			timeString = "0";
+		}
+		return timeString;
+	}
+	
 	private void addSecoondsChangeListener(AlertDialog dialog) {
 		seconds = (EditText) dialog.findViewById(R.id.input_time_editText_seconds);
 		seconds.addTextChangedListener(new TextWatcher() {
 			@Override
 			public void afterTextChanged(Editable s) {
-				timeText.updateSecondsOnly(seconds.getText().toString().trim());
+				String second = getTime(seconds);
+				timeText.updateSecondsOnly(second);
 			}
 			@Override
 			public void beforeTextChanged(CharSequence s, int start, int count,
