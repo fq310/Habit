@@ -2,7 +2,7 @@ package com.jasonfu19860310.habit.view;
 
 
 import com.jasonfu19860310.habit.adt.HabitDate;
-import com.jasonfu19860310.habit.controller.HabitManager;
+import com.jasonfu19860310.habit.controller.HabitDataManager;
 import com.jasonfu19860310.habit.helper.ColorHelper;
 import com.jasonfu19860310.habit.model.Habit;
 import com.jasonfu19860310.tim.R;
@@ -29,14 +29,14 @@ public abstract class HabitBaseActivity extends Activity {
 	public static final String MODIFY = "modify";
 	public static final String OPERATION = "operation";
 	protected Habit project;
-	private HabitManager projectManager;
+	private HabitDataManager projectManager;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_habit_info);
 		getActionBar().setDisplayShowHomeEnabled(false);
-		projectManager = new HabitManager(this);
+		projectManager = new HabitDataManager(this);
 		initialButton();
 	}
 
@@ -158,10 +158,14 @@ public abstract class HabitBaseActivity extends Activity {
 			showWarningMessage(R.string.warning, R.string.warning_input_hours);
 			return false;
 		}
-		if (hours != null)
-			project.setHours(Integer.valueOf(hours));
-		if (minutes != null)
-			project.setMinitues(Integer.valueOf(minutes));
+		if (hours != null) {
+			project.setHours(Integer.valueOf(hours)); } 
+		else {
+			project.setHours(0); }
+		if (minutes != null) {
+			project.setMinitues(Integer.valueOf(minutes)); } 
+		else {
+			project.setMinitues(0); }
 		return true;
 	}
 
@@ -174,7 +178,7 @@ public abstract class HabitBaseActivity extends Activity {
 		return text.toString();
 	}
 	
-	protected HabitManager getProjectManager() {
+	protected HabitDataManager getProjectManager() {
 		return projectManager;
 	}
 	

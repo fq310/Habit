@@ -3,7 +3,7 @@ package com.jasonfu19860310.habit;
 import java.text.DecimalFormat;
 import java.util.List;
 
-import com.jasonfu19860310.habit.controller.HabitManager;
+import com.jasonfu19860310.habit.controller.HabitDataManager;
 import com.jasonfu19860310.habit.model.Habit;
 import com.jasonfu19860310.tim.R;
 
@@ -20,25 +20,25 @@ public class PorjectListAdapter extends BaseAdapter {
 	private static final int COLOR_BLACK = Color.rgb(0, 0, 0);
 	private static final int COLOR_YELLOW = Color.rgb(184, 133, 10);
 	private static final int COLOR_GREEN = Color.rgb(64, 116, 52);
+	private String paused;
+	private String started;
 
 	@Override
 	public void notifyDataSetChanged() {
 		super.notifyDataSetChanged();
 	}
 
-	public static final String FINISHED_PERCENT = "percent";
-	public static final String DAYS_PASSED = "days";
-	public static final String UNFINISHED_TIME_OF_TODAY = "time";
-	public static final String PROJECT_NAME = "name";
 	private List<Habit> habits;
 	private LayoutInflater layoutInflater;  
-	private HabitManager habitManager;
+	private HabitDataManager habitManager;
 	
 	public PorjectListAdapter(Context context) {
 		layoutInflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		habitManager = new HabitManager(context);
+		habitManager = new HabitDataManager(context);
 		habits = habitManager.getAllHabits();
+		paused = context.getString(R.string.paused);
+		started = context.getString(R.string.started);
 	}
 
 	@Override
@@ -75,11 +75,11 @@ public class PorjectListAdapter extends BaseAdapter {
 		boolean timerPaused = habit.isTimer_paused();
 		boolean timerStarted = habit.isTimer_started();
 		if (timerPaused) {
-			habitName = habitName + " [PAUSED]";
+			habitName = habitName + " [" + paused + "]";
 			itemView.setBackgroundColor(COLOR_YELLOW);
 		}
 		if (timerStarted) {
-			habitName = habitName + " [STARTED]"; 
+			habitName = habitName + " [" + started + "]"; 
 			itemView.setBackgroundColor(COLOR_GREEN);
 		}
 		nameTextView.setText(habitName);

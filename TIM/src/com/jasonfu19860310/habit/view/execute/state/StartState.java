@@ -13,18 +13,18 @@ public class StartState extends ExecuteState {
 	public void start() {
 		recordTimer.cancelTimer();
 		changeStartButtonTo(START_STATUS.START);
-		currentProject.setTimer_started(false);
-		currentProject.setTimer_paused(true);
-		currentProject.setTimer_seconds(timeText.getTotalSeconds());
+		currentHabit.setTimer_started(false);
+		currentHabit.setTimer_paused(true);
+		currentHabit.setTimer_seconds(timeText.getTotalSeconds());
 		activity.setCurrentState(activity.getPauseState());
 	}
 
 	@Override
 	public void onCreate() {
-		HabitDate timerDestroyDate = currentProject.getTimerDestroyDate();
+		HabitDate timerDestroyDate = currentHabit.getTimerDestroyDate();
 		HabitDate currentDate = new HabitDate();
-		long totalSeconds = (currentDate.getTimeInMillis() - timerDestroyDate.getTimeInMillis()) / 1000 + currentProject.getTimer_seconds();
-		currentProject.setTimer_seconds(totalSeconds);
+		long totalSeconds = (currentDate.getTimeInMillis() - timerDestroyDate.getTimeInMillis()) / 1000 + currentHabit.getTimer_seconds();
+		currentHabit.setTimer_seconds(totalSeconds);
 		timeText.setTime(totalSeconds);
 		changeStartButtonTo(START_STATUS.PAUSE);
 		recordTimer.startTimer();

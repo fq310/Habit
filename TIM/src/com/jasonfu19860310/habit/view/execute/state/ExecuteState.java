@@ -3,8 +3,7 @@ package com.jasonfu19860310.habit.view.execute.state;
 import android.widget.Button;
 
 import com.jasonfu19860310.habit.adt.HabitDate;
-import com.jasonfu19860310.habit.controller.HabitManager;
-import com.jasonfu19860310.habit.controller.RecordManager;
+import com.jasonfu19860310.habit.controller.HabitDataManager;
 import com.jasonfu19860310.habit.helper.ColorHelper;
 import com.jasonfu19860310.habit.model.Habit;
 import com.jasonfu19860310.habit.view.execute.ExecuteHabitActivity;
@@ -19,9 +18,8 @@ abstract public class ExecuteState implements IExecuteState{
 		PAUSE, START
 	}
 	protected ExecuteHabitActivity activity;
-	private RecordManager recordManager;
-	private HabitManager projectManager;
-	protected Habit currentProject;
+	private HabitDataManager habitManager;
+	protected Habit currentHabit;
 	
 	private Button startButton;
 	protected TimeText timeText;
@@ -30,11 +28,10 @@ abstract public class ExecuteState implements IExecuteState{
 	public ExecuteState(ExecuteHabitActivity activity) {
 		this.activity = activity;
 		startButton = (Button)activity.findViewById(R.id.button_execute_start);
-		recordManager = activity.getRecordManager();
-		projectManager = activity.getProjectManager();
+		habitManager = activity.getProjectManager();
 		timeText = activity.getTimeText();
 		recordTimer = activity.getRecordTimer();
-		currentProject = activity.getProject();
+		currentHabit = activity.getProject();
 	}
 	
 	protected void changeStartButtonTo(START_STATUS status) {
@@ -63,8 +60,7 @@ abstract public class ExecuteState implements IExecuteState{
 					R.string.execute_error_msg);
 			return;
 		}
-		recordManager.addNewRecord(currentProject.getId(), timeText.getTotalSeconds());
-		projectManager.updateProjectAfterSave(currentProject);
+		habitManager.addNewRecord(currentHabit, timeText.getTotalSeconds());
 		changeStartButtonTo(START_STATUS.START);
 		initialRecordStatus();
 		timeText.setTime(0);
@@ -74,9 +70,9 @@ abstract public class ExecuteState implements IExecuteState{
 	}
 	
 	private void initialRecordStatus() {
-		currentProject.setTimer_seconds(0);
-		currentProject.setTimer_started(false);
-		currentProject.setTimer_paused(false);
+		currentHabit.setTimer_seconds(0);
+		currentHabit.setTimer_started(false);
+		currentHabit.setTimer_paused(false);
 	}
 	
 	private void createWarningDialog(int title, int message) {
@@ -87,16 +83,16 @@ abstract public class ExecuteState implements IExecuteState{
 	@Override
 	public void exit() {
 		recordTimer.cancelTimer();
-		currentProject.setTimer_seconds(timeText.getTotalSeconds());
-		currentProject.setTimerDestroyDate(new HabitDate());
-		projectManager.updateProjectAfterExitActivity(currentProject);
+		currentHabit.setTimer_seconds(timeText.getTotalSeconds());
+		currentHabit.setTimerDestroyDate(new HabitDate());
+		habitManager.updateProjectAfterExitActivity(currentHabit);
 	}
 	
 	@Override
 	public void input() {
 		recordTimer.cancelTimer();
-		currentProject.setTimer_started(false);
-		currentProject.setTimer_paused(true);
+		currentHabit.setTimer_started(false);
+		currentHabit.setTimer_paused(true);
 		changeStartButtonTo(START_STATUS.START);
 		InputTimeDialog input = new InputTimeDialog(timeText, activity);
 		input.openDialog();

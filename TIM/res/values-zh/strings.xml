@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">好习惯</string>
+    <string name="action_settings">设置</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="addHabit">新建</string>
+    <string name="deleteHabit">删除</string>
+    <string name="title_activity_create_habit">新的习惯</string>
+    <string name="title_activity_modify_habit">修改</string>
+    <string name="delProject">删除</string>
+    <string name="start_date">开始日期</string>
+    <string name="end_date">结束日期</string>
+    <string name="hours_time">小时</string>
+    <string name="minites_time">分钟</string>
+    <string name="habit_name">名称</string>
+    <string name="time_spent_per_day">每天花费的时间</string>
+    <string name="set_start_date">设置起始日期</string>
+    <string name="set_end_date">设置终止日期</string>
+    <string name="done">确定</string>
+    <string name="cancel">取消</string>
+    <string name="title_activity_create">新建</string>
+    <string name="habit_list_goto">></string>
+    <string name="habit_list_percent">100%</string>
+    <string name="executed_days">[天]</string>
+    <string name="unfinished_time">未完成的时间</string>
+    <string name="title_activity_execute_habit">详情</string>
+    <string name="modifyHabit">修改</string>
+    
+    
+    <string name="noData">单击“新建”添加一个新的习惯</string>
+    
+    <!-- execute project strings  -->
+    <string name="inital_time">00:00:00</string>
+    <string name="startTiming">开始</string>
+    <string name="saveTiming">保存</string>
+    <string name="clearTiming">清除</string>
+    <string name="inputManually">手输</string>
+    <string name="colon">:</string>
+    <string name="input_time">请输入时间</string>
+    <string name="hint_hours">(小时)</string>
+    <string name="hint_minute">(分)</string>
+    <string name="hint_second">(秒)</string>
+    <string name="execute_error_msg">坚持的时间太短了，没办法保存，请再多坚持一会儿。</string>
+    <string name="execute_error_msg_title">错误！</string>
+    <string name="execute_error_msg_minute">请输入分钟！</string>
+    <string name="execute_error_msg_time">请 输入合法的分/秒！</string>
+    <string name="execute_error_msg_ok">保存成功!</string>
+    <string name="execute_error_msg_success"></string>
+    
+    <string name="execute_warning">警告</string>
+    <string name="execute_warning_msg">是要删除这个习惯么？</string>
+    <string name="execute_warning_save">在修改习惯之前，请保存正在运行的习惯记录。</string>
+    
+    <string name="Total_Finished_Time">总共完成了</string>
+    <string name="Total_Passed_Days">已经过去了</string>
+    <string name="today_Finished_Time">今天完成了</string>
+    
+    <string name="paused">暂停</string>
+    <string name="started">记录中</string>
+
+</resources>

@@ -5,15 +5,15 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="11"
-        android:targetSdkVersion="17" />
+        android:minSdkVersion="14"
+        android:targetSdkVersion="19" />
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@drawable/icon"
         android:label="@string/app_name" >
         <activity
-            android:name="com.jasonfu19860310.tim.MainActivity"
+            android:name="com.jasonfu19860310.habit.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,16 +22,16 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.jasonfu19860310.tim.view.CreateProjectActivity"
-            android:label="@string/title_activity_create_project" >
+            android:name="com.jasonfu19860310.habit.view.CreateHabitActivity"
+            android:label="@string/title_activity_create_habit" >
         </activity>
         <activity
-            android:name="com.jasonfu19860310.tim.view.ModifyProjectActivity"
-            android:label="@string/title_activity_modify_project" >
+            android:name="com.jasonfu19860310.habit.view.ModifyHabitActivity"
+            android:label="@string/title_activity_modify_habit" >
         </activity>
         <activity
-            android:name="com.jasonfu19860310.tim.view.execute.ExecuteProjectActivity"
-            android:label="@string/title_activity_execute_project" >
+            android:name="com.jasonfu19860310.habit.view.execute.ExecuteHabitActivity"
+            android:label="@string/title_activity_execute_habit" >
         </activity>
     </application>
 

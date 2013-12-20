@@ -14,10 +14,12 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-public class HabitManager {
+public class HabitDataManager {
 	private DBHelper databaseHelper;
-	public HabitManager(Context context) {
+	private RecordManager recordManager;
+	public HabitDataManager(Context context) {
 		 databaseHelper = new DBHelper(context);
+		 recordManager = new RecordManager(context);
 	}
 	
 	public List<Habit> getAllHabits() {
@@ -197,5 +199,15 @@ public class HabitManager {
 		String[] selectionArgs = {id};
 		database.delete(HabitEntry.TABLE_NAME, selection, selectionArgs);
 		database.close();
+		recordManager.deleteRecords(projectID);
+	}
+
+	public void addNewRecord(Habit habit, long totalSeconds) {
+		recordManager.addNewRecord(habit.getId(), totalSeconds);
+		updateProjectAfterSave(habit);
+	}
+
+	public long getFinishedSecondsToday(long id) {
+		return recordManager.getFinishedSecondsToday(id);
 	}
 }

@@ -69,7 +69,7 @@
     <string name="Total_Finished_Time">Total Finished Time</string>
     <string name="Total_Passed_Days">Total Passed Days</string>
     <string name="today_Finished_Time">Today Finished Time</string>
+    <string name="paused">PAUSED</string>
+    <string name="started">STARTED</string>
     
-    
-
 </resources>

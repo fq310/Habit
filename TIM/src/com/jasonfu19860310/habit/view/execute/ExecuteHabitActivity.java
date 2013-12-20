@@ -1,8 +1,7 @@
 package com.jasonfu19860310.habit.view.execute;
 
 import com.jasonfu19860310.habit.adt.HabitDate;
-import com.jasonfu19860310.habit.controller.HabitManager;
-import com.jasonfu19860310.habit.controller.RecordManager;
+import com.jasonfu19860310.habit.controller.HabitDataManager;
 import com.jasonfu19860310.habit.helper.ColorHelper;
 import com.jasonfu19860310.habit.model.Habit;
 import com.jasonfu19860310.habit.view.ModifyHabitActivity;
@@ -31,11 +30,11 @@ public class ExecuteHabitActivity extends Activity {
 	private Handler handler;
 	protected TimeText timeText;
 	protected RecordTimer recordTimer;
-	private Habit currentProject;
-	private HabitManager projectManager;
-	private RecordManager recordManager;
+	private Habit currentHabit;
+	private HabitDataManager habitManager;
 	private boolean isNotifiedTodayFinished = false;
 	private long todayFinishedTime;
+	private final static int MODIFY = 1;
 	
 	private IExecuteState startState;
 	private IExecuteState stopState;
@@ -66,18 +65,23 @@ public class ExecuteHabitActivity extends Activity {
 	
 	private void initialActionBar() {
 		getActionBar().setDisplayShowHomeEnabled(false);
-		getActionBar().setTitle(currentProject.getName());
+		getActionBar().setTitle(currentHabit.getName());
 	}
 	
 	private void initialUtilityObject() {
 		handler = new Handler();
-		long projectID = getIntent().getLongExtra("id", -1);
-		projectManager = new HabitManager(this);
-		recordManager = new RecordManager(this);
-		currentProject = projectManager.getProject(projectID);
+		habitManager = new HabitDataManager(this);
+		
 		TextView timeTextView = (TextView) findViewById(R.id.execute_project_textView_time);
 		timeText = new TimeText(timeTextView);
 		recordTimer = new RecordTimer(this);
+		
+		initialHabit();
+	}
+
+	private void initialHabit() {
+		long habitID = getIntent().getLongExtra("id", -1);
+		currentHabit = habitManager.getProject(habitID);
 	}
 
 	private void initialProgressBars() {
@@ -87,8 +91,8 @@ public class ExecuteHabitActivity extends Activity {
 	}
 
 	private void intialTodayFinishedTimeBar() {
-		todayFinishedTime = recordManager.getFinishedSecondsToday(currentProject.getId());
-		long totalTimePerDay = currentProject.getTimeSpentPerDay();
+		todayFinishedTime = habitManager.getFinishedSecondsToday(currentHabit.getId());
+		long totalTimePerDay = currentHabit.getTimeSpentPerDay();
 		int finishedRate = (int) (((float)todayFinishedTime/totalTimePerDay)*100);
 		ProgressBar todayFinishedBar = (ProgressBar) findViewById(R.id.execute_project_progressBar_today_finished);
 		todayFinishedBar.setMax(100);
@@ -101,8 +105,8 @@ public class ExecuteHabitActivity extends Activity {
 
 	private void initialTotalPassedDaysBar() {
 		ProgressBar passedDayBar = (ProgressBar) findViewById(R.id.execute_project_progressBar2);
-		HabitDate startDate = currentProject.getStartDate();
-		HabitDate endDate = currentProject.getEndDate();
+		HabitDate startDate = currentHabit.getStartDate();
+		HabitDate endDate = currentHabit.getEndDate();
 		passedDayBar.setMax(startDate.daysFrom(endDate));
 		int passedDays = startDate.daysFrom(new HabitDate());
 		if (passedDays < 0) passedDays = 0;
@@ -115,13 +119,13 @@ public class ExecuteHabitActivity extends Activity {
 
 	private void initialTotalFinishedTimeBar() {
 		ProgressBar finishedTimeBar = (ProgressBar) findViewById(R.id.execute_project_progressBar1);
-		float rate = (float)currentProject.getTotalFinishedSeconds()/currentProject.getTotalSeconds() * 100;
+		float rate = (float)currentHabit.getTotalFinishedSeconds()/currentHabit.getTotalSeconds() * 100;
 		finishedTimeBar.setMax(100);
 		finishedTimeBar.setProgress((int)rate);
 		
 		TextView finishedTimeText = (TextView) findViewById(R.id.execute_project_text1);
 		finishedTimeText.setText(R.string.Total_Finished_Time);
-		long totalSeconds = currentProject.getTotalFinishedSeconds();
+		long totalSeconds = currentHabit.getTotalFinishedSeconds();
 		finishedTimeText.append(" [ " + TimeText.getTimeStringFromSeconds(totalSeconds) + " ]");
 	}
 
@@ -130,8 +134,8 @@ public class ExecuteHabitActivity extends Activity {
 		stopState = new StopState(this);
 		pauseState = new PausedState(this);
 		
-		boolean projectPaused = currentProject .isTimer_paused();
-		boolean projectStarted = currentProject.isTimer_started();
+		boolean projectPaused = currentHabit .isTimer_paused();
+		boolean projectStarted = currentHabit.isTimer_started();
 		if (projectPaused) {
 			currentState = pauseState;
 		} else if (projectStarted) {
@@ -151,8 +155,18 @@ public class ExecuteHabitActivity extends Activity {
 	public void onModifyHabit(MenuItem i) {
 		if (inValidStatus()) return;
 		Intent intent = new Intent(this, ModifyHabitActivity.class);
-		intent.putExtra("id", currentProject.getId());
-		this.startActivity(intent);
+		intent.putExtra("id", currentHabit.getId());
+		startActivityForResult(intent, MODIFY);
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		switch (requestCode) {
+		case MODIFY:
+			initialHabit();
+			initialActionBar();
+			initialProgressBars();
+		}
 	}
 	
 	public void onDeleteHabit(MenuItem i) {
@@ -161,7 +175,7 @@ public class ExecuteHabitActivity extends Activity {
 			new OnClickListener() {
 				@Override
 				public void onClick(DialogInterface arg0, int button) {
-					projectManager.deleteProject(currentProject);
+					habitManager.deleteProject(currentHabit);
 					finish();
 				}
 		});
@@ -190,6 +204,7 @@ public class ExecuteHabitActivity extends Activity {
 
 	public void onSaveClicked(View view) {
 		currentState.save();
+		initialHabit();
 		initialProgressBars();
 	}
 	
@@ -217,17 +232,13 @@ public class ExecuteHabitActivity extends Activity {
 	}
 
 	public Habit getProject() {
-		return currentProject;
+		return currentHabit;
 	}
 
-	public HabitManager getProjectManager() {
-		return projectManager;
+	public HabitDataManager getProjectManager() {
+		return habitManager;
 	}
 
-	public RecordManager getRecordManager() {
-		return recordManager;
-	}
-	
 	public TimeText getTimeText() {
 		return timeText;
 	}
@@ -248,9 +259,9 @@ public class ExecuteHabitActivity extends Activity {
 	 * the state.
 	 */
 	public void saveCurrentState() {
-		currentProject.setTimer_seconds(timeText.getTotalSeconds());
-		currentProject.setTimerDestroyDate(new HabitDate());
-		projectManager.updateProjectAfterExitActivity(currentProject);
+		currentHabit.setTimer_seconds(timeText.getTotalSeconds());
+		currentHabit.setTimerDestroyDate(new HabitDate());
+		habitManager.updateProjectAfterExitActivity(currentHabit);
 	}
 	
 	protected void increaseOneSecond() {
@@ -258,8 +269,8 @@ public class ExecuteHabitActivity extends Activity {
 			@Override
 			public void run() {
 				timeText.increaseOneSecond();
-				currentProject.setTimer_seconds(currentProject.getTimer_seconds() + 1);
-				long targetTimeToday = currentProject.getTimeSpentPerDay();
+				currentHabit.setTimer_seconds(currentHabit.getTimer_seconds() + 1);
+				long targetTimeToday = currentHabit.getTimeSpentPerDay();
 				long finishedTime = timeText.getTotalSeconds() + todayFinishedTime;
 				Log.i("fqtime", "current : " + timeText.getTotalSeconds() + ". total finished: " + finishedTime + ". Target: " + targetTimeToday);
 				if (isNotifiedTodayFinished == false &&  finishedTime >= targetTimeToday) {

@@ -1,6 +1,6 @@
 package com.jasonfu19860310.habit;
 
-import com.jasonfu19860310.habit.controller.HabitManager;
+import com.jasonfu19860310.habit.controller.HabitDataManager;
 import com.jasonfu19860310.habit.view.CreateHabitActivity;
 import com.jasonfu19860310.habit.view.execute.ExecuteHabitActivity;
 import com.jasonfu19860310.tim.R;
@@ -22,14 +22,14 @@ public class MainActivity extends ListActivity {
 	public static final int ADD = 1;
 	public static final int EXECUTE = 2;
 	private PorjectListAdapter listAdapter;
-	private HabitManager habitManager;
+	private HabitDataManager habitManager;
 
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
 		getActionBar().setDisplayShowHomeEnabled(false);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        habitManager = new HabitManager(this);
+        habitManager = new HabitDataManager(this);
         listAdapter = new PorjectListAdapter(this); 
         initialHabitList();
     }

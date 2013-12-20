@@ -12,7 +12,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 public class RecordManager {
 	private DBHelper databaseHelper;
-	public RecordManager(Context context) {
+	protected RecordManager(Context context) {
 		databaseHelper = new DBHelper(context);
 	}
 	public void addNewRecord(long id, long totalSeconds) {
@@ -53,5 +53,14 @@ public class RecordManager {
 	private long getTimeConsuming(Cursor cursor) {
 		return cursor.getLong(
 				cursor.getColumnIndexOrThrow(RecordEntry.COLUMN_NAME_RECORD_TIME_CONSUMING));
+	}
+	
+	public void deleteRecords(long projectID) {
+		SQLiteDatabase database = databaseHelper.getWritableDatabase();
+		String selection = RecordEntry.COLUMN_NAME_PROJECT_ID + "=?";
+		String id = String.valueOf(projectID);
+		String[] selectionArgs = {id};
+		database.delete(RecordEntry.TABLE_NAME, selection, selectionArgs);
+		database.close();
 	}
 }
