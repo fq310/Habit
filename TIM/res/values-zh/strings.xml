@@ -58,5 +58,7 @@
     
     <string name="paused">暂停</string>
     <string name="started">记录中</string>
+    <string name="about">关于</string>
+    <string name="about_msg">版本1.1  非常感谢大家使用好习惯.这只是我的个人作品.如果发现bug或者有新的需求.请务必毫无顾忌的去我的微博@fq310 吐槽.</string>
 
 </resources>

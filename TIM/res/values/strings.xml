@@ -71,5 +71,7 @@
     <string name="today_Finished_Time">Today Finished Time</string>
     <string name="paused">PAUSED</string>
     <string name="started">STARTED</string>
+    <string name="about">About</string>
+    <string name="about_msg">Habit Version 1.1</string>
     
 </resources>

@@ -5,4 +5,10 @@
         android:title="@string/addHabit" 
         android:onClick="onOptionAddHabit" 
         android:showAsAction="ifRoom|withText"/>
+     <item
+        android:id="@+id/aboutMenu"
+        android:title="@string/about" 
+        android:onClick="onAbout" 
+        android:showAsAction="ifRoom|withText"/>
+     
 </menu>

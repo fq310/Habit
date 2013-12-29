@@ -6,7 +6,9 @@ import com.jasonfu19860310.habit.view.execute.ExecuteHabitActivity;
 import com.jasonfu19860310.tim.R;
 
 import android.os.Bundle;
+import android.app.AlertDialog;
 import android.app.ListActivity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -49,13 +51,25 @@ public class MainActivity extends ListActivity {
 	
 	@Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.add_habit, menu);
+        getMenuInflater().inflate(R.menu.main_activity_menu, menu);
         return true;
     }
 	
 	public void onOptionAddHabit(MenuItem i) {
 		Intent intent = new Intent(this, CreateHabitActivity.class);
 		this.startActivityForResult(intent, ADD);
+	}
+	
+	public void onAbout(MenuItem i) {
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setMessage(R.string.about_msg)
+		       .setTitle(R.string.about);
+		builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+	           public void onClick(DialogInterface dialog, int id) {
+	           }
+	       });
+		AlertDialog dialog = builder.create();
+		dialog.show();
 	}
 	
 	@Override
