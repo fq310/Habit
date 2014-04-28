@@ -10,8 +10,7 @@ import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class DBHelper extends SQLiteOpenHelper {
-
-	protected static String DATABASE_NAME = "habit2.db";
+	public static String DATABASE_NAME = "habit.db";
 	public static final int DATABASE_VERSION = 1;
 	protected static final String TEXT_TYPE = " TEXT";
 	protected static final String INT_TYPE = " INT";
@@ -61,5 +60,5 @@ public class DBHelper extends SQLiteOpenHelper {
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int arg1, int arg2) {
 	}
-
+	
 }

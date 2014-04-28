@@ -23,6 +23,7 @@ public class MainActivity extends ListActivity {
 	private long selectedHabitID;
 	public static final int ADD = 1;
 	public static final int EXECUTE = 2;
+	public static final int SYNC = 3;
 	private PorjectListAdapter listAdapter;
 	private HabitDataManager habitManager;
 
@@ -72,6 +73,11 @@ public class MainActivity extends ListActivity {
 		dialog.show();
 	}
 	
+	public void onSync(MenuItem i) {
+		Intent intent = new Intent(this, Sync.class);
+		this.startActivityForResult(intent, SYNC);
+	}
+	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		switch (requestCode) {
@@ -79,6 +85,9 @@ public class MainActivity extends ListActivity {
 			listAdapter.reloadData();
 			break;
 		case EXECUTE:
+			listAdapter.reloadData();
+			break;
+		case SYNC:
 			listAdapter.reloadData();
 			break;
 		}

@@ -140,6 +140,7 @@ public class HabitDataManager {
 		SQLiteDatabase database = databaseHelper.getWritableDatabase();
 		ContentValues values = getUpdateValues(project);
 		updateTable(project, database, values);
+		database.close();
 	}
 	
 	public int getTimeOn(Calendar date, long id) {
@@ -174,7 +175,6 @@ public class HabitDataManager {
 		String id = String.valueOf(project.getId());
 		String[] selectionArgs = {id};
 		database.update(HabitEntry.TABLE_NAME, values, selection, selectionArgs);
-		database.close();
 	}
 
 	public void updateProjectAfterExitActivity(Habit project) {
@@ -185,6 +185,7 @@ public class HabitDataManager {
 		values.put(HabitEntry.COLUMN_NAME_TIMER_SECONDS, project.getTimer_seconds());
 		values.put(HabitEntry.COLUMN_NAME_TIMER_DESTORY_DATE, project.getTimerDestroyDate().getTimeInMillis());
 		updateTable(project, database, values);
+		database.close();
 	}
 
 	public void deleteProject(Habit currentProject) {

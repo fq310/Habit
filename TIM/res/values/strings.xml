@@ -40,11 +40,9 @@
     <string name="unfinished_time">unfinished_time</string>
     <string name="title_activity_execute_habit">Habit Detail</string>
     <string name="modifyHabit">Modify</string>
-    
-    
     <string name="noData">No projects found, please add a new one.</string>
-    
-    <!-- execute project strings  -->
+
+    <!-- execute project strings -->
     <string name="inital_time">00:00:00</string>
     <string name="startTiming">Start</string>
     <string name="saveTiming">Save</string>
@@ -61,11 +59,9 @@
     <string name="execute_error_msg_time">Please enter valid minutes/second.</string>
     <string name="execute_error_msg_ok">Record Saved!</string>
     <string name="execute_error_msg_success"></string>
-    
     <string name="execute_warning">Warning</string>
     <string name="execute_warning_msg">Do you want to delete this habit?</string>
     <string name="execute_warning_save">Please save the current record before you modify the habit.</string>
-    
     <string name="Total_Finished_Time">Total Finished Time</string>
     <string name="Total_Passed_Days">Total Passed Days</string>
     <string name="today_Finished_Time">Today Finished Time</string>
@@ -73,5 +69,20 @@
     <string name="started">STARTED</string>
     <string name="about">About</string>
     <string name="about_msg">Habit Version 1.1</string>
+    <string name="backup_set_dir">Set Sync Directory</string>
+    <string name="backup_description">        Tips: \n
+        1. Set sync directory to your network hardisk\'s auto-sync directory so that your data can be auto-synced to the server.\n
+        2. After you set a valid sync directory, Habit will export data to this directory automatically every time you save a habit record.\n
+        3. You can also click "Export data now" button to export data immediately.\n
+        4. When you want to restore data, set the "Sync Directory" to the directory which contains the data, and click "import Data Now". 	</string>
+    <string name="backup_export_data">Export Data Now</string>
+    <string name="backup_import_data">Import Data Now</string>
+    <string name="title_activity_sync">Sync</string>
+    <string name="backup_save">Save</string>
+    <string name="backup_sync_finish">Sync Complete</string>
+    <string name="backup_sync_warning">Please set a valid directory</string>
     
+    <string name="backup_chose_file">Choose</string>
+    <string name="backup_chose_file_readErr">Could not read folder contents.</string>
+
 </resources>

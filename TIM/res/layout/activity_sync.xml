@@ -1,0 +1,73 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" 
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp" >
+
+	<TextView
+        android:id="@+id/backup_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/backup_description" />
+    
+    <Button
+	    android:id="@+id/button_backup_set_dir"
+	    style="?android:attr/buttonBarButtonStyle"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+	    android:onClick="onSetDir"
+	    android:text="@string/backup_set_dir" />
+    
+    <LinearLayout
+        android:id="@+id/layout_backup_sync"
+        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content" >
+        <Button
+            android:id="@+id/button_backup_import"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:layout_weight="1"
+            android:onClick="onImportDataNow"
+            android:text="@string/backup_import_data" />
+        
+        <Button
+            android:id="@+id/button_backup_export"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="onExportDataNow"
+            android:text="@string/backup_export_data" />
+    </LinearLayout>
+    
+    <LinearLayout
+        android:id="@+id/layout_backup_ok_cancel"
+        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content" >
+        <Button
+            android:id="@+id/button_backup_cancel"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:layout_weight="1"
+            android:onClick="onCancel"
+            android:text="@string/cancel" />
+        
+        <Button
+            android:id="@+id/button_backup_ok"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="onOk"
+            android:text="@string/backup_save" />
+    </LinearLayout>
+
+</LinearLayout>

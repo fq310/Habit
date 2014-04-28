@@ -60,5 +60,22 @@
     <string name="started">记录中</string>
     <string name="about">关于</string>
     <string name="about_msg">版本1.1  非常感谢大家使用好习惯.这只是我的个人作品.如果发现bug或者有新的需求.请务必毫无顾忌的去我的微博@fq310 吐槽.</string>
+    
+    <string name="backup_set_dir">单击设置同步文件夹</string>
+    <string name="backup_description">
+		说明：\n
+		1. 同步文件夹的路径可以设置为手机上的任意位置，推荐设置在网盘的“同步文件夹”内（现在的网盘客户端基本都支持这一功能，网盘请自选），这样导出的数据库文件就可以自动备份到网盘了。\n
+        2. 在设置了有效的路径并且保存之后，每次保存习惯记录之后好习惯就会自动导出当前数据以实现自动备份，省去了每次手动备份的麻烦。\n
+        3. 也可以单击下边的“立即导出数据”来立刻导出数据文件。\n
+        4. 恢复数据时，设置“同步文件夹路径”为存有备份数据的文件夹，单击“导入数据”即可。
+    </string>
+    <string name="backup_export_data">立刻导出数据</string>
+    <string name="backup_import_data">立刻导入数据</string>
+    <string name="title_activity_sync">同步</string>
+    <string name="backup_sync_finish">同步完成</string>
+    <string name="backup_sync_warning">请选择一个有效的文件夹</string>
+    <string name="backup_save">保存</string>
+    <string name="backup_chose_file">选择</string>
+    <string name="backup_chose_file_readErr">不能读取文件夹内容。</string>
 
 </resources>
