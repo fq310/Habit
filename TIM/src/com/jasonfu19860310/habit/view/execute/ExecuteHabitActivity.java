@@ -2,7 +2,6 @@ package com.jasonfu19860310.habit.view.execute;
 
 import com.jasonfu19860310.habit.adt.HabitDate;
 import com.jasonfu19860310.habit.controller.HabitDataManager;
-import com.jasonfu19860310.habit.db.DBExportImport;
 import com.jasonfu19860310.habit.helper.ColorHelper;
 import com.jasonfu19860310.habit.model.Habit;
 import com.jasonfu19860310.habit.view.ModifyHabitActivity;
@@ -207,7 +206,6 @@ public class ExecuteHabitActivity extends Activity {
 		currentState.save();
 		initialHabit();
 		initialProgressBars();
-		new DBExportImport(this).exportDataAuto();
 	}
 	
 	public void onInputManuallyClicked(View view) {

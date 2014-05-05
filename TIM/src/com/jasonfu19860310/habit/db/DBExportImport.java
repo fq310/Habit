@@ -13,7 +13,6 @@ import com.jasonfu19860310.tim.R;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Environment;
-import android.widget.Toast;
 
 public class DBExportImport {
 	public static final String PACKAGE_NAME = "com.jasonfu19860310.tim";
@@ -50,7 +49,6 @@ public class DBExportImport {
 			    targetFile.write(buffer, 0, length);
 			}
 			targetFile.flush();
-			Toast.makeText(context, R.string.backup_sync_finish, Toast.LENGTH_LONG).show();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {

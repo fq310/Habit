@@ -5,21 +5,29 @@ import java.util.Calendar;
 import java.util.List;
 
 import com.jasonfu19860310.habit.adt.HabitDate;
+import com.jasonfu19860310.habit.db.DBExportImport;
 import com.jasonfu19860310.habit.db.DBHelper;
 import com.jasonfu19860310.habit.db.DBContract.HabitEntry;
 
 import com.jasonfu19860310.habit.model.Habit;
+import com.jasonfu19860310.tim.R;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.widget.Toast;
 
 public class HabitDataManager {
 	private DBHelper databaseHelper;
 	private RecordManager recordManager;
+	private DBExportImport dbExportImport;
+	private Context context;
 	public HabitDataManager(Context context) {
-		 databaseHelper = new DBHelper(context);
+		 this.context = context;
+		databaseHelper = new DBHelper(context);
 		 recordManager = new RecordManager(context);
+		 dbExportImport = new DBExportImport(context);
 	}
 	
 	public List<Habit> getAllHabits() {
@@ -101,6 +109,8 @@ public class HabitDataManager {
 		ContentValues values = getUpdateValues(project);
 		database.insert(HabitEntry.TABLE_NAME, null, values);
 		database.close();
+		dbExportImport.exportDataAuto();
+		Toast.makeText(context, R.string.backup_sync_finish, Toast.LENGTH_LONG).show();
 	}
 
 	private ContentValues getUpdateValues(Habit project) {
@@ -141,6 +151,8 @@ public class HabitDataManager {
 		ContentValues values = getUpdateValues(project);
 		updateTable(project, database, values);
 		database.close();
+		dbExportImport.exportDataAuto();
+		Toast.makeText(context, R.string.backup_sync_finish, Toast.LENGTH_LONG).show();
 	}
 	
 	public int getTimeOn(Calendar date, long id) {
@@ -186,6 +198,7 @@ public class HabitDataManager {
 		values.put(HabitEntry.COLUMN_NAME_TIMER_DESTORY_DATE, project.getTimerDestroyDate().getTimeInMillis());
 		updateTable(project, database, values);
 		database.close();
+		dbExportImport.exportDataAuto();
 	}
 
 	public void deleteProject(Habit currentProject) {
@@ -201,6 +214,8 @@ public class HabitDataManager {
 		database.delete(HabitEntry.TABLE_NAME, selection, selectionArgs);
 		database.close();
 		recordManager.deleteRecords(projectID);
+		dbExportImport.exportDataAuto();
+		Toast.makeText(context, R.string.backup_sync_finish, Toast.LENGTH_LONG).show();
 	}
 
 	public void addNewRecord(Habit habit, long totalSeconds) {
