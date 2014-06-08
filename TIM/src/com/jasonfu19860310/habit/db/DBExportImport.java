@@ -13,6 +13,7 @@ import com.jasonfu19860310.tim.R;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Environment;
+import android.widget.Toast;
 
 public class DBExportImport {
 	public static final String PACKAGE_NAME = "com.jasonfu19860310.tim";
@@ -91,6 +92,7 @@ public class DBExportImport {
 		if (savedDir.equals(initialDir))
 			return;
 		exportData(savedDir + "/" + DBHelper.DATABASE_NAME);
+		Toast.makeText(context, R.string.backup_sync_finish, Toast.LENGTH_LONG).show();
 	}
 
 }
