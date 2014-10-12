@@ -28,5 +28,15 @@ public class DBContract {
         public static final String COLUMN_NAME_RECORD_DATE = "date";
         public static final String COLUMN_NAME_RECORD_TIME_CONSUMING = "time_consuming";
     }
+	
+	public static abstract class CountHabitEntry implements BaseColumns {
+        public static final String TABLE_NAME = "habits_count";
+        public static final String COLUMN_NAME_NAME = "name";
+        public static final String COLUMN_NAME_START_DATE = "startDate";
+        public static final String COLUMN_NAME_END_DATE = "endDate";
+        public static final String COLUMN_NAME_TIMES_PER_DAY = "timesPerDay";
+        public static final String COLUMN_NAME_TOTAL_CHECKED = "total_checked";
+        public static final String COLUMN_NAME_TODAY_CHECKED = "today_checked";
+    }
 }
 

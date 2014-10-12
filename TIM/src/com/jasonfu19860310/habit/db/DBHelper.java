@@ -1,5 +1,6 @@
 package com.jasonfu19860310.habit.db;
 
+import com.jasonfu19860310.habit.db.DBContract.CountHabitEntry;
 import com.jasonfu19860310.habit.db.DBContract.HabitEntry;
 import com.jasonfu19860310.habit.db.DBContract.RecordEntry;
 
@@ -30,12 +31,20 @@ public class DBHelper extends SQLiteOpenHelper {
 		    HabitEntry.COLUMN_NAME_TOTAL_SECONDS + BIGINT_TYPE + COMMA_SEP +
 		    HabitEntry.COLUMN_NAME_TOTAL_FINISHED_SECONDS + BIGINT_TYPE + COMMA_SEP +
 		    HabitEntry.COLUMN_NAME_TIMER_DESTORY_DATE + BIGINT_TYPE + COMMA_SEP +
-		    HabitEntry.COLUMN_NAME_TOTAL_PASSED_DAYS + INT_TYPE + ")";;
+		    HabitEntry.COLUMN_NAME_TOTAL_PASSED_DAYS + INT_TYPE + ")";
 	protected String SQL_CREATE_RECORD =  "CREATE TABLE " + RecordEntry.TABLE_NAME + " (" +
 			RecordEntry._ID + " INTEGER PRIMARY KEY," +
 			RecordEntry.COLUMN_NAME_PROJECT_ID + BIGINT_TYPE + COMMA_SEP +
 		    RecordEntry.COLUMN_NAME_RECORD_DATE + BIGINT_TYPE + COMMA_SEP +
-		    RecordEntry.COLUMN_NAME_RECORD_TIME_CONSUMING + BIGINT_TYPE + ")";;
+		    RecordEntry.COLUMN_NAME_RECORD_TIME_CONSUMING + BIGINT_TYPE + ")";
+	protected String SQL_CREATE_COUNT_HABIT =  "CREATE TABLE " + CountHabitEntry.TABLE_NAME + " (" +
+			CountHabitEntry._ID + " INTEGER PRIMARY KEY," +
+			CountHabitEntry.COLUMN_NAME_NAME + TEXT_TYPE + COMMA_SEP +
+		    CountHabitEntry.COLUMN_NAME_START_DATE + BIGINT_TYPE + COMMA_SEP +
+		    CountHabitEntry.COLUMN_NAME_END_DATE + BIGINT_TYPE + COMMA_SEP +
+		    CountHabitEntry.COLUMN_NAME_TIMES_PER_DAY + BIGINT_TYPE + COMMA_SEP +
+		    CountHabitEntry.COLUMN_NAME_TODAY_CHECKED + BIGINT_TYPE + COMMA_SEP +
+		    CountHabitEntry.COLUMN_NAME_TOTAL_CHECKED + BIGINT_TYPE + COMMA_SEP +")";
 
 	public DBHelper(Context context, String name, CursorFactory factory,
 			int version) {
@@ -55,10 +64,14 @@ public class DBHelper extends SQLiteOpenHelper {
 	public void onCreate(SQLiteDatabase db) {
 		db.execSQL(SQL_CREATE_HABIT);
 		db.execSQL(SQL_CREATE_RECORD);
+		db.execSQL(SQL_CREATE_COUNT_HABIT);
 	}
 
 	@Override
-	public void onUpgrade(SQLiteDatabase db, int arg1, int arg2) {
+	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+		if (oldVersion == 1) {
+			db.execSQL(SQL_CREATE_COUNT_HABIT);
+		}
 	}
 	
 }
