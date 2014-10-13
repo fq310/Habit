@@ -1,9 +1,9 @@
 package com.jasonfu19860310.habit.view.execute;
 
 import com.jasonfu19860310.habit.adt.HabitDate;
-import com.jasonfu19860310.habit.controller.HabitDataManager;
+import com.jasonfu19860310.habit.controller.TimingHabitManager;
 import com.jasonfu19860310.habit.helper.ColorHelper;
-import com.jasonfu19860310.habit.model.Habit;
+import com.jasonfu19860310.habit.model.TimingHabit;
 import com.jasonfu19860310.habit.view.ModifyHabitActivity;
 import com.jasonfu19860310.habit.view.execute.state.IExecuteState;
 import com.jasonfu19860310.habit.view.execute.state.PausedState;
@@ -30,8 +30,8 @@ public class ExecuteHabitActivity extends Activity {
 	private Handler handler;
 	protected TimeText timeText;
 	protected RecordTimer recordTimer;
-	private Habit currentHabit;
-	private HabitDataManager habitManager;
+	private TimingHabit currentHabit;
+	private TimingHabitManager habitManager;
 	private boolean isNotifiedTodayFinished = false;
 	private long todayFinishedTime;
 	private final static int MODIFY = 1;
@@ -70,7 +70,7 @@ public class ExecuteHabitActivity extends Activity {
 	
 	private void initialUtilityObject() {
 		handler = new Handler();
-		habitManager = new HabitDataManager(this);
+		habitManager = new TimingHabitManager(this);
 		
 		TextView timeTextView = (TextView) findViewById(R.id.execute_project_textView_time);
 		timeText = new TimeText(timeTextView);
@@ -231,11 +231,11 @@ public class ExecuteHabitActivity extends Activity {
 		return handler;
 	}
 
-	public Habit getProject() {
+	public TimingHabit getProject() {
 		return currentHabit;
 	}
 
-	public HabitDataManager getProjectManager() {
+	public TimingHabitManager getProjectManager() {
 		return habitManager;
 	}
 

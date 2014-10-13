@@ -2,9 +2,9 @@ package com.jasonfu19860310.habit.view;
 
 
 import com.jasonfu19860310.habit.adt.HabitDate;
-import com.jasonfu19860310.habit.controller.HabitDataManager;
+import com.jasonfu19860310.habit.controller.TimingHabitManager;
 import com.jasonfu19860310.habit.helper.ColorHelper;
-import com.jasonfu19860310.habit.model.Habit;
+import com.jasonfu19860310.habit.model.TimingHabit;
 import com.jasonfu19860310.tim.R;
 
 import android.os.Bundle;
@@ -28,15 +28,15 @@ public abstract class HabitBaseActivity extends Activity {
 	public static final String CREATE = "create";
 	public static final String MODIFY = "modify";
 	public static final String OPERATION = "operation";
-	protected Habit project;
-	private HabitDataManager projectManager;
+	protected TimingHabit project;
+	private TimingHabitManager projectManager;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_habit_info);
 		getActionBar().setDisplayShowHomeEnabled(false);
-		projectManager = new HabitDataManager(this);
+		projectManager = new TimingHabitManager(this);
 		initialButton();
 	}
 
@@ -178,7 +178,7 @@ public abstract class HabitBaseActivity extends Activity {
 		return text.toString();
 	}
 	
-	protected HabitDataManager getProjectManager() {
+	protected TimingHabitManager getProjectManager() {
 		return projectManager;
 	}
 	

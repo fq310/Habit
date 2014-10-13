@@ -9,29 +9,30 @@ import com.jasonfu19860310.habit.db.DBExportImport;
 import com.jasonfu19860310.habit.db.DBHelper;
 import com.jasonfu19860310.habit.db.DBContract.HabitEntry;
 
-import com.jasonfu19860310.habit.model.Habit;
+import com.jasonfu19860310.habit.model.HabitListItem;
+import com.jasonfu19860310.habit.model.TimingHabit;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-public class HabitDataManager {
+public class TimingHabitManager {
 	private DBHelper databaseHelper;
 	private RecordManager recordManager;
 	private DBExportImport dbExportImport;
-	public HabitDataManager(Context context) {
+	public TimingHabitManager(Context context) {
 		databaseHelper = new DBHelper(context);
 		recordManager = new RecordManager(context);
 		dbExportImport = new DBExportImport(context);
 	}
 	
-	public List<Habit> getAllHabits() {
+	public List<HabitListItem> getAllHabits() {
 		SQLiteDatabase database = databaseHelper.getWritableDatabase();
 		String sortOrder =
 				HabitEntry.COLUMN_NAME_NAME + " DESC";
 		Cursor cursor = database.query(HabitEntry.TABLE_NAME, null, null, null, null, null, sortOrder);
-		ArrayList<Habit> allProjects = new ArrayList<Habit>();
+		List<HabitListItem> allProjects = new ArrayList<HabitListItem>();
 		if (cursor.moveToFirst()) {
 			allProjects.add(readHabitFrom(cursor));
 			while (cursor.moveToNext()) {
@@ -42,7 +43,7 @@ public class HabitDataManager {
 		return allProjects;
 	}
 
-	private Habit readHabitFrom(Cursor cursor) {
+	private TimingHabit readHabitFrom(Cursor cursor) {
 		long id = cursor.getLong(
 				cursor.getColumnIndexOrThrow(HabitEntry._ID)
 		);
@@ -82,7 +83,7 @@ public class HabitDataManager {
 		long timerDestroyDate = cursor.getLong(
 				cursor.getColumnIndexOrThrow(HabitEntry.COLUMN_NAME_TIMER_DESTORY_DATE)
 		);
-		Habit project = new Habit();
+		TimingHabit project = new TimingHabit();
 		project.setId(id);
 		project.setName(name);
 		project.getStartDate().setTimeInMillis(startDate);
@@ -99,7 +100,7 @@ public class HabitDataManager {
 		return project;
 	}
 	
-	public void saveNewProject(Habit project) {
+	public void saveNewProject(TimingHabit project) {
 		project.setTotalSeconds(getTotalTime(project));
 		SQLiteDatabase database = databaseHelper.getWritableDatabase();
 		ContentValues values = getUpdateValues(project);
@@ -108,7 +109,7 @@ public class HabitDataManager {
 		dbExportImport.exportDataAuto();
 	}
 
-	private ContentValues getUpdateValues(Habit project) {
+	private ContentValues getUpdateValues(TimingHabit project) {
 		ContentValues values = new ContentValues();
 		values.put(HabitEntry.COLUMN_NAME_NAME, project.getName());
 		values.put(HabitEntry.COLUMN_NAME_START_DATE, project.getStartDate().getTimeInMillis());
@@ -125,14 +126,14 @@ public class HabitDataManager {
 		return values;
 	}
 	
-	public Habit getProject(long projectID) {
+	public TimingHabit getProject(long projectID) {
 		SQLiteDatabase database = databaseHelper.getWritableDatabase();
 		String selection = HabitEntry._ID + "=?";
 		String id = String.valueOf(projectID);
 		String[] selectionArgs = {id};
 		Cursor cursor = database.query(HabitEntry.TABLE_NAME, null, selection, selectionArgs, null, null, null);
 		if (cursor.moveToFirst()) {
-			Habit project = readHabitFrom(cursor);
+			TimingHabit project = readHabitFrom(cursor);
 			database.close();
 			return project;
 		}
@@ -140,7 +141,7 @@ public class HabitDataManager {
 		return null;
 	}
 	
-	public void updateProject(Habit project) {
+	public void updateProject(TimingHabit project) {
 		project.setTotalSeconds(getTotalTime(project));
 		SQLiteDatabase database = databaseHelper.getWritableDatabase();
 		ContentValues values = getUpdateValues(project);
@@ -156,7 +157,7 @@ public class HabitDataManager {
 		return 600;
 	}
 	
-	private long getTotalTime(Habit project) {
+	private long getTotalTime(TimingHabit project) {
 		int totalDays = project.getStartDate().daysFrom(project.getEndDate());
 		return totalDays * ((project.getHours() * 60 + project.getMinitues()) * 60);
 	}
@@ -169,13 +170,13 @@ public class HabitDataManager {
 		return 60;
 	}
 
-	public void updateProjectAfterSave(Habit project) {
+	public void updateProjectAfterSave(TimingHabit project) {
 		project.setTotalFinishedSeconds(project.getTotalFinishedSeconds() + project.getTimer_seconds());
 		project.setTotalPassedDays(project.getStartDate().daysFrom(new HabitDate()));
 		updateProject(project);
 	}
 
-	private void updateTable(Habit project, SQLiteDatabase database,
+	private void updateTable(TimingHabit project, SQLiteDatabase database,
 			ContentValues values) {
 		String selection = HabitEntry._ID + "=?";
 		String id = String.valueOf(project.getId());
@@ -183,7 +184,7 @@ public class HabitDataManager {
 		database.update(HabitEntry.TABLE_NAME, values, selection, selectionArgs);
 	}
 
-	public void updateProjectAfterExitActivity(Habit project) {
+	public void updateProjectAfterExitActivity(TimingHabit project) {
 		SQLiteDatabase database = databaseHelper.getWritableDatabase();
 		ContentValues values = new ContentValues();
 		values.put(HabitEntry.COLUMN_NAME_TIMER_STARTED, String.valueOf(project.isTimer_started()));
@@ -195,7 +196,7 @@ public class HabitDataManager {
 		dbExportImport.exportDataAuto();
 	}
 
-	public void deleteProject(Habit currentProject) {
+	public void deleteProject(TimingHabit currentProject) {
 		long projectID = currentProject.getId();
 		deleteProjectByID(projectID);
 	}
@@ -211,7 +212,7 @@ public class HabitDataManager {
 		dbExportImport.exportDataAuto();
 	}
 
-	public void addNewRecord(Habit habit, long totalSeconds) {
+	public void addNewRecord(TimingHabit habit, long totalSeconds) {
 		recordManager.addNewRecord(habit.getId(), totalSeconds);
 		updateProjectAfterSave(habit);
 	}

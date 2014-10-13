@@ -3,9 +3,9 @@ package com.jasonfu19860310.habit.view.execute.state;
 import android.widget.Button;
 
 import com.jasonfu19860310.habit.adt.HabitDate;
-import com.jasonfu19860310.habit.controller.HabitDataManager;
+import com.jasonfu19860310.habit.controller.TimingHabitManager;
 import com.jasonfu19860310.habit.helper.ColorHelper;
-import com.jasonfu19860310.habit.model.Habit;
+import com.jasonfu19860310.habit.model.TimingHabit;
 import com.jasonfu19860310.habit.view.execute.ExecuteHabitActivity;
 import com.jasonfu19860310.habit.view.execute.InputTimeDialog;
 import com.jasonfu19860310.habit.view.execute.RecordTimer;
@@ -18,8 +18,8 @@ abstract public class ExecuteState implements IExecuteState{
 		PAUSE, START
 	}
 	protected ExecuteHabitActivity activity;
-	private HabitDataManager habitManager;
-	protected Habit currentHabit;
+	private TimingHabitManager habitManager;
+	protected TimingHabit currentHabit;
 	
 	private Button startButton;
 	protected TimeText timeText;

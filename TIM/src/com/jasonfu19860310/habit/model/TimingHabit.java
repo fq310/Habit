@@ -1,9 +1,15 @@
 package com.jasonfu19860310.habit.model;
 
-import com.jasonfu19860310.habit.adt.HabitDate;
+import java.text.DecimalFormat;
 
-public class Habit {
-	public static final String ID = "id";
+import android.content.Context;
+import android.content.Intent;
+
+import com.jasonfu19860310.habit.adt.HabitDate;
+import com.jasonfu19860310.habit.view.execute.ExecuteHabitActivity;
+import com.jasonfu19860310.tim.R;
+
+public class TimingHabit implements HabitListItem {
 	private long id;
 	private String name = "project";
 	private HabitDate startDate = new HabitDate();
@@ -120,6 +126,43 @@ public class Habit {
 
 	public long getTimeSpentPerDay() {
 		return this.getHours()*3600 + this.getMinitues()*60;
+	}
+
+	@Override
+	public Intent getExecuteIntent(Context context) {
+		return new Intent(context, ExecuteHabitActivity.class);
+	}
+
+	@Override
+	public String getTipString(Context context) {
+		String str = "";
+		String paused = context.getString(R.string.paused);
+		String started = context.getString(R.string.started);
+		if (isTimer_paused()) {
+			str = " [" + paused + "]";
+		}
+		if (isTimer_started()) {
+			str = " [" + started + "]"; 
+		}
+		return str;
+	}
+
+	@Override
+	public int getBackgroundClolor() {
+		if (isTimer_paused()) {
+			return COLOR_YELLOW;
+		}
+		if (isTimer_started()) {
+			return COLOR_GREEN;
+		}
+		return COLOR_BLACK;
+	}
+
+	@Override
+	public String getFinishRate() {
+		float finishRate = ((float)getTotalFinishedSeconds()/getTotalSeconds()) * 100;
+		DecimalFormat df = new DecimalFormat("###.##");
+		return df.format(finishRate) + "%";
 	}
 
 }

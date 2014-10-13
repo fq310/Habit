@@ -12,7 +12,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DBHelper extends SQLiteOpenHelper {
 	public static String DATABASE_NAME = "habit.db";
-	public static final int DATABASE_VERSION = 1;
+	public static final int DATABASE_VERSION = 2;
 	protected static final String TEXT_TYPE = " TEXT";
 	protected static final String INT_TYPE = " INT";
 	protected static final String BIGINT_TYPE = " BIGINT";

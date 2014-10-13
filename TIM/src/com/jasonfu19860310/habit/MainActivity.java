@@ -1,8 +1,8 @@
 package com.jasonfu19860310.habit;
 
-import com.jasonfu19860310.habit.controller.HabitDataManager;
+import com.jasonfu19860310.habit.controller.TimingHabitManager;
+import com.jasonfu19860310.habit.model.HabitListItem;
 import com.jasonfu19860310.habit.view.CreateHabitActivity;
-import com.jasonfu19860310.habit.view.execute.ExecuteHabitActivity;
 import com.jasonfu19860310.tim.R;
 
 import android.os.Bundle;
@@ -25,14 +25,14 @@ public class MainActivity extends ListActivity {
 	public static final int EXECUTE = 2;
 	public static final int SYNC = 3;
 	private PorjectListAdapter listAdapter;
-	private HabitDataManager habitManager;
+	private TimingHabitManager habitManager;
 
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
 		getActionBar().setDisplayShowHomeEnabled(false);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        habitManager = new HabitDataManager(this);
+        habitManager = new TimingHabitManager(this);
         listAdapter = new PorjectListAdapter(this); 
         initialHabitList();
     }
@@ -114,7 +114,8 @@ class ItemClickListener implements OnItemClickListener {
 	private ListActivity context;
 	@Override
 	public void onItemClick(AdapterView<?> list, View view, int position, long id) {
-		Intent intent = new Intent(context, ExecuteHabitActivity.class);
+		HabitListItem item = (HabitListItem) list.getItemAtPosition(position);
+		Intent intent = item.getExecuteIntent(context);
 		intent.putExtra("id", id);
 		context.startActivityForResult(intent, MainActivity.EXECUTE);
 	}
