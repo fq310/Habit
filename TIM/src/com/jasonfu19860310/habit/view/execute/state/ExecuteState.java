@@ -1,10 +1,10 @@
 package com.jasonfu19860310.habit.view.execute.state;
 
+import android.graphics.Color;
 import android.widget.Button;
 
 import com.jasonfu19860310.habit.adt.HabitDate;
 import com.jasonfu19860310.habit.controller.TimingHabitManager;
-import com.jasonfu19860310.habit.helper.ColorHelper;
 import com.jasonfu19860310.habit.model.TimingHabit;
 import com.jasonfu19860310.habit.view.execute.ExecuteHabitActivity;
 import com.jasonfu19860310.habit.view.execute.InputTimeDialog;
@@ -24,6 +24,8 @@ abstract public class ExecuteState implements IExecuteState{
 	private Button startButton;
 	protected TimeText timeText;
 	protected RecordTimer recordTimer;
+	private int yellow = Color.parseColor("#FF9900");
+	private int green = Color.parseColor("#339933");
 	
 	public ExecuteState(ExecuteHabitActivity activity) {
 		this.activity = activity;
@@ -32,14 +34,16 @@ abstract public class ExecuteState implements IExecuteState{
 		timeText = activity.getTimeText();
 		recordTimer = activity.getRecordTimer();
 		currentHabit = activity.getProject();
+		yellow = Color.parseColor(activity.getString(R.color.yellow));
+		green = Color.parseColor(activity.getString(R.color.green));
 	}
 	
 	protected void changeStartButtonTo(START_STATUS status) {
 		startButton.setText(status.name());
 		if (status == START_STATUS.PAUSE) 
-			setStartButtonColor(ColorHelper.color_yellow);
+			setStartButtonColor(yellow);
 		if (status == START_STATUS.START) 
-			setStartButtonColor(ColorHelper.color_green);
+			setStartButtonColor(green);
 	}
 	
 	@Override
@@ -49,7 +53,7 @@ abstract public class ExecuteState implements IExecuteState{
 		timeText.setTime(0);
 		initialRecordStatus();
 		activity.setCurrentState(activity.getStopState());
-		setStartButtonColor(ColorHelper.color_green);
+		setStartButtonColor(green);
 	}
 
 	@Override

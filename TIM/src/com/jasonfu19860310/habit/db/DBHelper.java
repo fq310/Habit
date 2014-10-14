@@ -44,7 +44,7 @@ public class DBHelper extends SQLiteOpenHelper {
 		    CountHabitEntry.COLUMN_NAME_END_DATE + BIGINT_TYPE + COMMA_SEP +
 		    CountHabitEntry.COLUMN_NAME_TIMES_PER_DAY + BIGINT_TYPE + COMMA_SEP +
 		    CountHabitEntry.COLUMN_NAME_TODAY_CHECKED + BIGINT_TYPE + COMMA_SEP +
-		    CountHabitEntry.COLUMN_NAME_TOTAL_CHECKED + BIGINT_TYPE + COMMA_SEP +")";
+		    CountHabitEntry.COLUMN_NAME_TOTAL_CHECKED + BIGINT_TYPE +")";
 
 	public DBHelper(Context context, String name, CursorFactory factory,
 			int version) {

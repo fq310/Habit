@@ -3,7 +3,6 @@ package com.jasonfu19860310.habit.view;
 
 import com.jasonfu19860310.habit.adt.HabitDate;
 import com.jasonfu19860310.habit.controller.TimingHabitManager;
-import com.jasonfu19860310.habit.helper.ColorHelper;
 import com.jasonfu19860310.habit.model.TimingHabit;
 import com.jasonfu19860310.tim.R;
 
@@ -37,19 +36,6 @@ public abstract class HabitBaseActivity extends Activity {
 		setContentView(R.layout.activity_habit_info);
 		getActionBar().setDisplayShowHomeEnabled(false);
 		projectManager = new TimingHabitManager(this);
-		initialButton();
-	}
-
-	private void initialButton() {
-		((Button)findViewById(R.id.button_create_project_done))
-			.setBackgroundColor(ColorHelper.color_green);
-		((Button)findViewById(R.id.button_create_project_cancel))
-			.setBackgroundColor(ColorHelper.color_blue);
-		
-		((Button)findViewById(R.id.button_create_project_start_date))
-			.setBackgroundColor(ColorHelper.color_blue);
-		((Button)findViewById(R.id.button_create_project_end_date))
-			.setBackgroundColor(ColorHelper.color_blue);
 	}
 
 	public void onSetStartDate(View v) {

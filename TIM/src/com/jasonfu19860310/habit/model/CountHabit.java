@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.jasonfu19860310.habit.adt.HabitDate;
+import com.jasonfu19860310.habit.view.CreateCountHabit;
 
 public class CountHabit implements HabitListItem {
 	private long id;
@@ -74,8 +75,7 @@ public class CountHabit implements HabitListItem {
 	}
 	@Override
 	public Intent getExecuteIntent(Context context) {
-		// TODO Auto-generated method stub
-		return null;
+		return new Intent(context, CreateCountHabit.class);
 	}
 	@Override
 	public String getTipString(Context context) {

@@ -5,12 +5,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-import com.jasonfu19860310.habit.helper.ColorHelper;
 import com.jasonfu19860310.tim.R;
 
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
@@ -111,8 +111,9 @@ public class DirectoryPicker extends ListActivity {
 	}
 
 	private void initialButtonChoose() {
+		int green = Color.parseColor(getString(R.color.green));
 		((Button)findViewById(R.id.button_backup_choose_dir))
-		.setBackgroundColor(ColorHelper.color_green);
+		.setBackgroundColor(green);
         Button btnChoose = (Button) findViewById(R.id.button_backup_choose_dir);
         String name = dir.getName();
         if(name.length() == 0)

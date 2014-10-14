@@ -1,9 +1,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item
-        android:id="@+id/AddHabitMenu"
-        android:title="@string/addHabit" 
-        android:onClick="onOptionAddHabit" 
+        android:id="@+id/AddTimingHabitMenu"
+        android:title="@string/addTimingHabit" 
+        android:onClick="onOptionAddTimingHabit" 
+        android:showAsAction="ifRoom|withText"/>
+    <item
+        android:id="@+id/AddCountHabitMenu"
+        android:title="@string/addCountHabit" 
+        android:onClick="onOptionAddCountHabit" 
         android:showAsAction="ifRoom|withText"/>
      <item
         android:id="@+id/aboutMenu"

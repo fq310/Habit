@@ -2,7 +2,6 @@ package com.jasonfu19860310.habit;
 
 import com.jasonfu19860310.habit.db.DBExportImport;
 import com.jasonfu19860310.habit.db.DBHelper;
-import com.jasonfu19860310.habit.helper.ColorHelper;
 import com.jasonfu19860310.tim.R;
 
 import android.os.Bundle;
@@ -27,20 +26,11 @@ public class Sync extends Activity {
 	}
 
 	private void initialButton() {
-		((Button)findViewById(R.id.button_backup_ok))
-		.setBackgroundColor(ColorHelper.color_green);
-		((Button)findViewById(R.id.button_backup_export))
-			.setBackgroundColor(ColorHelper.color_blue);
-		((Button)findViewById(R.id.button_backup_cancel))
-		.setBackgroundColor(ColorHelper.color_blue);
-		((Button)findViewById(R.id.button_backup_import))
-			.setBackgroundColor(ColorHelper.color_blue);
-		Button setDirbutton = getDirButton();
-		setDirbutton.setBackgroundColor(ColorHelper.color_blue);
 		SharedPreferences settings = getSharedPreferences(DBExportImport.PREFS_NAME, 0);
 		String savedDir = settings.getString(
 				DirectoryPicker.CHOSEN_DIRECTORY, 
 				getResources().getString(R.string.backup_set_dir));
+		Button setDirbutton = getDirButton();
 		setDirbutton.setText(savedDir);
 	}
 

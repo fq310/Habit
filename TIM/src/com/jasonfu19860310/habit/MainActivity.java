@@ -2,6 +2,7 @@ package com.jasonfu19860310.habit;
 
 import com.jasonfu19860310.habit.controller.TimingHabitManager;
 import com.jasonfu19860310.habit.model.HabitListItem;
+import com.jasonfu19860310.habit.view.CreateCountHabit;
 import com.jasonfu19860310.habit.view.CreateHabitActivity;
 import com.jasonfu19860310.tim.R;
 
@@ -56,8 +57,13 @@ public class MainActivity extends ListActivity {
         return true;
     }
 	
-	public void onOptionAddHabit(MenuItem i) {
+	public void onOptionAddTimingHabit(MenuItem i) {
 		Intent intent = new Intent(this, CreateHabitActivity.class);
+		this.startActivityForResult(intent, ADD);
+	}
+	
+	public void onOptionAddCountHabit(MenuItem i) {
+		Intent intent = new Intent(this, CreateCountHabit.class);
 		this.startActivityForResult(intent, ADD);
 	}
 	

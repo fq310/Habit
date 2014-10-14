@@ -2,7 +2,6 @@ package com.jasonfu19860310.habit.view.execute;
 
 import com.jasonfu19860310.habit.adt.HabitDate;
 import com.jasonfu19860310.habit.controller.TimingHabitManager;
-import com.jasonfu19860310.habit.helper.ColorHelper;
 import com.jasonfu19860310.habit.model.TimingHabit;
 import com.jasonfu19860310.habit.view.ModifyHabitActivity;
 import com.jasonfu19860310.habit.view.execute.state.IExecuteState;
@@ -21,7 +20,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -48,21 +46,9 @@ public class ExecuteHabitActivity extends Activity {
 		initialUtilityObject();
 		initialActionBar();
 		initialProgressBars();
-		initialButton();
 		initialState();
 	}
 
-	private void initialButton() {
-		((Button)findViewById(R.id.button_save))
-			.setBackgroundColor(ColorHelper.color_blue);
-		((Button)findViewById(R.id.button_clear))
-			.setBackgroundColor(ColorHelper.color_blue);
-		((Button)findViewById(R.id.button_inputManually))
-			.setBackgroundColor(ColorHelper.color_blue);
-		((Button)findViewById(R.id.button_execute_start))
-			.setBackgroundColor(ColorHelper.color_green);
-	}
-	
 	private void initialActionBar() {
 		getActionBar().setDisplayShowHomeEnabled(false);
 		getActionBar().setTitle(currentHabit.getName());

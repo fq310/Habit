@@ -4,7 +4,7 @@
     <string name="app_name">好习惯</string>
     <string name="action_settings">设置</string>
     <string name="hello_world">Hello world!</string>
-    <string name="addHabit">新建</string>
+    <string name="addTimingHabit">计时</string>
     <string name="deleteHabit">删除</string>
     <string name="title_activity_create_habit">新的习惯</string>
     <string name="title_activity_modify_habit">修改</string>
@@ -77,5 +77,10 @@
     <string name="backup_save">保存</string>
     <string name="backup_chose_file">选择</string>
     <string name="backup_chose_file_readErr">不能读取文件夹内容。</string>
+    
+        <!-- count habit -->
+    <string name="title_activity_create_count_habit">新的打卡习惯</string>
+    <string name="title_habit_times_per_day">每天打卡次数</string>
+    <string name="addCountHabit">打卡</string>
 
 </resources>
