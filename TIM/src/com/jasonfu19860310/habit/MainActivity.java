@@ -2,8 +2,8 @@ package com.jasonfu19860310.habit;
 
 import com.jasonfu19860310.habit.controller.TimingHabitManager;
 import com.jasonfu19860310.habit.model.HabitListItem;
-import com.jasonfu19860310.habit.view.CreateCountHabit;
-import com.jasonfu19860310.habit.view.CreateHabitActivity;
+import com.jasonfu19860310.habit.view.create.count.CreateCountHabitActivity;
+import com.jasonfu19860310.habit.view.create.timing.CreateTimingHabitActivity;
 import com.jasonfu19860310.tim.R;
 
 import android.os.Bundle;
@@ -22,7 +22,8 @@ import android.widget.AdapterView.OnItemLongClickListener;
 
 public class MainActivity extends ListActivity {
 	private long selectedHabitID;
-	public static final int ADD = 1;
+	public static final int ADD_TIMING = 1;
+	public static final int ADD_COUNT = 4;
 	public static final int EXECUTE = 2;
 	public static final int SYNC = 3;
 	private PorjectListAdapter listAdapter;
@@ -58,13 +59,13 @@ public class MainActivity extends ListActivity {
     }
 	
 	public void onOptionAddTimingHabit(MenuItem i) {
-		Intent intent = new Intent(this, CreateHabitActivity.class);
-		this.startActivityForResult(intent, ADD);
+		Intent intent = new Intent(this, CreateTimingHabitActivity.class);
+		this.startActivityForResult(intent, ADD_TIMING);
 	}
 	
 	public void onOptionAddCountHabit(MenuItem i) {
-		Intent intent = new Intent(this, CreateCountHabit.class);
-		this.startActivityForResult(intent, ADD);
+		Intent intent = new Intent(this, CreateCountHabitActivity.class);
+		this.startActivityForResult(intent, ADD_COUNT);
 	}
 	
 	public void onAbout(MenuItem i) {
@@ -87,7 +88,7 @@ public class MainActivity extends ListActivity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		switch (requestCode) {
-		case ADD:
+		case ADD_TIMING:
 			listAdapter.reloadData();
 			break;
 		case EXECUTE:

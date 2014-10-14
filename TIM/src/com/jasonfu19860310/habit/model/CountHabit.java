@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.jasonfu19860310.habit.adt.HabitDate;
-import com.jasonfu19860310.habit.view.CreateCountHabit;
+import com.jasonfu19860310.habit.view.execute.ExecuteHabitActivity;
 
 public class CountHabit implements HabitListItem {
 	private long id;
@@ -26,6 +26,8 @@ public class CountHabit implements HabitListItem {
 		this.totalChecked = totalChecked;
 		this.todayChecked = todayChecked;
 	}
+	public CountHabit() {
+	}
 	public long getId() {
 		return id;
 	}
@@ -38,12 +40,14 @@ public class CountHabit implements HabitListItem {
 	public void setName(String name) {
 		this.name = name;
 	}
+	@Override
 	public HabitDate getStartDate() {
 		return startDate;
 	}
 	public void setStartDate(HabitDate startDate) {
 		this.startDate = startDate;
 	}
+	@Override
 	public HabitDate getEndDate() {
 		return endDate;
 	}
@@ -75,7 +79,7 @@ public class CountHabit implements HabitListItem {
 	}
 	@Override
 	public Intent getExecuteIntent(Context context) {
-		return new Intent(context, CreateCountHabit.class);
+		return new Intent(context, ExecuteHabitActivity.class);
 	}
 	@Override
 	public String getTipString(Context context) {

@@ -82,5 +82,6 @@
     <string name="title_activity_create_count_habit">新的打卡习惯</string>
     <string name="title_habit_times_per_day">每天打卡次数</string>
     <string name="addCountHabit">打卡</string>
+    <string name="warning_times_per_day">每天打卡数要大于0.</string>
 
 </resources>

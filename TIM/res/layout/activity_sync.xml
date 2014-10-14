@@ -60,6 +60,7 @@
         android:id="@+id/layout_backup_ok_cancel"
         android:layout_width="match_parent"
         android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
         android:layout_height="wrap_content" >
         <Button
             android:id="@+id/button_backup_cancel"

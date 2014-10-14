@@ -24,6 +24,7 @@ public class TimingHabit implements HabitListItem {
 	private long timer_seconds;
 	private HabitDate timerDestroyDate = new HabitDate();
 	
+	@Override
 	public HabitDate getEndDate() {
 		return endDate;
 	}
@@ -43,7 +44,7 @@ public class TimingHabit implements HabitListItem {
 	public String getName() {
 		return name;
 	}
-
+	@Override
 	public HabitDate getStartDate() {
 		return startDate;
 	}

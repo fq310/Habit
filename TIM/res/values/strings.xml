@@ -88,5 +88,6 @@
     <string name="title_activity_create_count_habit">Create Count Habit</string>
     <string name="title_habit_times_per_day">Times Per Day</string>
     <string name="addCountHabit">Check</string>
+    <string name="warning_times_per_day">Times Per Day should be a positive number.</string>
 
 </resources>

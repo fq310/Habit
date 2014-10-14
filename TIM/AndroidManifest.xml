@@ -6,7 +6,7 @@
 
     <uses-sdk
         android:minSdkVersion="14"
-        android:targetSdkVersion="19" />
+        android:targetSdkVersion="20" />
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
@@ -24,11 +24,19 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.jasonfu19860310.habit.view.CreateHabitActivity"
+            android:name="com.jasonfu19860310.habit.view.create.timing.CreateTimingHabitActivity"
             android:label="@string/title_activity_create_habit" >
         </activity>
         <activity
-            android:name="com.jasonfu19860310.habit.view.ModifyHabitActivity"
+            android:name="com.jasonfu19860310.habit.view.create.timing.ModifyTimingHabitActivity"
+            android:label="@string/title_activity_modify_habit" >
+        </activity>
+                <activity
+            android:name="com.jasonfu19860310.habit.view.create.count.CreateCountHabitActivity"
+            android:label="@string/title_activity_create_habit" >
+        </activity>
+        <activity
+            android:name="com.jasonfu19860310.habit.view.create.count.ModifyCountHabitActivity"
             android:label="@string/title_activity_modify_habit" >
         </activity>
         <activity
@@ -42,10 +50,6 @@
         <activity
             android:name="com.jasonfu19860310.habit.DirectoryPicker"
             android:label="@string/backup_chose_file" >
-        </activity>
-        <activity
-            android:name="com.jasonfu19860310.habit.view.CreateCountHabit"
-            android:label="@string/title_activity_create_count_habit" >
         </activity>
     </application>
 

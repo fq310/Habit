@@ -1,5 +1,7 @@
 package com.jasonfu19860310.habit.model;
 
+import com.jasonfu19860310.habit.adt.HabitDate;
+
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -14,4 +16,9 @@ public interface HabitListItem {
 	public String getTipString(Context context);
 	public int getBackgroundClolor();
 	public String getFinishRate();
+	public HabitDate getStartDate();
+	public HabitDate getEndDate();
+	public void setName(String name);
+	public void setStartDate(HabitDate startDate);
+	public void setEndDate(HabitDate endDate);
 }

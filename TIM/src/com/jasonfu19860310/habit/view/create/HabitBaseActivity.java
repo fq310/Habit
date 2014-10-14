@@ -1,9 +1,7 @@
-package com.jasonfu19860310.habit.view;
-
+package com.jasonfu19860310.habit.view.create;
 
 import com.jasonfu19860310.habit.adt.HabitDate;
-import com.jasonfu19860310.habit.controller.TimingHabitManager;
-import com.jasonfu19860310.habit.model.TimingHabit;
+import com.jasonfu19860310.habit.model.HabitListItem;
 import com.jasonfu19860310.tim.R;
 
 import android.os.Bundle;
@@ -27,15 +25,18 @@ public abstract class HabitBaseActivity extends Activity {
 	public static final String CREATE = "create";
 	public static final String MODIFY = "modify";
 	public static final String OPERATION = "operation";
-	protected TimingHabit project;
-	private TimingHabitManager projectManager;
+	private HabitListItem habit;
 
+	public HabitBaseActivity(HabitListItem habit) {
+		super();
+		this.habit = habit;
+	}
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_habit_info);
 		getActionBar().setDisplayShowHomeEnabled(false);
-		projectManager = new TimingHabitManager(this);
 	}
 
 	public void onSetStartDate(View v) {
@@ -67,21 +68,34 @@ public abstract class HabitBaseActivity extends Activity {
 		return verifyProjectName() 
 				&& verifyStartDate()
 				&& verifyEndDate()
-				&& verifyTimePerDay() 
 				&& verifyDates();
 	}
 
 	private boolean verifyDates() {
-		HabitDate start = project.getStartDate();
-		HabitDate end = project.getEndDate();
+		HabitDate start = habit.getStartDate();
+		HabitDate end = habit.getEndDate();
 		if (start.after(end)) {
 			showWarningMessage(R.string.warning, R.string.warning_input_dateCompare);
 			return false;
 		}
 		return true;
 	}
+	
+	protected void initialText(int data, int value) {
+		initialText(String.valueOf(data), value);
+	}
 
-	private void showWarningMessage(int title, int message) {
+	protected void initialText(String data, int id) {
+		EditText text = getEditText(id);
+		text.setText(data);
+	}
+
+	protected void initialDateButton(HabitDate date, int buttonId) {
+		Button dateButton = getButton(buttonId);
+		dateButton.setText(date.toString());
+	}
+
+	protected void showWarningMessage(int title, int message) {
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setMessage(message)
 		       .setTitle(title);
@@ -99,14 +113,23 @@ public abstract class HabitBaseActivity extends Activity {
 			showWarningMessage(R.string.warning, R.string.warning_input_name);
 			return false;
 		}
-		project.setName(projectName);
+		habit.setName(projectName);
 		return true;
+	}
+	
+	protected String getDateFromText(int editID) {
+		EditText editor = getEditText(editID);
+		Editable text = editor.getText();
+		if (text == null || text.length() == 0) {
+			return null;
+		}
+		return text.toString();
 	}
 	
 	private boolean verifyStartDate() {
 		String dateText = getDateText(R.id.button_create_project_start_date);
 		if (HabitDate.isValidTimeString(dateText)) {
-			project.setStartDate(new HabitDate(dateText));
+			habit.setStartDate(new HabitDate(dateText));
 			return true;
 		}
 		showWarningMessage(R.string.warning, R.string.warning_input_startdate);
@@ -116,7 +139,7 @@ public abstract class HabitBaseActivity extends Activity {
 	private boolean verifyEndDate() {
 		String dateText = getDateText(R.id.button_create_project_end_date);
 		if (HabitDate.isValidTimeString(dateText)) {
-			project.setEndDate(new HabitDate(dateText));
+			habit.setEndDate(new HabitDate(dateText));
 			return true;
 		}
 		showWarningMessage(R.string.warning, R.string.warning_input_enddate);
@@ -136,38 +159,6 @@ public abstract class HabitBaseActivity extends Activity {
 	protected EditText getEditText(int id) {
 		return  (EditText) findViewById(id);
 	}
-	
-	private boolean verifyTimePerDay() {
-		String hours = getDateFromText(R.id.text_create_project_hours);
-		String minutes = getDateFromText(R.id.text_create_project_minutues);
-		if (hours == null && minutes == null) {
-			showWarningMessage(R.string.warning, R.string.warning_input_hours);
-			return false;
-		}
-		if (hours != null) {
-			project.setHours(Integer.valueOf(hours)); } 
-		else {
-			project.setHours(0); }
-		if (minutes != null) {
-			project.setMinitues(Integer.valueOf(minutes)); } 
-		else {
-			project.setMinitues(0); }
-		return true;
-	}
-
-	private String getDateFromText(int editID) {
-		EditText editor = getEditText(editID);
-		Editable text = editor.getText();
-		if (text == null || text.length() == 0) {
-			return null;
-		}
-		return text.toString();
-	}
-	
-	protected TimingHabitManager getProjectManager() {
-		return projectManager;
-	}
-	
 }
 
 class DateSetListener implements OnDateSetListener {

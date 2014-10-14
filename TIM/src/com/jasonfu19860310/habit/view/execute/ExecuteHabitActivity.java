@@ -3,7 +3,7 @@ package com.jasonfu19860310.habit.view.execute;
 import com.jasonfu19860310.habit.adt.HabitDate;
 import com.jasonfu19860310.habit.controller.TimingHabitManager;
 import com.jasonfu19860310.habit.model.TimingHabit;
-import com.jasonfu19860310.habit.view.ModifyHabitActivity;
+import com.jasonfu19860310.habit.view.create.timing.ModifyTimingHabitActivity;
 import com.jasonfu19860310.habit.view.execute.state.IExecuteState;
 import com.jasonfu19860310.habit.view.execute.state.PausedState;
 import com.jasonfu19860310.habit.view.execute.state.StartState;
@@ -140,7 +140,7 @@ public class ExecuteHabitActivity extends Activity {
 	
 	public void onModifyHabit(MenuItem i) {
 		if (inValidStatus()) return;
-		Intent intent = new Intent(this, ModifyHabitActivity.class);
+		Intent intent = new Intent(this, ModifyTimingHabitActivity.class);
 		intent.putExtra("id", currentHabit.getId());
 		startActivityForResult(intent, MODIFY);
 	}
