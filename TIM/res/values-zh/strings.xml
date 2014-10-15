@@ -33,7 +33,7 @@
     <!-- execute project strings  -->
     <string name="inital_time">00:00:00</string>
     <string name="startTiming">开始</string>
-    <string name="saveTiming">保存</string>
+    <string name="save">保存</string>
     <string name="clearTiming">清除</string>
     <string name="inputManually">手输</string>
     <string name="colon">:</string>
@@ -45,7 +45,7 @@
     <string name="execute_error_msg_title">错误！</string>
     <string name="execute_error_msg_minute">请输入分钟！</string>
     <string name="execute_error_msg_time">请 输入合法的分/秒！</string>
-    <string name="execute_error_msg_ok">保存成功!</string>
+    <string name="execute_record_saved">保存成功!</string>
     <string name="execute_error_msg_success"></string>
     
     <string name="execute_warning">警告</string>
@@ -83,5 +83,10 @@
     <string name="title_habit_times_per_day">每天打卡次数</string>
     <string name="addCountHabit">打卡</string>
     <string name="warning_times_per_day">每天打卡数要大于0.</string>
+	<string name="count_habit_today">今日</string>
+    <string name="count_habit_total">总共</string>
+    <string name="uncheck">撤销</string>
+    <string name="check">打卡</string>
+    <string name="inital_check">0/0</string>
 
 </resources>

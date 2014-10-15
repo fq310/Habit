@@ -149,7 +149,7 @@
             style="?android:attr/buttonBarButtonStyle"
             android:onClick="onSaveClicked"
             android:background="@color/blue"
-            android:text="@string/saveTiming" />
+            android:text="@string/save" />
 
     </LinearLayout>
 

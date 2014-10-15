@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.jasonfu19860310.tim"
+    package="com.github.fq310.habit"
     android:versionCode="2"
     android:versionName="1.2" >
 
@@ -15,7 +15,7 @@
         android:icon="@drawable/icon"
         android:label="@string/app_name" >
         <activity
-            android:name="com.jasonfu19860310.habit.MainActivity"
+            android:name="com.github.fq310.habit.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,32 +24,36 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.jasonfu19860310.habit.view.create.timing.CreateTimingHabitActivity"
+            android:name="com.github.fq310.habit.view.create.timing.CreateTimingHabitActivity"
             android:label="@string/title_activity_create_habit" >
         </activity>
         <activity
-            android:name="com.jasonfu19860310.habit.view.create.timing.ModifyTimingHabitActivity"
+            android:name="com.github.fq310.habit.view.create.timing.ModifyTimingHabitActivity"
             android:label="@string/title_activity_modify_habit" >
         </activity>
-                <activity
-            android:name="com.jasonfu19860310.habit.view.create.count.CreateCountHabitActivity"
+        <activity
+            android:name="com.github.fq310.habit.view.create.count.CreateCountHabitActivity"
             android:label="@string/title_activity_create_habit" >
         </activity>
         <activity
-            android:name="com.jasonfu19860310.habit.view.create.count.ModifyCountHabitActivity"
+            android:name="com.github.fq310.habit.view.create.count.ModifyCountHabitActivity"
             android:label="@string/title_activity_modify_habit" >
         </activity>
         <activity
-            android:name="com.jasonfu19860310.habit.view.execute.ExecuteHabitActivity"
+            android:name="com.github.fq310.habit.view.execute.timing.ExecuteHabitActivity"
             android:label="@string/title_activity_execute_habit" >
         </activity>
         <activity
-            android:name="com.jasonfu19860310.habit.Sync"
+            android:name="com.github.fq310.habit.Sync"
             android:label="@string/title_activity_sync" >
         </activity>
         <activity
-            android:name="com.jasonfu19860310.habit.DirectoryPicker"
+            android:name="com.github.fq310.habit.DirectoryPicker"
             android:label="@string/backup_chose_file" >
+        </activity>
+        <activity
+            android:name="com.github.fq310.habit.view.execute.count.ExecuteCountHabitActivity"
+            android:label="@string/title_activity_execute_count_habit" >
         </activity>
     </application>
 

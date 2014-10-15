@@ -45,7 +45,7 @@
     <!-- execute project strings -->
     <string name="inital_time">00:00:00</string>
     <string name="startTiming">Start</string>
-    <string name="saveTiming">Save</string>
+    <string name="save">Save</string>
     <string name="clearTiming">Clear</string>
     <string name="inputManually">Input</string>
     <string name="colon">:</string>
@@ -57,7 +57,7 @@
     <string name="execute_error_msg_title">Error</string>
     <string name="execute_error_msg_minute">Invalid Minutes</string>
     <string name="execute_error_msg_time">Please enter valid minutes/second.</string>
-    <string name="execute_error_msg_ok">Record Saved!</string>
+    <string name="execute_record_saved">Record Saved!</string>
     <string name="execute_error_msg_success"></string>
     <string name="execute_warning">Warning</string>
     <string name="execute_warning_msg">Do you want to delete this habit?</string>
@@ -83,11 +83,17 @@
     <string name="backup_sync_warning">Please set a valid directory</string>
     <string name="backup_chose_file">Choose</string>
     <string name="backup_chose_file_readErr">Could not read folder contents.</string>
-    
+
     <!-- count habit -->
     <string name="title_activity_create_count_habit">Create Count Habit</string>
     <string name="title_habit_times_per_day">Times Per Day</string>
     <string name="addCountHabit">Check</string>
     <string name="warning_times_per_day">Times Per Day should be a positive number.</string>
+    <string name="title_activity_execute_count_habit">ExecuteCountHabitActivity</string>
+    <string name="count_habit_today">today</string>
+    <string name="count_habit_total">total</string>
+    <string name="uncheck">Un-Check</string>
+    <string name="check">Check</string>
+    <string name="inital_check">0/0</string>
 
 </resources>

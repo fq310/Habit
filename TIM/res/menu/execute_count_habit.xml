@@ -1,0 +1,16 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.jasonfu19860310.tim.ExecuteCountHabitActivity" >
+
+    <item
+        android:id="@+id/ModifyHabitMenu"
+        android:title="@string/modifyHabit" 
+        android:onClick="onModifyHabit" 
+        android:showAsAction="ifRoom|withText"/>
+    <item
+        android:id="@+id/DeleteHabittMenu"
+        android:title="@string/deleteHabit" 
+        android:onClick="onDeleteHabit" 
+        android:showAsAction="ifRoom|withText"/>
+
+</menu>
