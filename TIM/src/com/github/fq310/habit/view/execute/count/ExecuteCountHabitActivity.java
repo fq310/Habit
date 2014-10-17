@@ -28,6 +28,12 @@ public class ExecuteCountHabitActivity extends Activity {
 		habitManager = new CountHabitManager(this);
 		initialHabit();
 		updateUIData();
+		initialActionBar();
+	}
+	
+	private void initialActionBar() {
+		getActionBar().setDisplayShowHomeEnabled(false);
+		getActionBar().setTitle(habit.getName());
 	}
 	
 	private void updateUIData() {

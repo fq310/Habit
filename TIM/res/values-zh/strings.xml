@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">好习惯</string>
+    <string name="app_name">跬步</string>
     <string name="action_settings">设置</string>
     <string name="hello_world">Hello world!</string>
     <string name="addTimingHabit">计时</string>
@@ -28,7 +28,7 @@
     <string name="modifyHabit">修改</string>
     
     
-    <string name="noData">单击“新建”添加一个新的习惯</string>
+    <string name="noData">没有习惯可以显示哦。\n单击“计时”添加一个计时的习惯\n单击“打卡”添加一个打卡的习惯\n单击“备份”习惯数据设置备份路径\n</string>
     
     <!-- execute project strings  -->
     <string name="inital_time">00:00:00</string>
@@ -59,7 +59,9 @@
     <string name="paused">暂停</string>
     <string name="started">记录中</string>
     <string name="about">关于</string>
-    <string name="about_msg">版本1.2  非常感谢大家选择好习惯.这只是我的个人作品.如果发现bug或者有新的需求.请务必毫无顾忌的去我的微博@fq310 吐槽.</string>
+    <string name="about_msg">
+	版本1.0 \n1. 跬步取自“故不积跬步，无以至千里”，习惯的养成总是需要日积月累的坚持不懈。\n2. 作为一个热爱编程的程序员，总想着有一天写出震惊世界的产品，每一个人提到你都会赞不绝口。然而现实总是骨感的，就像Eric S. Raymond在《Unix编程艺术》里写的：“那些薪水的奴隶，他们只会在专有软件公司大厦的小隔间里费力的做着呆伯特似的工作，来迎合无法达成的最终期限”。\n3. 但至少我还能做一些事情：写一个简单实用而又能让别人的生活轻松一点的app。希望大家能喜欢，谢谢。\n4. 如果发现bug或者有新的需求.请务必毫无顾忌的去我的微博@fq310 吐槽.\n
+    </string>
     
     <string name="backup_set_dir">单击设置备份文件夹</string>
     <string name="backup_description">
@@ -74,6 +76,9 @@
     <string name="title_activity_sync">备份</string>
     <string name="backup_sync_finish">备份完成</string>
     <string name="backup_sync_warning">请选择一个有效的文件夹</string>
+    <string name="backup_sync_nofile">未找到数据文件</string>
+    <string name="backup_sync_exportOK">导出完成</string>
+    <string name="backup_sync_importOK">导入完成</string>
     <string name="backup_save">保存</string>
     <string name="backup_chose_file">选择</string>
     <string name="backup_chose_file_readErr">不能读取文件夹内容。</string>

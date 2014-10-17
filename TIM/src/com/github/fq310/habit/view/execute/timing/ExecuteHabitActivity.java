@@ -100,7 +100,8 @@ public class ExecuteHabitActivity extends Activity {
 		
 		TextView passedDayText = (TextView) findViewById(R.id.execute_project_text2);
 		passedDayText.setText(startDate.toString() + " - " + endDate.toString());
-		passedDayText.append(" [ Day - " + passedDays +" ]");
+		int totalDays = startDate.daysFrom(currentHabit.getEndDate());
+		passedDayText.append(" [ Day - " + passedDays + "/" + totalDays + " ]");
 	}
 
 	private void initialTotalFinishedTimeBar() {

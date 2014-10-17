@@ -1,40 +1,31 @@
 package com.github.fq310.habit;
 
 import com.github.fq310.habit.R;
-import com.github.fq310.habit.controller.TimingHabitManager;
 import com.github.fq310.habit.model.HabitListItem;
 import com.github.fq310.habit.view.create.count.CreateCountHabitActivity;
 import com.github.fq310.habit.view.create.timing.CreateTimingHabitActivity;
 
 import android.os.Bundle;
-import android.app.AlertDialog;
 import android.app.ListActivity;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.view.ContextMenu;
-import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AdapterView.OnItemLongClickListener;
 
 public class MainActivity extends ListActivity {
-	private long selectedHabitID;
 	public static final int ADD_TIMING = 1;
 	public static final int ADD_COUNT = 4;
 	public static final int EXECUTE = 2;
 	public static final int SYNC = 3;
 	private PorjectListAdapter listAdapter;
-	private TimingHabitManager habitManager;
 
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
 		getActionBar().setDisplayShowHomeEnabled(false);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        habitManager = new TimingHabitManager(this);
         listAdapter = new PorjectListAdapter(this); 
         initialHabitList();
     }
@@ -42,14 +33,6 @@ public class MainActivity extends ListActivity {
 	private void initialHabitList() {
 		setListAdapter(listAdapter);
         getListView().setOnItemClickListener(new ItemClickListener(this));
-        registerForContextMenu(getListView());
-        getListView().setOnItemLongClickListener(new OnItemLongClickListener() {
-			@Override
-			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
-					int arg2, long id) {
-				selectedHabitID = id;
-				return false;
-		}});
 	}
 	
 	@Override
@@ -69,15 +52,8 @@ public class MainActivity extends ListActivity {
 	}
 	
 	public void onAbout(MenuItem i) {
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setMessage(R.string.about_msg)
-		       .setTitle(R.string.about);
-		builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-	           public void onClick(DialogInterface dialog, int id) {
-	           }
-	       });
-		AlertDialog dialog = builder.create();
-		dialog.show();
+		Intent intent = new Intent(this, AboutActivity.class);
+		this.startActivity(intent);
 	}
 	
 	public void onSync(MenuItem i) {
@@ -90,18 +66,6 @@ public class MainActivity extends ListActivity {
 		listAdapter.reloadData();
 	}
 	
-	@Override
-	public boolean onContextItemSelected(MenuItem item) {
-		habitManager.deleteProjectByID(selectedHabitID);
-		listAdapter.reloadData();
-		return true;
-	}
-
-	@Override
-	public void onCreateContextMenu(ContextMenu menu, View v,
-			ContextMenuInfo menuInfo) {
-		menu.add(R.string.deleteHabit);
-	}
 }
 
 class ItemClickListener implements OnItemClickListener {

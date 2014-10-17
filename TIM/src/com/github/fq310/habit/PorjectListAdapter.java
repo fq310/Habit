@@ -1,6 +1,8 @@
 package com.github.fq310.habit;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import com.github.fq310.habit.R;
@@ -28,8 +30,7 @@ public class PorjectListAdapter extends BaseAdapter {
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		timingHabitManager = new TimingHabitManager(context);
 		countHabitManager = new CountHabitManager(context);
-		habits.addAll(timingHabitManager.getAllHabits());
-		habits.addAll(countHabitManager.getAllHabits());
+		readDataFromDB();
 	}
 
 	@Override
@@ -76,10 +77,20 @@ public class PorjectListAdapter extends BaseAdapter {
 	}
 
 	public void reloadData() {
+		readDataFromDB();
+		notifyDataSetChanged();
+	}
+
+	private void readDataFromDB() {
 		habits.clear();
 		habits.addAll(timingHabitManager.getAllHabits());
 		habits.addAll(countHabitManager.getAllHabits());
-		notifyDataSetChanged();
+		Collections.sort(habits, new Comparator<HabitListItem>() {
+			@Override
+			public int compare(HabitListItem a, HabitListItem b) {
+				return a.getName().compareTo(b.getName());
+			}
+		});
 	}
 	
 }

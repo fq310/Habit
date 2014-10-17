@@ -51,6 +51,7 @@ public class Sync extends Activity {
 			return;
 		}
 		new DBExportImport(this).importData(getDir() + "/" + DBHelper.DATABASE_NAME);
+		Toast.makeText(this, R.string.backup_sync_importOK, Toast.LENGTH_SHORT).show();
 	}
 
 	public void onExportDataNow(View v) {
@@ -59,10 +60,11 @@ public class Sync extends Activity {
 			return;
 		}
 		new DBExportImport(this).exportData(getDir() + "/" + DBHelper.DATABASE_NAME);
+		Toast.makeText(this, R.string.backup_sync_importOK, Toast.LENGTH_SHORT).show();
 	}
 	
 	private void waning() {
-		Toast.makeText(this, R.string.backup_sync_warning, Toast.LENGTH_LONG).show();
+		Toast.makeText(this, R.string.backup_sync_exportOK, Toast.LENGTH_LONG).show();
 	}
 
 	private boolean isValidDir() {

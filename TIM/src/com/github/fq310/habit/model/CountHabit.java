@@ -99,8 +99,11 @@ public class CountHabit implements HabitListItem {
 	}
 	@Override
 	public int getBackgroundClolor(Context context) {
-		if (isTodayFinished()) return COLOR_GREEN;
+		if (isTodayFinished() || isTotalFinished()) return COLOR_GREEN;
 		return COLOR_TRANSPARENT;
+	}
+	private boolean isTotalFinished() {
+		return getTotalChecked() >= getTotalTarget();
 	}
 	@Override
 	public String getFinishRate() {

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Habit</string>
+    <string name="app_name">跬步</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
     <string name="addTimingHabit">Timing</string>
@@ -40,7 +40,7 @@
     <string name="unfinished_time">unfinished_time</string>
     <string name="title_activity_execute_habit">Habit Detail</string>
     <string name="modifyHabit">Modify</string>
-    <string name="noData">No projects found, please add a new one.</string>
+    <string name="noData">No habit found, please add a new one.</string>
 
     <!-- execute project strings -->
     <string name="inital_time">00:00:00</string>
@@ -68,7 +68,7 @@
     <string name="paused">PAUSED</string>
     <string name="started">STARTED</string>
     <string name="about">About</string>
-    <string name="about_msg">Habit Version 1.1</string>
+    <string name="about_msg">Habit Version 1.0</string>
     <string name="backup_set_dir">Set Sync Directory</string>
     <string name="backup_description">        Tips: \n
         1. Set sync directory to your network hardisk\'s auto-sync directory so that your data can be auto-synced to the server.\n
@@ -81,7 +81,10 @@
     <string name="backup_save">Save</string>
     <string name="backup_sync_finish">Sync Complete</string>
     <string name="backup_sync_warning">Please set a valid directory</string>
+    <string name="backup_sync_nofile">Can not find database file.</string>
     <string name="backup_chose_file">Choose</string>
+	<string name="backup_sync_exportOK">Export Finished</string>
+    <string name="backup_sync_importOK">Import Finished</string>
     <string name="backup_chose_file_readErr">Could not read folder contents.</string>
 
     <!-- count habit -->
@@ -95,5 +98,6 @@
     <string name="uncheck">Un-Check</string>
     <string name="check">Check</string>
     <string name="inital_check">0/0</string>
+    <string name="title_activity_about">AboutActivity</string>
 
 </resources>

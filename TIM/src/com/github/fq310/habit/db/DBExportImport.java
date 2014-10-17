@@ -16,7 +16,7 @@ import android.os.Environment;
 import android.widget.Toast;
 
 public class DBExportImport {
-	public static final String PACKAGE_NAME = "com.jasonfu19860310.tim";
+	public static final String PACKAGE_NAME = "com.github.fq310.habit";
 	public static final String DATA_DIRECTORY_DATABASE =
 			Environment.getDataDirectory() +
 			"/data/" + PACKAGE_NAME +
@@ -34,7 +34,6 @@ public class DBExportImport {
 	
 	public void exportData(String target) {
 		copyFile(DBExportImport.DATA_DIRECTORY_DATABASE, target);
-		
 	}
 
 	public void copyFile(String source, String target) {
@@ -52,6 +51,7 @@ public class DBExportImport {
 			targetFile.flush();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
+			Toast.makeText(context, R.string.backup_sync_nofile, Toast.LENGTH_SHORT).show();
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
@@ -92,7 +92,7 @@ public class DBExportImport {
 		if (savedDir.equals(initialDir))
 			return;
 		exportData(savedDir + "/" + DBHelper.DATABASE_NAME);
-		Toast.makeText(context, R.string.backup_sync_finish, Toast.LENGTH_LONG).show();
+		Toast.makeText(context, R.string.backup_sync_finish, Toast.LENGTH_SHORT).show();
 	}
 
 }

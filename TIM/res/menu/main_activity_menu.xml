@@ -10,15 +10,14 @@
         android:title="@string/addCountHabit" 
         android:onClick="onOptionAddCountHabit" 
         android:showAsAction="ifRoom|withText"/>
+    <item
+        android:id="@+id/syncMenu"
+        android:title="@string/title_activity_sync" 
+        android:onClick="onSync" 
+        android:showAsAction="ifRoom|withText"/>
      <item
         android:id="@+id/aboutMenu"
         android:title="@string/about" 
         android:onClick="onAbout" 
         android:showAsAction="ifRoom|withText"/>
-     <item
-        android:id="@+id/syncMenu"
-        android:title="@string/title_activity_sync" 
-        android:onClick="onSync" 
-        android:showAsAction="ifRoom|withText"/>
-     
 </menu>

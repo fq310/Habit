@@ -2,6 +2,7 @@ package com.github.fq310.habit.view.execute.timing.state;
 
 import android.graphics.Color;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.github.fq310.habit.R;
 import com.github.fq310.habit.adt.HabitDate;
@@ -69,8 +70,7 @@ abstract public class ExecuteState implements IExecuteState{
 		initialRecordStatus();
 		timeText.setTime(0);
 		activity.setCurrentState(activity.getStopState());
-		createWarningDialog(R.string.execute_error_msg_success, 
-				R.string.execute_record_saved);
+		Toast.makeText(activity, R.string.execute_record_saved, Toast.LENGTH_SHORT).show();
 	}
 	
 	private void initialRecordStatus() {

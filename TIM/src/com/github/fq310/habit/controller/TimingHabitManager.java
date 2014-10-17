@@ -193,7 +193,6 @@ public class TimingHabitManager {
 		values.put(HabitEntry.COLUMN_NAME_TIMER_DESTORY_DATE, project.getTimerDestroyDate().getTimeInMillis());
 		updateTable(project, database, values);
 		database.close();
-		dbExportImport.exportDataAuto();
 	}
 
 	public void deleteProject(TimingHabit currentProject) {

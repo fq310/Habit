@@ -160,15 +160,21 @@ public class TimingHabit implements HabitListItem {
 
 	@Override
 	public int getBackgroundClolor(Context context) {
-		if (getTodayFinishedRate(context) >= 100) return COLOR_GREEN;
+		if (getTodayFinishedRate(context) >= 100 ||
+				getTotalFinishedRate() >= 100) return COLOR_GREEN;
 		return COLOR_TRANSPARENT;
 	}
 
 	@Override
 	public String getFinishRate() {
-		float finishRate = ((float)getTotalFinishedSeconds()/getTotalSeconds()) * 100;
+		float finishRate = getTotalFinishedRate();
 		DecimalFormat df = new DecimalFormat("###.##");
 		return df.format(finishRate) + "%";
+	}
+
+	private float getTotalFinishedRate() {
+		float finishRate = ((float)getTotalFinishedSeconds()/getTotalSeconds()) * 100;
+		return finishRate;
 	}
 
 }
