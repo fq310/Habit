@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -39,12 +38,6 @@ public class Sync extends Activity {
 		return setDirbutton;
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.sync, menu);
-		return true;
-	}
-	
 	public void onImportDataNow(View v) {
 		if (isValidDir() == false) {
 			waning();

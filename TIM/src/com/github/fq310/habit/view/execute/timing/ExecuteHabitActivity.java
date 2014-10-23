@@ -24,7 +24,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 public class ExecuteHabitActivity extends Activity {
-
 	private Handler handler;
 	protected TimeText timeText;
 	protected RecordTimer recordTimer;
@@ -45,8 +44,6 @@ public class ExecuteHabitActivity extends Activity {
 		setContentView(R.layout.activity_execute_habit);
 		initialUtilityObject();
 		initialActionBar();
-		initialProgressBars();
-		initialState();
 	}
 
 	private void initialActionBar() {
@@ -266,5 +263,19 @@ public class ExecuteHabitActivity extends Activity {
 				}
 			}
 		});
+	}
+	
+	@Override
+	protected void onResume() {
+		initialHabit();
+		initialProgressBars();
+		initialState();
+		super.onResume();
+	}
+
+	@Override
+	protected void onPause() {
+		currentState.exit();
+		super.onPause();
 	}
 }
